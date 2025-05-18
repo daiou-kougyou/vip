@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鉄筋積算書｜大桜工業株式会社</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="generator" content="Studio.Design">
+<meta name="robots" content="all">
+<meta property="og:site_name" content="大桜工業株式会社">
+<meta property="og:title" content="大桜工業株式会社">
+<meta property="og:image" content="https://storage.googleapis.com/production-os-assets/assets/749da57f-b4db-467c-9034-d1cca6768b24">
+<meta property="og:description" content="大桜工業株式会社は、福岡県にある鉄筋加工・鉄筋工事を行う会社です。建築・土木・壁構築・住宅・加工販売まで全ての鉄筋工事に対応可能です。お気軽にお問い合わせください。">
+<meta property="og:type" content="website">
+<meta name="description" content="大桜工業株式会社は、福岡県にある鉄筋加工・鉄筋工事を行う会社です。建築・土木・壁構築・住宅・加工販売まで全ての鉄筋工事に対応可能です。お気軽にお問い合わせください。">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://storage.googleapis.com/production-os-assets/assets/749da57f-b4db-467c-9034-d1cca6768b24">
+<meta name="apple-mobile-web-app-title" content="大桜工業株式会社">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="chrome" content="nointentdetection">
+<meta property="og:url" content="/">
+<link rel="icon" type="image/png" href="https://storage.googleapis.com/production-os-assets/assets/a7a22875-c5ae-451e-82f8-a82fcd097111" data-hid="2c9d455">
+<link rel="apple-touch-icon" type="image/png" href="https://storage.googleapis.com/production-os-assets/assets/a7a22875-c5ae-451e-82f8-a82fcd097111" data-hid="74ef90c">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+ <style>
+ * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: white;
+}
+.a4-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: white;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0px;
+}
+table input[type="number"],
+table input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  padding: 4px;
+  font-size: 16px;
+}
+th, td {
+  border: 0.1pt solid #999;
+  padding: 4px;
+  border-style: inset;
+  text-align: center;
+  font-size: 14px;
+  vertical-align: middle;
+}
+td[contenteditable="true"] {
+  outline: none;
+  min-width: 60px;
+}
+td canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+#shapePopup, .popup {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #aaa;
+  padding: 16px;
+  z-index: 1001;
+  border-radius: 10px;
+  width: auto;
+  max-width: 100vw; 
+  max-height: 100vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  justify-content: center; 
+  align-items: center; 
+}
+#shapePopup h3 {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+#overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+.shape-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.shape-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4px;
+}
+.shape-option input {
+  width: 60px;
+  padding: 4px;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 4px;
+}
+.sub {
+  font-size: 11px;
+  color: #777;
+  font-style: italic;
+}
+.bold {
+  font-weight: bold;
+}
+.btn,
+#applyBtn,
+#cancelBtn,
+#deleteBtn {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 4px;
+  text-align: center;
+  width: 120px;
+  height: 40px; 
+  box-sizing: border-box;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  text-align: center; 
+}
+#applyBtn,
+.btn.add-row {
+  background-color: #007bff;
+  color: white;
+}
+#applyBtn:hover,
+.btn.add-row:hover {
+  background-color: #0056b3;
+}
+#cancelBtn,
+.btn.print {
+  background-color: #cccccc;
+  color: #333;
+}
+#cancelBtn:hover,
+.btn.print:hover {
+  background-color: #eeeeee;
+}
+#deleteBtn {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+#deleteBtn:hover {
+  background-color: #f5c6cb; 
+}
+.context-menu {
+  position: absolute;
+  display: none;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  min-width: 160px;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 5px 0;
+}
+.context-menu ul li {
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.context-menu ul li:hover {
+  background: #eee;
+}
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+.header-body {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.header-left {
+  flex: 1;
+}
+.header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.header-body .info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  font-size: 14px;
+}
+.header-body .info-item input[type="text"],
+.header-body .info-item input[type="tel"],
+.header-body .info-item input[type="date"],
+.header-body .info-item input[type="time"] {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+}
+.header-body .info-item label {
+  width: 90px;
+  color: #000;
+}
+.header-body .info-item input::placeholder {
+  color: #888;
+  font-weight: normal;
+}
+.header-top {
+  text-align: center;
+}
+.header-top h1 {
+  font-size: 25px;
+  color: #000;
+  letter-spacing: 25px;
+}
+.fixed-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+}
+.fixed-buttons .btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #cccccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.fixed-buttons .btn:hover {
+  background-color: #eeeeee;
+}
+  .tabs {
+    display: flex;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .tab-btn {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+	font-size: 14px;
+    border-bottom: 3px solid transparent;
+  }
+  .tab-btn.active {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  .tab-content {
+    display: none;
+	min-height:180px;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .shape-list canvas {
+  width: 100%;
+    display: block;
+    margin-bottom: 1px;
+    border: 1px solid #aaa;
+    background: #fff;
+    cursor: pointer;
+  }
+.tab-layout {
+  display: flex;
+  justify-content: center; 
+  flex-wrap: nowrap;
+  gap: 1rem;
+    margin-top: 0.5rem;
+}
+.tab-col-header {
+  display: inline-block;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: #007bff;
+  color: #007bff;
+  margin-bottom: 1px;
+}
+
+.tab-col {
+  flex: 1 1 20%;
+  min-width: 60px;
+  justify-content: center;
+}
+.tab-col label:first-of-type {
+  margin-bottom: 5px;
+}
+.tab-col label {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+	margin-bottom: 2px; 
+}
+  .tab-col input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+select.angle-preset {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+  .tab-col label span {
+  display: inline-block;
+  width: 30px; 
+  text-align: right;
+}
+.tab-col.dim-col,
+.tab-col.angle-col {
+  border: 1px solid #ccc;
+  padding: 4px;
+  background-color: #fdfdfd;
+  border-radius: 4px;
+}
+canvas {
+  max-width: 250px;
+  background: #fff;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.shape-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+  min-width: 200px; 
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+.shape-col canvas {
+  margin-left: 0;
+  width: 180px;  
+  height: 120px; 
+  background-color: #fff;
+  display: block;
+}
+.spec-row {
+  display: flex;
+   flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.spec-row label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.spec-row input {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.input-wrap {
+  position: relative;
+  display: inline-block;
+}
+.input-wrap input[type="text"],
+.input-wrap input[type="number"] {
+  padding-right: 18px;
+  box-sizing: border-box;
+  width: 60px;
+}
+.input-wrap .suffix {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+  font-size: 14px;
+}
+.info-date input[type="date"] {
+  padding: 4px;
+  font-size: 14px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background: transparent;
+  box-sizing: border-box;
+}
+.info-date {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  font-size: 14px;
+  flex: 1 1 auto; 
+}
+.info-date select {
+  flex: 1;
+  min-width: 100px;
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+   background: transparent;
+  appearance: none;  
+  -webkit-appearance: none;
+  -moz-appearance: none;  
+  color: #666;        
+}
+#total-sum {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  padding: 4px;
+}
+
+#total-sum .sum-note {
+  font-size: 11px;
+  color: #888; /* màu mờ */
+  font-style: italic;
+  margin-top: 2px;
+}
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.button-row button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.button-row button i {
+  font-size: 16px;
+}
+.strong-label {
+  color: red;
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+.input-d {
+  appearance: none;  
+  -webkit-appearance: none;
+  -moz-appearance: none;   
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
+  width: 60px;  
+  height: 30px;   
+  background-color: white;
+}
+label select.input-d {
+  margin-left: 4px;
+}
+select.angle-preset {
+  appearance: none;      
+  -webkit-appearance: none; 
+  -moz-appearance: none;   
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 30px;
+  width: 110px;
+  margin: 0 auto;
+  display: block;
+  align-items: center;
+}
+.highlight-label {
+  font-weight: bold;
+  color: #d35400; /* cam đậm */
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+#transport-select {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 30px;
+  background-color: #fff;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #666;        
+}
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .header {
+    padding: 15px;
+  }
+  .header-body, .header-right {
+    flex: 1;
+  }
+  th, td {
+    font-size: 12px;
+    padding: 6px;
+  }
+  .shape-option input,
+  #applyBtn,
+  #cancelBtn,
+  .btn {
+    width: 100%;
+    max-width: none;
+    font-size: 14px;
+   }
+input[type="number"],
+input[type="text"] {
+    font-size: 16px;
+  #shapePopup {
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+    border-radius: 0; 
+  }
+
+  .tab-layout {
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .tab-col {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .tab-col.shape-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  .tab-col.shape-col canvas {
+    width: 90vw;
+    max-width: 280px;
+    height: auto;
+  }
+}
+  .info-date input[type="date"] {
+    width: 100px;
+  }
+
+
+}
+@media print {
+  .info-date select {
+    border: none;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    pointer-events: none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="a4-container">
+<div class="header-top">
+  <h1>鉄筋積算書</h1>
+  <div class="header">
+    <div class="header-body">
+      <div class="info-item">
+        工事名：<input type="text" id="project-name" placeholder="大桜工業株式会社" />
+      </div>
+      <div class="info-item">
+        現場住所：<input type="text" id="site-address" placeholder="福岡県那珂川西畑1054番地1" />
+      </div>
+      <div class="info-item">
+        担当者(電話)：<input type="text" id="contact" placeholder="富安栄嗣 (090 3660 1790)" />
+      </div>
+      <div class="info-date">
+        搬入日<input type="date" id="delivery-date" />
+        <label style="margin-left: 1rem;" id="transport-label">運搬:</label>
+        <select id="transport-select">
+          <option value="">不要</option>
+          <option value="5000">軽トラック (5,000)</option>
+          <option value="15000">3トン車 (15,000)</option>
+          <option value="20000">4トン車 (20,000)</option>
+          <option value="0">無料</option>
+        </select>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="info-item">大桜工業株式会社</div>
+      <div class="info-item">福岡県那珂川西畑1054番地1</div>
+      <div class="info-item">Tel: 092-951-0727 || Fax: 092-951-0728</div>
+      <div class="info-item">LINE: 090-3660-1790 (富安栄嗣)</div>
+      <div class="info-item">Email: momo.cheri@w2.dion.ne.jp</div>
+    </div>
+  </div>
+</div>
+  <table id="rebarTable">
+    <thead>
+      <tr>
+		<th>番号<br><span class="sub">(No.)</span></th>
+          <th>形状</th>
+          <th>径</th>
+          <th>切寸法</th>
+          <th>本数</th>
+          <th>重量<br><span class="sub">(kg)</span></th>
+          <th>切断<br><span class="sub">25円/回</span></th>
+          <th>折曲<br><span class="sub">25円/回</span></th>
+          <th>材料<br><span class="sub">110円/kg</span></th>
+          <th>合計<br><span class="sub">材料+切断＋折曲</span></th>
+      </tr>
+    </thead>
+    <tbody id="dataBody">
+      <tr>
+        <td></td>
+        <td class="shape-cell" onclick="openPopup(this)">
+          <canvas width="100" height="50" data-a="a" data-b="b" data-c="c" data-d="d" data-e="e" data-f="f"  data-shape="0"></canvas>
+        </td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+	<tfoot id="tableFooter">
+        <tr>
+          <td colspan="5" class="bold">合計</td>
+          <td id="total-weight">0</td>
+          <td id="total-cut-cost">0</td>
+          <td id="total-bend-cost">0</td>
+          <td id="total-material-cost">0</td>
+		  <td id="total-sum">
+			<div class="sum-value">0</div>
+			<div class="sum-note"></div>
+		  </td>
+        </tr>
+      </tfoot>
+  </table>
+  <div class="context-menu" id="contextMenu">
+    <ul>
+      <li onclick="addRow()"><i class="fas fa-plus"></i> 形状追加</li>
+      <li onclick="insertBelow()"><i class="fas fa-arrows-alt-v"></i> 下追加</li>
+      <li onclick="deleteRow()"><i class="fas fa-trash-alt"></i> 削除</li>
+      <li onclick="moveUp()"><i class="fas fa-arrow-up"></i> 上移動</li>
+      <li onclick="moveDown()"><i class="fas fa-arrow-down"></i> 下移動</li>
+    </ul>
+  </div>
+<div id="overlay"></div>
+<div id="shapePopup" class="popup hidden">
+  <h3>形状選択</h3>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="0" data-shape="0">直筋</button>
+    <button class="tab-btn" data-tab="1" data-shape="1">1 回</button>
+    <button class="tab-btn" data-tab="2" data-shape="2">2 回</button>
+    <button class="tab-btn" data-tab="3" data-shape="3">3 回</button>
+    <button class="tab-btn" data-tab="4" data-shape="4">4 回</button>
+    <button class="tab-btn" data-tab="5" data-shape="5">5 回</button>
+  </div>
+  <div class="spec-row">
+    <label>径 <input type="number" id="dia" value="" /></label>
+    <label>切寸法 <input type="number" id="len" value="" /></label>
+    <label>本数 <input type="number" id="qty" value="" /></label>
+  </div>
+  <div class="tab-content" data-content="0">
+    <div class="tab-layout">
+      <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+        <label><span class="highlight-label">a</span><input type="number" id="s0a" value="a" /></label>
+      </div>
+      <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  </div>
+    </div>
+      <div class="tab-col shape-col">
+        <canvas width="120" height="80" id="shape0" data-shape="0"></canvas>
+      </div>
+  </div>
+<div class="tab-content" data-content="1">
+  <div class="tab-layout">
+    <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+      <label><span>a</span><input type="number" id="s1a" value="a" /></label>
+      <label><span class="highlight-label">b</span><input type="number" id="s1b" value="b" /></label>
+    </div>
+    <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  <label>
+        <div class="input-wrap">
+          <select class="angle-preset" data-tab="1"></select>
+        </div>
+      </label>
+      <label><span>1</span>
+        <div class="input-wrap">
+          <input type="number" id="s1bend1" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="tab-col shape-col">
+    <canvas width="120" height="80" id="shape1" data-shape="1"></canvas>
+  </div>
+</div>
+<div class="tab-content" data-content="2">
+  <div class="tab-layout">
+    <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+      <label><span>a</span><input type="number" id="s2a" value="a" /></label>
+      <label><span class="highlight-label">b</span><input type="number" id="s2b" value="b" /></label>
+      <label><span>c</span><input type="number" id="s2c" value="c" /></label>
+    </div>
+    <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  <label>
+        <div class="input-wrap">
+          <select class="angle-preset" data-tab="2"></select>
+        </div>
+      </label>
+      <label><span>1</span>
+        <div class="input-wrap">
+          <input type="number" id="s2bend1" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>2</span>
+        <div class="input-wrap">
+          <input type="number" id="s2bend2" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="tab-col shape-col">
+    <canvas width="120" height="80" id="shape2" data-shape="2"></canvas>
+  </div>
+</div>
+<div class="tab-content" data-content="3">
+  <div class="tab-layout">
+    <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+      <label><span>a</span><input type="number" id="s3a" value="a" /></label>
+      <label><span class="highlight-label">b</span><input type="number" id="s3b" value="b" /></label>
+      <label><span>c</span><input type="number" id="s3c" value="c" /></label>
+      <label><span>d</span><input type="number" id="s3d" value="d" /></label>
+    </div>
+    <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  <label>
+        <div class="input-wrap">
+          <select class="angle-preset" data-tab="3"></select>
+        </div>
+      </label>
+      <label><span>1</span>
+        <div class="input-wrap">
+          <input type="number" id="s3bend1" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>2</span>
+        <div class="input-wrap">
+          <input type="number" id="s3bend2" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>3</span>
+        <div class="input-wrap">
+          <input type="number" id="s3bend3" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="tab-col shape-col">
+    <canvas width="120" height="80" id="shape3" data-shape="3"></canvas>
+  </div>
+</div>
+<div class="tab-content" data-content="4">
+  <div class="tab-layout">
+    <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+      <label><span>a</span><input type="number" id="s4a" value="a" /></label>
+      <label><span>b</span><input type="number" id="s4b" value="b" /></label>
+      <label><span>c</span><input type="number" id="s4c" value="c" /></label>
+      <label><span>d</span><input type="number" id="s4d" value="d" /></label>
+      <label><span>e</span><input type="number" id="s4e" value="e" /></label>
+    </div>
+    <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  <label>
+        <div class="input-wrap">
+          <select class="angle-preset" data-tab="4"></select>
+        </div>
+      </label>
+      <label><span>1</span>
+        <div class="input-wrap">
+          <input type="number" id="s4bend1" value="-45" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>2</span>
+        <div class="input-wrap">
+          <input type="number" id="s4bend2" value="-90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>3</span>
+        <div class="input-wrap">
+          <input type="number" id="s4bend3" value="-90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>4</span>
+        <div class="input-wrap">
+          <input type="number" id="s4bend4" value="-135" /><span class="suffix">°</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="tab-col shape-col">
+    <canvas width="120" height="80" id="shape4" data-shape="4"></canvas>
+  </div>
+</div>
+<div class="tab-content" data-content="5">
+  <div class="tab-layout">
+    <div class="tab-col dim-col">
+      <label class="tab-col-header">寸法</label>
+      <label><span>a</span><input type="number" id="s5a" value="a" /></label>
+      <label><span>b</span><input type="number" id="s5b" value="b" /></label>
+      <label><span>c</span><input type="number" id="s5c" value="c" /></label>
+      <label><span>d</span><input type="number" id="s5d" value="d" /></label>
+      <label><span>e</span><input type="number" id="s5e" value="e" /></label>
+      <label><span>f</span><input type="number" id="s5f" value="f" /></label>
+    </div>
+    <div class="tab-col angle-col">
+      <label class="tab-col-header">角度</label>
+	  <label>
+        <div class="input-wrap">
+          <select class="angle-preset" data-tab="5"></select>
+        </div>
+      </label>
+      <label><span>1</span>
+        <div class="input-wrap">
+          <input type="number" id="s5bend1" value="45" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>2</span>
+        <div class="input-wrap">
+          <input type="number" id="s5bend2" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>3</span>
+        <div class="input-wrap">
+          <input type="number" id="s5bend3" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>4</span>
+        <div class="input-wrap">
+          <input type="number" id="s5bend4" value="90" /><span class="suffix">°</span>
+        </div>
+      </label>
+      <label><span>5</span>
+        <div class="input-wrap">
+          <input type="number" id="s5bend5" value="45" /><span class="suffix">°</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="tab-col shape-col">
+    <canvas width="120" height="80" id="shape5" data-shape="5"></canvas>
+  </div>
+</div>
+
+  
+  <div class="button-row">
+    <button id="applyBtn" onclick="applyShape()" title="確定">
+      <i class="fas fa-check"></i> 確定
+    </button>
+    <button id="cancelBtn" onclick="closePopup()" title="キャンセル">
+      <i class="fas fa-times"></i> キャンセル
+    </button>
+    <button id="deleteBtn" onclick="deleteCurrentPopupRow()" title="削除">
+      <i class="fas fa-trash-alt"></i> 削除
+    </button>
+  </div>
+</div>
+<div class="fixed-buttons">
+  <button class="btn print" onclick="exportPDF()">
+    <i class="fas fa-print"></i> 印刷
+  </button>
+</div>
+<script>
+
+  let lastInsertedRow = null;
+  let selectedCanvas = null;
+  let isCanvasScaled = false; 
+  let currentRow = null;
+  let touchTimer = null;
+  const fixedAddress = "福岡県那珂川西畑1054番地1";
+  const addressInput = document.getElementById("site-address");
+  const transportLabel = document.getElementById("transport-label");
+  const locationIQKey = "pk.85eee324f556e13b7c5ba1d74edef695";
+  const overlay = document.getElementById("overlay");
+  const popup = document.getElementById("shapePopup");
+  const diaInput = document.getElementById("dia");
+  const suffixes = ["a", "b", "c", "d", "e", "f", "bend1", "bend2", "bend3", "bend4", "bend5"];
+  const selector = suffixes.map(suffix => `input[id^="s"][id$="${suffix}"]`).join(", ");
+  const today = new Date().toISOString().split('T')[0];
+  const table = document.getElementById("rebarTable");
+  const contextMenu = document.getElementById("contextMenu");
+  const validDiameters = [10, 13, 16, 19, 22, 25, 29, 32, 35, 38, 41];
+  const cutPricePerBend = 25;
+  const bendPricePerBend = 25;
+  const materialPricePerKg = 110;
+  const kgPerMeterMap = {10: 0.56, 13: 0.99, 16: 1.56, 19: 2.25, 22: 3.13, 25: 3.98, 29: 5.04, 32: 6.32, 35: 7.51, 38: 8.89, 41: 10.39};
+const shapesByTab = {
+  1: {
+    '片アンカー': {
+      angles: [90],
+      params: ['a', 'b', 'dBar'],
+      calculate: ({ a, b, dBar }) => a + b - 2 * dBar,
+      highlight: ['b']
+    },
+    'フック': {
+      angles: [180],
+      params: ['b', 'dBar'],
+      calculate: ({ b, dBar }) => b + 10 * dBar,
+      highlight: ['b']
+    },
+    'への字': {
+      angles: [135],
+      params: ['a', 'b', 'dBar'],
+      calculate: ({ a, b, dBar }) => a + b,
+      highlight: ['b']
+    },
+    'ツメ（45°）': {
+      angles: [45],
+      params: ['b', 'dBar'],
+      calculate: ({ b, dBar }) => b + 10 * dBar,
+      highlight: ['b']
+    }
+  },
+  2: {
+    '両アンカー': {
+      angles: [90, 90],
+      params: ['a','b','c', 'dBar'],
+      calculate: ({ a, b, c, dBar }) => a + b + c - 2 * 2 * dBar,
+      highlight: ['b']
+    },
+    '逆アンカー': {
+      angles: [90, -90],
+      params: ['a','b','c', 'dBar'],
+      calculate: ({ a, b, c, dBar }) => a + b + c - 2 * 2 * dBar,
+      highlight: ['b']
+    },
+    '幅止め': {
+      angles: [-45, -90],
+      params: ['b', 'dBar'],
+      calculate: ({ b, dBar }) => b + 18 * dBar,
+      highlight: ['b']
+    },
+    '吊り': {
+      angles: [180, 90],
+      params: ['b','c' ,'dBar'],
+      calculate: ({ b, c, dBar }) => b + c + 10 * dBar,
+      highlight: ['b']
+    },
+    '逆吊り': {
+      angles: [180, -90],
+      params: ['b','c', 'dBar'],
+      calculate: ({ b, c, dBar }) => b + c + 10 * dBar,
+      highlight: ['b']
+    }
+  },
+  3: {
+    '壁-ＳＴ': {
+      angles: [180, 90, 90],
+      params: ['b', 'c', 'd', 'dBar'],
+      calculate: ({ b, c, d, dBar }) => b + c + d + 6 * dBar,
+      highlight: ['b', 'c']
+    },
+    '片船形': {
+      angles: [180, 45, -45],
+      params: ['b', 'c', 'd', 'dBar'],
+      calculate: ({ b, c, d, dBar }) => b + c + d + 10 * dBar,
+      highlight: ['b', 'c']
+    },
+    'フカシウマ': {
+      angles: [90, 90, 90],
+      params: ['a', 'b', 'c', 'd', 'dBar'],
+      calculate: ({ a, b, c, d, dBar }) => a + b + c + d - 8 * dBar,
+      highlight: ['b', 'c']
+    }
+  },
+  4: {
+    'ウマ': {
+      angles: [-135, -90, -90, 135],
+      params: ['a', 'c', 'd', 'dBar'],
+      calculate: ({ a, c, d, dBar }) => 2*a + c + 2*d - 8 * dBar,
+      highlight: ['a', 'c', 'd']
+    },
+    '逆ウマ': {
+      angles: [-45, -90, -90, -135],
+      params: [ 'b', 'c', 'e', 'dBar'],
+      calculate: ({ b, c, e, dBar }) => 2*b + c + 2*e - 8 * dBar,
+      highlight: ['b', 'c', 'e']
+    },
+    'スタラップ': {
+      angles: [180, 90, 90, 180],
+      params: ['c', 'd', 'dBar'],
+      calculate: ({ c, d, dBar }) => 2 * c + 2 * d + 16 * dBar,
+      highlight: ['c', 'd']
+    },
+    '船形': {
+      angles: [-90, 135, 135, -90],
+      params: ['b', 'c', 'e', 'dBar'],
+      calculate: ({ b, c, e, dBar }) => 2*b + c + +2*e ,
+      highlight: ['b','c', 'e']
+    },
+    'ガネー': {
+      angles: [90, 90, 90, 90],
+      params: ['b', 'c', 'e', 'dBar'],
+      calculate: ({ b, c, e, dBar }) => 2*b + c + 2*e - 8 * dBar,
+      highlight: ['b', 'c', 'e']
+    }
+  },
+  5: {
+    'スタラップ': {
+      angles: [45, 90, 90, 90, 45],
+      params: ['c', 'd', 'dBar'],
+      calculate: ({ c, d, dBar }) => 2 * c + 2 * d + 12 * dBar,
+      highlight: ['c', 'd']
+    },
+    'フック': {
+      angles: [180, 90, 90, 90, 90],
+      params: ['c', 'd', 'dBar'],
+      calculate: ({ c, d, dBar }) => 2 * c + 2 * d + 13 * dBar,
+      highlight: ['c', 'd']
+    },
+    '閉じる': {
+      angles: [90, 90, 90, 90, 90],
+      params: [ 'c', 'd', 'dBar'],
+      calculate: ({ c, d, dBar }) => 2*c + 2*d + 10*dBar,
+      highlight: ['c', 'd']
+    }
+  }
+};
+
+function updateDistanceLabel(distanceKm) {
+  if (transportLabel) {
+    transportLabel.textContent = `運搬: (${distanceKm} km)`;
+  }
+}
+
+async function getLatLngFromAddress(address) {
+  const url = `https://us1.locationiq.com/v1/search?key=${locationIQKey}&q=${encodeURIComponent(address)}&format=json`;
+  const response = await fetch(url);
+  const data = await response.json();
+  if (data && data.length > 0) {
+    return {
+      lat: parseFloat(data[0].lat),
+      lon: parseFloat(data[0].lon),
+    };
+  }
+}
+
+async function calculateDistance(userAddress) {
+  try {
+    const [from, to] = await Promise.all([
+      getLatLngFromAddress(userAddress),
+      getLatLngFromAddress(fixedAddress)
+    ]);
+
+    const routeUrl = `https://us1.locationiq.com/v1/directions/driving/${from.lon},${from.lat};${to.lon},${to.lat}?key=${locationIQKey}&overview=false`;
+    const routeResponse = await fetch(routeUrl);
+    const routeData = await routeResponse.json();
+
+    if (routeData.routes && routeData.routes.length > 0) {
+      const meters = routeData.routes[0].distance;
+      const km = Math.round(meters / 1000);
+      updateDistanceLabel(km);
+	  updateTransportSelection(km);
+    } else {
+    }
+  } catch (err) {
+  }
+}
+function updateTransportSelection(distanceKm) {
+  const transportSelect = document.getElementById("transport-select");
+  if (!transportSelect) return;
+
+  if (distanceKm <= 15) {
+    for (let option of transportSelect.options) {
+      if (option.value === "0" && option.text.includes("無料")) {
+        transportSelect.value = option.value;
+        break;
+      }
+    }
+  }
+}
+const deliveryDateInput = document.getElementById("delivery-date");
+deliveryDateInput.addEventListener("change", () => {
+  const inputVal = addressInput.value.trim();
+  if (inputVal) {
+    calculateDistance(inputVal); 
+  }
+});
+
+function dimLetterToIndex(letter) {
+  return letter.toLowerCase().charCodeAt(0) - 97 + 1; 
+}
+function updateLength(tabIndex) {
+  const select = document.querySelector(`.angle-preset[data-tab="${tabIndex}"]`);
+  if (!select) return;
+
+  const selected = select.value;
+  if (!selected) return;
+
+  const shape = shapesByTab[tabIndex]?.[selected];
+  if (!shape || typeof shape.calculate !== 'function') return;
+
+  const diaInput = document.getElementById('dia');
+  const dBar = diaInput ? parseFloat(diaInput.value) || 0 : 0;
+
+  const args = {};
+  shape.params.forEach(param => {
+    if (param === 'dBar') {
+      args[param] = dBar;
+    } else {
+      const input = document.getElementById(`s${tabIndex}${param}`);
+      args[param] = input ? (parseFloat(input.value) || 0) : 0;
+    }
+  });
+
+  const length = shape.calculate(args);
+  const lenInput = document.getElementById('len');
+  if (lenInput) {
+    lenInput.value = length.toFixed(0);
+  }
+}
+
+function initAnglePresets() {
+  const selects = document.querySelectorAll('.angle-preset');
+  selects.forEach(select => {
+    const tabIndex = parseInt(select.dataset.tab);
+    const shapes = shapesByTab[tabIndex];
+    if (!shapes) return;
+
+    select.innerHTML = '<option value="">形状選択...</option>';
+    for (const shapeName in shapes) {
+      const option = document.createElement('option');
+      option.value = shapeName;
+      option.textContent = shapeName;
+      select.appendChild(option);
+    }
+
+    select.addEventListener('change', function () {
+      const selected = this.value;
+      const shape = shapes[selected];
+      if (!shape) return;
+
+      // Xóa highlight cũ
+      document.querySelectorAll(`#s${tabIndex}a, #s${tabIndex}b, #s${tabIndex}c, #s${tabIndex}d, #s${tabIndex}e, #s${tabIndex}f`)
+        .forEach(input => {
+          input.classList.remove('highlight-dim');
+          const labelSpan = input.parentElement.querySelector('span');
+          if (labelSpan) labelSpan.classList.remove('highlight-label');
+        });
+
+      // Thêm highlight theo shape.highlight
+      (shape.highlight ?? []).forEach(letter => {
+        const input = document.getElementById(`s${tabIndex}${letter}`);
+        if (input) {
+          input.classList.add('highlight-dim');
+          const labelSpan = input.parentElement.querySelector('span');
+          if (labelSpan) labelSpan.classList.add('highlight-label');
+        }
+      });
+
+      // Gán giá trị góc bẻ vào input tương ứng s{tab}bend{i}
+      const angles = shape.angles ?? [];
+      for (let i = 0; ; i++) {
+        const bendInput = document.getElementById(`s${tabIndex}bend${i + 1}`);
+        if (!bendInput) break;
+        bendInput.value = angles[i] ?? angles[angles.length - 1] ?? '';
+      }
+
+      updateLength(tabIndex);
+
+      drawSample();
+    });
+
+    ['a','b','c','d','e','f'].forEach(letter => {
+  const input = document.getElementById(`s${tabIndex}${letter}`);
+  if (input) {
+    input.addEventListener('input', () => {
+      updateLength(tabIndex);
+      drawSample();
+
+      // Nếu không có angle-preset thì gọi updateLengthFromABC
+      const anglePreset = document.querySelector(`.angle-preset[data-tab="${tabIndex}"]`);
+      if (!anglePreset) {
+        updateLengthFromABC(tabIndex);
+      }
+    });
+  }
+});
+
+  });
+
+const diaInput = document.getElementById('dia');
+if (diaInput) {
+  diaInput.addEventListener('input', () => {
+    // Lấy tab đang active, ưu tiên biến currentTabIndex nếu có
+    let tabIndex = typeof currentTabIndex === 'number'
+      ? currentTabIndex
+      : (() => {
+          const activeTabBtn = document.querySelector('.tab-btn.active');
+          return activeTabBtn ? parseInt(activeTabBtn.dataset.shape) : null;
+        })();
+
+    if (tabIndex !== null) {
+      updateLength(tabIndex);
+      drawSample();
+
+      const anglePreset = document.querySelector(`.angle-preset[data-tab="${tabIndex}"]`);
+      if (!anglePreset) {
+        updateLengthFromABC(tabIndex);
+      }
+    }
+  });
+}
+}
+
+document.querySelectorAll(selector).forEach(input => {
+  input.addEventListener("input", drawSample);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+initAnglePresets();
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabIndex = tab.getAttribute('data-tab');
+      tabs.forEach(btn => btn.classList.remove('active'));
+      tab.classList.add('active');
+      tabContents.forEach(content => {
+        content.classList.toggle('active', content.getAttribute('data-content') === tabIndex);
+      });
+      const segs = ['a', 'b', 'c', 'd', 'e', 'f'];
+      segs.forEach(seg => {
+        const input = document.getElementById(`s${tabIndex}${seg}`);
+        if (input) input.value = "";
+      });
+      const specIds = ['dia', 'len', 'qty'];
+      specIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = "";
+      });
+      if (selectedCanvas) {
+        selectedCanvas.dataset.shape = tabIndex;
+        segs.forEach(seg => selectedCanvas.dataset[seg] = "0");
+      }
+     drawSample();
+	 const inputA = document.getElementById(`s${tabIndex}a`);
+		inputA?.focus();
+    });
+  });
+});
+
+let originalHeight = window.innerHeight;
+window.addEventListener('resize', () => {
+  const currentHeight = window.innerHeight;
+  if (currentHeight < originalHeight - 100) {
+    const activeInput = document.activeElement;
+    if (activeInput && activeInput.tagName === 'INPUT') {
+      const canvas = activeInput.closest('.tab-content')?.querySelector('canvas');
+      if (canvas) {
+        setTimeout(() => {
+          canvas.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }, 300); 
+      }
+    }
+  }
+});
+
+document.getElementById("rebarTable").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    const currentRow = e.target.closest("tr");
+    if (currentRow && currentRow === lastInsertedRow) {
+      e.preventDefault();
+      const shapeCell = currentRow.querySelector(".shape-cell");
+      if (shapeCell) {
+        openPopup(shapeCell);
+        lastInsertedRow = null;
+      }
+    }
+  }
+});
+
+document.querySelectorAll(".header-body input, .header-body select").forEach((el, index, allElements) => {
+  el.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      for (let i = index + 1; i < allElements.length; i++) {
+        if (!allElements[i].disabled && allElements[i].offsetParent !== null) {
+          allElements[i].focus();
+          break;
+        }
+      }
+    }
+  });
+});
+
+document.getElementById("rebarTable").addEventListener("input", () => {
+  calculateAll();
+});
+
+document.getElementById("transport-select").addEventListener("change", () => {
+  calculateAll();
+});
+
+document.getElementById("delivery-date").value = today;
+
+document.getElementById("rebarTable").addEventListener("input", (event) => {
+    const targetCell = event.target.closest("td");
+    if (!targetCell) return;
+
+    const row = targetCell.parentElement;
+    const columnIndex = targetCell.cellIndex;
+    let value = targetCell.textContent.trim();
+    if (columnIndex === 2) {
+      const diameter = parseFloat(value);
+      if (!validDiameters.includes(diameter)) {
+        targetCell.style.backgroundColor = "#ffdddd";
+        targetCell.title = "有効な直径を入力してください";
+      } else {
+        targetCell.style.backgroundColor = "";
+        targetCell.title = "";
+      }
+    }
+    if (columnIndex === 3) {
+      if (isNaN(value) || value === "") {
+        targetCell.style.backgroundColor = "#ffdddd";
+        targetCell.title = "数値のみ入力できます";
+      } else if (parseFloat(value) > 12000) {
+        targetCell.style.backgroundColor = "#ffcccc";
+        targetCell.title = "長さは12000を超えることはできません";
+      } else {
+        targetCell.style.backgroundColor = "";
+        targetCell.title = "";
+      }
+    }
+    if (columnIndex === 4) {
+      if (isNaN(value) || value === "") {
+        targetCell.style.backgroundColor = "#ffdddd";
+        targetCell.title = "数値のみ入力できます";
+      } else {
+        targetCell.style.backgroundColor = "";
+        targetCell.title = "";
+      }
+    }
+    calculateAll();
+  });
+  
+document.getElementById("rebarTable").addEventListener("keydown", (event) => {
+  const targetCell = event.target.closest("td");
+  if (!targetCell) return;
+
+  const row = targetCell.parentElement;
+  const table = document.getElementById("rebarTable");
+  const columnIndex = targetCell.cellIndex;
+  if ([2, 3, 4].includes(columnIndex)) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (columnIndex === 4) {
+        const nextRow = row.nextElementSibling;
+
+        if (nextRow) {
+          const nextCell = nextRow.cells[2];
+          if (nextCell && nextCell.getAttribute("contenteditable") === "true") {
+            nextCell.focus();
+            placeCursorCenter(nextCell);
+          }
+        } else {
+			addRow()			
+		const newRow = row.nextElementSibling;
+          const firstEditable = newRow.cells[2];
+          firstEditable.focus();
+          placeCursorCenter(firstEditable);
+        }
+      } else {
+        const nextCell = targetCell.nextElementSibling;
+        if (nextCell && nextCell.getAttribute("contenteditable") === "true") {
+          nextCell.focus();
+          placeCursorCenter(nextCell);
+        }
+      }
+    }
+    if (event.key === "Enter" && event.shiftKey) {
+      event.preventDefault();
+      const prevCell = targetCell.previousElementSibling;
+      if (prevCell && prevCell.getAttribute("contenteditable") === "true") {
+        prevCell.focus();
+        placeCursorCenter(prevCell);
+      }
+    }
+  }
+});
+
+table.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  const td = e.target.closest(".shape-cell");
+  if (td) {
+    currentRow = td.parentElement;
+    showContextMenu(e.pageX, e.pageY);
+  } else {
+    contextMenu.style.display = "none";
+  }
+});
+
+table.querySelectorAll(".shape-cell canvas").forEach(canvas => {
+  canvas.addEventListener("touchstart", (e) => {
+  touchTimer = setTimeout(() => {
+    const td = canvas.closest(".shape-cell");
+    if (td) {
+      currentRow = td.parentElement;
+      const touch = e.touches[0];
+      showContextMenu(touch.pageX, touch.pageY);
+    }
+  }, 600);
+ });
+  canvas.addEventListener("touchend", () => clearTimeout(touchTimer));
+  canvas.addEventListener("touchmove", () => clearTimeout(touchTimer));
+});
+
+document.body.addEventListener("click", () => {
+  contextMenu.style.display = "none";
+});
+
+["0", "1", "2", "3", "4", "5"].forEach(shapeId => {
+const segments = ["a", "b", "c", "d", "e", "f"];
+const diaInput = document.getElementById("dia");
+if (diaInput) {
+  diaInput.addEventListener("input", () => {
+    const val = parseFloat(diaInput.value);
+    if (!validDiameters.includes(val)) {
+      diaInput.style.backgroundColor = "#ffdddd";
+      diaInput.title = "有効な直径を入力してください";
+    } else {
+      diaInput.style.backgroundColor = "";
+      diaInput.title = "";
+    }
+  });
+}
+const lenInput = document.getElementById(`len`);
+  if (lenInput) {
+    lenInput.addEventListener("input", () => {
+      const val = parseFloat(lenInput.value);
+      if (isNaN(val)) {
+        lenInput.style.backgroundColor = "#ffdddd";
+        lenInput.title = "数値のみ入力できます";
+      } else if (val > 12000) {
+        lenInput.style.backgroundColor = "#ffcccc";
+        lenInput.title = "長さは12000を超えることはできません";
+      } else {
+        lenInput.style.backgroundColor = "";
+        lenInput.title = "";
+      }
+    });
+  }
+  const qtyInput = document.getElementById(`qty`);
+  if (qtyInput) {
+    qtyInput.addEventListener("input", () => {
+      const val = parseFloat(qtyInput.value);
+      if (isNaN(val)) {
+        qtyInput.style.backgroundColor = "#ffdddd";
+        qtyInput.title = "数値のみ入力できます";
+      } else {
+        qtyInput.style.backgroundColor = "";
+        qtyInput.title = "";
+      }
+    });
+  }
+});
+
+function setupTabInputsNavigation() {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    const inputs = tab.querySelectorAll('input');
+    inputs.forEach((input) => {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const activeTab = input.closest('.tab-content.active');
+          if (!activeTab) return;
+          const visibleInputs = Array.from(activeTab.querySelectorAll('input'))
+            .filter(i => i.offsetParent !== null && !i.id.includes('bend'));
+          const techInputs = ['dia', 'len', 'qty'].map(id => document.getElementById(id));
+          const allInputs = [...visibleInputs, ...techInputs];
+          const currentIndex = allInputs.indexOf(input);
+          const nextInput = allInputs[currentIndex + 1];
+          if (nextInput) {
+            nextInput.focus();
+          } else {
+            document.getElementById('applyBtn')?.focus();
+          }
+        }
+      });
+    });
+  });
+  ['dia', 'len', 'qty'].forEach((id, index, arr) => {
+    const input = document.getElementById(id);
+    input?.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const nextId = arr[index + 1];
+        if (nextId) {
+          document.getElementById(nextId)?.focus();
+        } else {
+          document.getElementById('applyBtn')?.focus();
+        }
+      }
+    });
+  });
+  document.getElementById('applyBtn')?.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      applyShape();
+    }
+  });
+}
+
+function handlePopupKeys(e) {
+  const activeTab = document.querySelector('.tab-content.active');
+  if (!activeTab) return;
+  const activeTabIndex = parseInt(activeTab.dataset.content || "0");
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const nextTabIndex = e.shiftKey
+      ? (activeTabIndex - 1 + 6) % 6
+      : (activeTabIndex + 1) % 6;
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      const tab = btn.getAttribute('data-tab');
+      const isActive = tab === String(nextTabIndex);
+      btn.classList.toggle('active', isActive);
+      const content = document.querySelector(`.tab-content[data-content="${tab}"]`);
+      if (content) content.classList.toggle('active', isActive);
+    });
+    if (selectedCanvas) {
+      selectedCanvas.dataset.shape = String(nextTabIndex);
+    }
+    const letters = ['a', 'b', 'c', 'd', 'e', 'f'];
+    letters.forEach(l => {
+      const input = document.getElementById(`s${nextTabIndex}${l}`);
+      if (input) input.value = "";
+    });
+    ['dia', 'len', 'qty'].forEach(id => {
+      const input = document.getElementById(id);
+      if (input) input.value = "";
+    });
+
+    drawSample();
+  }
+}
+
+function openPopup(cell) {
+  selectedCanvas = cell.querySelector("canvas");
+  const shape = selectedCanvas.dataset.shape || "0";
+  const row = selectedCanvas.closest("tr");
+  if (!row) return;
+  const letters = ['a', 'b', 'c', 'd', 'e', 'f'];
+  for (let l of letters) {
+    const input = document.getElementById(`s${shape}${l}`);
+    if (input) input.value = selectedCanvas.dataset[l] || "0";
+  }
+  const [dia, len, qty] = [2, 3, 4].map(i => row.cells[i]?.textContent.trim() || "");
+  document.getElementById('dia').value = dia;
+  document.getElementById('len').value = len;
+  document.getElementById('qty').value = qty;
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    const tab = btn.getAttribute('data-tab');
+    const isActive = tab === shape;
+    btn.classList.toggle('active', isActive);
+    const content = document.querySelector(`.tab-content[data-content="${tab}"]`);
+    if (content) content.classList.toggle('active', isActive);
+  });
+  drawSample();
+  overlay.style.display = "block";
+  popup.style.display = "block";
+  calculateAll();
+  popup.addEventListener('keydown', handlePopupKeys);
+  setupTabInputsNavigation();
+   const inputA = document.getElementById(`s${shape}a`);
+	inputA?.focus();
+}
+
+function closePopup() {
+  overlay.style.display = "none";
+  popup.style.display = "none";
+  popup.removeEventListener('keydown', handlePopupKeys);
+}
+
+function setupCanvas(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return canvas.getContext("2d");
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width = rect.width + "px";
+  canvas.style.height = rect.height + "px";
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return ctx;
+}
+
+function drawLineWithLabel(ctx, x1, y1, x2, y2, label, angleLabel) {
+  if (typeof angleLabel === 'number' && angleLabel < 0) {
+    [x1, y1, x2, y2] = [x2, y2, x1, y1];
+    angleLabel = -angleLabel;
+  }
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  const midX = (x1 + x2) / 2, midY = (y1 + y2) / 2;
+  const epsilon = 0.01;
+  let angle = Math.abs(dx) < epsilon ? -Math.PI / 2 : Math.atan2(dy, dx);
+  const offset = 10;
+  let ox, oy;
+  if (Math.abs(dx) < epsilon) {
+    ox = dy < 0 ? offset : -offset;
+    oy = 0;
+  } else if (Math.abs(dy) < epsilon) {
+    ox = 0;
+    oy = dx < 0 ? -offset : offset;
+  } else {
+    ox = (-dy / len) * offset;
+    oy = (dx / len) * offset;
+    if (dy < 0) oy = -oy;
+  }
+  if (label !== 0) {
+    ctx.save();
+    ctx.translate(midX + ox, midY + oy);
+    let textAngle = angle;
+    if (textAngle > Math.PI / 2 || textAngle < -Math.PI / 2) {
+      textAngle += Math.PI; 
+    }
+    ctx.rotate(textAngle);
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#000";
+    ctx.fillText(label, 0, 0);
+    ctx.restore();
+  }
+ const niceAngles = [0, 45, 90, 135, 180];
+  if (
+    typeof angleLabel === 'number' &&
+    !niceAngles.includes(Math.abs(angleLabel))
+  ){
+    const angleText = `${angleLabel}°`;
+    const cornerX = midX;
+    const cornerY = midY;
+    const cornerOffsetX = -ox;
+    const cornerOffsetY = -oy;
+    ctx.save();
+    ctx.translate(cornerX + cornerOffsetX, cornerY + cornerOffsetY);
+    let textAngle = angle;
+    if (textAngle > Math.PI / 2 || textAngle < -Math.PI / 2) {
+      textAngle += Math.PI;
+    }
+    ctx.rotate(textAngle);
+    ctx.font = "10px Arial";
+    ctx.fillStyle = "#777";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(angleText, 0, 0);
+    ctx.restore();
+  }
+}
+
+function drawHook(ctx, x0, y0, angle, radius, side = 'left') {
+  const direction = side === 'left' ? -1 : 1;
+  const arcCenterX = x0 + Math.cos(angle + direction * Math.PI / 2) * radius;
+  const arcCenterY = y0 + Math.sin(angle + direction * Math.PI / 2) * radius;
+  ctx.beginPath();
+  ctx.arc(
+    arcCenterX,
+    arcCenterY,
+    radius,
+    angle + direction * Math.PI / 2,
+    angle - direction * Math.PI / 2,
+    side === 'right'
+  );
+  ctx.stroke();
+  const startAngle = angle + direction * Math.PI / 2;
+  const endX = arcCenterX + Math.cos(startAngle) * radius;
+  const endY = arcCenterY + Math.sin(startAngle) * radius;
+  const nextX = endX - Math.cos(angle) * 5;
+  const nextY = endY - Math.sin(angle) * 5;
+  drawLineWithLabel(ctx, endX, endY, nextX, nextY, 0);
+}
+
+function drawShape0(ctx, a) {
+  drawLineWithLabel(ctx, 20, 30, 70, 30, a);
+}
+
+function drawShape1(ctx, a, b, bend1) {
+  const x0 = 30, y0 = 30;
+  const x1 = x0 + 50, y1 = y0;
+  const radius = 5;
+  drawLineWithLabel(ctx, x0, y0, x1, y1, b);
+  if (bend1 === 180) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const angle = Math.atan2(dy, dx);
+    const arcCenterX = x0 + Math.cos(angle - Math.PI / 2) * radius;
+    const arcCenterY = y0 + Math.sin(angle - Math.PI / 2) * radius;
+    ctx.beginPath();
+    ctx.arc(arcCenterX, arcCenterY, radius,
+            angle - Math.PI / 2,
+            angle + Math.PI / 2,
+            true); 
+    ctx.stroke();
+    drawLineWithLabel(ctx, x0, y0 - 10, x0 + dx - 40, y0 - 10, 0);
+
+  } else {
+    const rad = (180 - bend1) * Math.PI / 180;
+    const ax1 = x0, ay1 = y0;
+    const ax0 = x0 - Math.cos(rad) * 20;
+    const ay0 = y0 - Math.sin(rad) * 20;
+    drawLineWithLabel(ctx, ax0, ay0, ax1, ay1, a, bend1);
+  }
+}
+function drawShape2(ctx, a, b, c, bend1, bend2) {
+  const x0 = 30, y0 = 30; 
+  const x1 = x0 + 45, y1 = y0;
+  const radius = 5;
+    drawLineWithLabel(ctx, x0, y0, x1, y1, b);
+  if (bend1 === 180) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const angle = Math.atan2(dy, dx);
+    const arcCenterX = x0 + Math.cos(angle - Math.PI / 2) * radius;
+    const arcCenterY = y0 + Math.sin(angle - Math.PI / 2) * radius;
+    ctx.beginPath();
+    ctx.arc(arcCenterX, arcCenterY, radius,
+            angle - Math.PI / 2,
+            angle + Math.PI / 2,
+            true);
+    ctx.stroke();
+    drawLineWithLabel(ctx, x0, y0 - 10, x0 + dx - 40, y0 - 10, 0);
+  }
+  else {
+    const rad = (180 - bend1) * Math.PI / 180;
+    const ax1 = x0, ay1 = y0;
+    const ax0 = x0 - Math.cos(rad) * 20;
+    const ay0 = y0 - Math.sin(rad) * 20;
+    drawLineWithLabel(ctx, ax0, ay0, ax1, ay1, a, bend1);
+  }
+  if (bend2 === 180) {
+    drawLineWithLabel(ctx, x1, y1-10, x0+35, y0-10,0);
+    const arcCenterX = x1;
+    const arcCenterY = y1-radius;
+	ctx.beginPath();
+	ctx.arc(arcCenterX, arcCenterY, radius, 3 * Math.PI / 2, Math.PI / 2, false); 
+	ctx.stroke();
+  } 
+  else {
+    const rad = (bend2) * Math.PI / 180;
+    const cx0 = x1, cy0 = y1;
+    const cx1 = x1 - Math.cos(rad) * 20;
+    const cy1 = y1 - Math.sin(rad) * 20;
+    drawLineWithLabel(ctx, cx0, cy0, cx1, cy1, c, bend2);
+  }
+}
+
+function drawShape3(ctx, a, b, c, d, bend1, bend2, bend3) {
+  const x0 = 15, y0 = 30;
+  const radius = 5;
+  const x1 = x0 + 45, y1 = y0;
+  drawLineWithLabel(ctx, x0, y0, x1, y1, b);
+  if (bend1 === 180) {
+    drawLineWithLabel(ctx, x0, y0 - 10, x1 - 35, y1 - 10, 0);
+    const arcCenterX = x0;
+    const arcCenterY = y0 - radius;
+    ctx.beginPath();
+    ctx.arc(arcCenterX, arcCenterY, radius, 3 * Math.PI / 2, Math.PI / 2, true);
+    ctx.stroke();
+  } else {
+    const rad = (180 - bend1) * Math.PI / 180;
+    const ax1 = x0, ay1 = y0;
+    const ax0 = x0 - Math.cos(rad) * 15;
+    const ay0 = y0 - Math.sin(rad) * 15;
+    drawLineWithLabel(ctx, ax0, ay0, ax1, ay1, a, bend1);
+  }
+  const cx0 = x1, cy0 = y1;
+  const rad2 = (180 - bend2) * Math.PI / 180;
+  const cx1 = cx0 + Math.cos(rad2) * 15;
+  const cy1 = cy0 - Math.sin(rad2) * 15;
+  drawLineWithLabel(ctx, cx0, cy0, cx1, cy1, c, bend2);
+  const dx0 = cx1, dy0 = cy1;
+  if (bend3 === 180) {
+    const dx = cx1 - cx0;
+    const dy = cy1 - cy0;
+    const angle = Math.atan2(dy, dx);
+    const arcCenterX = dx0 + Math.cos(angle - Math.PI / 2) * radius;
+    const arcCenterY = dy0 + Math.sin(angle - Math.PI / 2) * radius;
+    ctx.beginPath();
+    ctx.arc(
+      arcCenterX,
+      arcCenterY,
+      radius,
+      angle - Math.PI / 2,
+      angle + Math.PI / 2,
+      false
+    );
+    ctx.stroke();
+  const startAngle = angle - Math.PI / 2;
+  const endX = arcCenterX + Math.cos(startAngle) * radius;
+  const endY = arcCenterY + Math.sin(startAngle) * radius;
+  const nextX = endX - Math.cos(angle) * 5;
+  const nextY = endY - Math.sin(angle) * 5;
+  drawLineWithLabel(ctx, endX, endY, nextX, nextY, 0);
+  } else {
+    const rad3 = (180 - bend2 + bend3) * Math.PI / 180;
+    const dx1 = dx0 + Math.cos(rad3) * 20;
+    const dy1 = dy0 - Math.sin(rad3) * 20;
+    drawLineWithLabel(ctx, dx1, dy1, dx0, dy0, d, bend3);
+  }
+}
+
+function drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4) {
+  const x0 = 22; 
+  const y0 = (bend2 < 0 || bend4 < 0) ? 25 : 30;
+  const radius = 5;
+  const x1 = x0 + 45, y1 = y0; 
+  drawLineWithLabel(ctx, x0, y0, x1, y1, c);
+  const bx0 = x0, by0 = y0;
+  const rad2 = (bend2 - 180) * Math.PI / 180;
+  const bx1 = bx0 - Math.cos(rad2) * 15;
+  const by1 = by0 + Math.sin(rad2) * 15;
+  drawLineWithLabel(ctx, bx1, by1, bx0, by0, b, bend2);
+  const ax0 = bx1, ay0 = by1;
+  if (bend1 === 180) {
+    const dx = bx1 - bx0;
+    const dy = by1 - by0;
+    const angle = Math.atan2(dy, dx);
+    drawHook(ctx, ax0, ay0, angle, radius, 'right');
+  } else {
+    const rad1 = (bend1 - 270) * Math.PI / 180;
+    const ax1 = ax0 - Math.cos(rad1) * 15;
+    const ay1 = ay0 + Math.sin(rad1) * 15;
+    drawLineWithLabel(ctx, ax0, ay0, ax1, ay1, a, bend1);
+  }
+  const dx0 = x1, dy0 = y1;
+  const rad3 = (180 - bend3) * Math.PI / 180;
+  const dx1 = dx0 + Math.cos(rad3) * 15;
+  const dy1 = dy0 - Math.sin(rad3) * 15;
+  drawLineWithLabel(ctx, dx0, dy0, dx1, dy1, d, bend3);
+  const ex0 = dx1, ey0 = dy1;
+  if (bend4 === 180) {
+    const dx = dx1 - dx0;
+    const dy = dy1 - dy0;
+    const angle = Math.atan2(dy, dx);
+    drawHook(ctx, ex0, ey0, angle, radius, 'left'); 
+  } else {
+    const rad4 = (270 - bend4) * Math.PI / 180;
+    const ex1 = ex0 + Math.cos(rad4) * 15;
+    const ey1 = ey0 - Math.sin(rad4) * 15;
+    drawLineWithLabel(ctx, ex1, ey1, ex0, ey0, e, bend4);
+  }
+}
+
+function drawShape5(ctx, a, b, c, d, e, f, bend1, bend2, bend3, bend4, bend5) {
+   const x0 = 22;
+  let y0 = 20;
+  if (bend3 === 90) {
+    y0 = 35;
+  }
+  const radius = 5;
+  const x1 = x0 + 45, y1 = y0; 
+  drawLineWithLabel(ctx, x0, y0, x1, y1, c);
+  const bx0 = x0, by0 = y0;
+  const rad2 = (bend2 - 180) * Math.PI / 180;
+    const lenB = (bend1 === 45 && bend5 === 45) ? 18 : 15;
+  const bx1 = bx0 - Math.cos(rad2) * 15;
+  const by1 = by0 + Math.sin(rad2) * 15;
+  const bx1a = bx0 - Math.cos(rad2) * lenB;
+  const by1a = by0 + Math.sin(rad2) * lenB;
+  drawLineWithLabel(ctx, bx1, by1, bx0, by0, b, bend2);
+  drawLineWithLabel(ctx, bx1a, by1a, bx0, by0, 0);
+  const ax0 = bx1, ay0 = by1;
+  if (bend1 === 180) {
+    const dx = bx1 - bx0;
+    const dy = by1 - by0;
+    const angle = Math.atan2(dy, dx);
+    drawHook(ctx, ax0, ay0, angle, radius, 'right'); 
+  } else {
+    const rad1 = (bend1 - 270) * Math.PI / 180;
+    const lenA = (bend1 === 45 && bend5 === 45) ? 8 : 15;
+    const ax1 = ax0 - Math.cos(rad1) * lenA;
+    const ay1 = ay0 + Math.sin(rad1) * lenA;
+    drawLineWithLabel(ctx, ax0, ay0, ax1, ay1, a);
+  }
+  const dx0 = x1, dy0 = y1;
+  const rad3 = (180 - bend3) * Math.PI / 180;
+  const dx1 = dx0 + Math.cos(rad3) * 18;
+  const dy1 = dy0 - Math.sin(rad3) * 18;
+  drawLineWithLabel(ctx, dx0, dy0, dx1, dy1, d, bend3);
+  const ex0 = dx1, ey0 = dy1;
+    const rad4 = (270 - bend4) * Math.PI / 180;
+let lenE = 15;
+if (bend4 === 90) {
+  lenE = (bend1 === 45 && bend5 === 45) ? 45 : 42;
+}
+    const ex1 = ex0 + Math.cos(rad4) * 42;
+    const ey1 = ey0 - Math.sin(rad4) * 42;
+    const ex1a = ex0 + Math.cos(rad4) * lenE;
+    const ey1a = ey0 - Math.sin(rad4) * lenE;
+    drawLineWithLabel(ctx, ex1, ey1, ex0, ey0, e, bend4);
+    drawLineWithLabel(ctx, ex1a, ey1a, ex0, ey0, 0);
+  const fx0 = ex1, fy0 = ey1;
+  const rad5 = (bend5) * Math.PI / 180;
+  const lenF = (bend1 === 45 && bend5 === 45) ? 8 : 15;
+  const fx1 = fx0 + Math.cos(rad5) * lenF;
+  const fy1 = fy0 + Math.sin(rad5) * lenF;
+  if (bend5 === 180) {
+    const dx = fx1 - fx0;
+    const dy = fy1 - fy0;
+    const angle = Math.atan2(dy, dx);
+    drawHook(ctx, fx0, fy0, angle, radius, 'left');
+  } else {
+    drawLineWithLabel(ctx, fx0, fy0, fx1, fy1, f);
+  }
+}
+
+function drawSample() {
+  const scale = 2;
+  [0, 1, 2, 3, 4, 5].forEach(id => {
+    const canvas = document.getElementById(`shape${id}`);
+    const ctx = setupCanvas(canvas);
+    const segments = ["a", "b", "c", "d", "e", "f"];
+const [a, b, c, d, e, f] = segments.map(seg => {
+  const el = document.getElementById(`s${id}${seg}`);
+  const val = parseFloat(el?.value);
+  if (!el || el.value.trim() === "") return 0;
+  return isNaN(val) ? 0 : val; 
+});
+    const [bend1, bend2, bend3, bend4, bend5] = [1, 2, 3, 4, 5].map(i => {
+      const val = parseFloat(document.getElementById(`s${id}bend${i}`)?.value || "0");
+      return isNaN(val) ? 0 : val;
+    });
+    if (!isCanvasScaled) {
+      const originalWidth = canvas.width;
+      const originalHeight = canvas.height;
+      canvas.width = originalWidth * scale;
+      canvas.height = originalHeight * scale; 
+      isCanvasScaled = true; 
+    }    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.scale(scale, scale);
+    switch (id) {
+      case 0: drawShape0(ctx, a); break;
+      case 1: drawShape1(ctx, a, b, bend1); break;
+      case 2: drawShape2(ctx, a, b, c, bend1, bend2); break;
+      case 3: drawShape3(ctx, a, b, c, d, bend1, bend2, bend3); break;
+      case 4: drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4); break;
+      case 5: drawShape5(ctx, a, b, c, d, e, f, bend1, bend2, bend3, bend4, bend5); break;
+    }
+    ctx.restore();
+  });
+}
+
+function applyShape() {
+  if (!selectedCanvas) return;
+  const shape = selectedCanvas.dataset.shape;
+  const ctx = setupCanvas(selectedCanvas);
+  ctx.clearRect(0, 0, selectedCanvas.width, selectedCanvas.height);
+const segments = ["a", "b", "c", "d", "e", "f"];
+const [a, b, c, d, e, f] = segments.map(seg => {
+  const val = parseFloat(document.getElementById(`s${shape}${seg}`)?.value || "0");
+  return isNaN(val) ? 0 : val;
+});
+const [bend1, bend2, bend3, bend4, bend5] = [1, 2, 3, 4, 5].map(i => {
+  const val = parseFloat(document.getElementById(`s${shape}bend${i}`)?.value || "0");
+  return isNaN(val) ? 0 : val;
+});
+  if (shape === "0") {
+    drawShape0(ctx, a);
+  } else if (shape === "1") {
+	drawShape1(ctx, a, b, bend1);
+  } else if (shape === "2") {
+	drawShape2(ctx, a, b, c, bend1, bend2);
+  } else if (shape === "3") {
+	drawShape3(ctx, a, b, c, d, bend1, bend2, bend3);
+  } else if (shape === "4") {
+	drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4);
+  } else if (shape === "5") {
+	drawShape5(ctx, a, b, c, d, e, f, bend1, bend2, bend3, bend4, bend5);
+  }
+segments.forEach(seg => {
+  const input = document.getElementById(`s${shape}${seg}`);
+  selectedCanvas.dataset[seg] = input ? input.value || "0" : "0";
+});
+for (let i = 1; i <= 5; i++) {
+  const bendInput = document.getElementById(`s${shape}bend${i}`);
+  selectedCanvas.dataset[`bend${i}`] = bendInput ? bendInput.value || "0" : "0";
+}
+selectedCanvas.dataset.shape = shape;
+
+
+
+  const row = selectedCanvas.closest("tr");
+  if (!row) return;
+  const diaInput = document.getElementById(`dia`);
+  const lenInput = document.getElementById(`len`);
+  const qtyInput = document.getElementById(`qty`);
+  if (diaInput && row.cells[2]) row.cells[2].textContent = diaInput.value;
+  if (lenInput && row.cells[3]) row.cells[3].textContent = lenInput.value;
+  if (qtyInput && row.cells[4]) row.cells[4].textContent = qtyInput.value;
+  closePopup();
+  calculateAll();
+  const tbody = document.getElementById("dataBody");
+  const rows = tbody.querySelectorAll("tr");
+  const lastRow = rows[rows.length - 1];
+  if (row === lastRow) {
+    lastInsertedRow = addRow();
+  }
+}
+
+function updateLengthFromABC(shapeId) {
+  const lenField = document.getElementById("len");
+  const dia = parseFloat(document.getElementById("dia")?.value || 0);
+  let totalLength = 0;
+  const segments = ["a", "b", "c", "d", "e", "f"];
+  for (let seg of segments) {
+    const input = document.getElementById(`s${shapeId}${seg}`);
+    if (input) {
+      const val = parseFloat(input.value || 0);
+      if (!isNaN(val)) {
+        totalLength += val;
+      }
+    }
+  }
+  const bends = document.querySelectorAll(`input[id^="s${shapeId}bend"]`);
+  const bendCount = bends.length;
+  const bendLoss = 2 * dia * bendCount;
+  let finalLength = totalLength - bendLoss;
+  let bend180Count = 0;
+  bends.forEach(bend => {
+    const bendValue = parseFloat(bend.value);
+    if (bendValue === 180) {
+      bend180Count++;
+    }
+  });
+  finalLength += bend180Count * 12 * dia;
+  finalLength = Math.max(Math.round(finalLength / 5) * 5, 0);
+  if (lenField) {
+    lenField.value = finalLength;
+  }
+}
+
+function calculateRow(row) {
+    const D = parseFloat(row.cells[2].textContent) || 0;
+    const length = parseFloat(row.cells[3].textContent) || 0;
+    const count = parseInt(row.cells[4].textContent) || 0;
+    const kgPerMeter = kgPerMeterMap[D] || 0;
+    const weightPerPiece = (length / 1000) * kgPerMeter;
+    const totalWeight = weightPerPiece * count;
+    const shapeCanvas = row.querySelector("canvas");
+    const shape = parseInt(shapeCanvas?.dataset?.shape || 0);
+	const exemptLengths = [];
+for (let i = 3500; i <= 12000; i += 500) {
+  exemptLengths.push(i);
+}
+let cutCost = cutPricePerBend * count;
+if (exemptLengths.includes(length)) {
+  cutCost = 0;
+}
+    const bends = getBendCountFromShape(shape);
+    const bendCost = bends * bendPricePerBend * count;
+    const materialCost = totalWeight * materialPricePerKg;
+    const totalCost = bendCost + materialCost + cutCost;
+	const formatter = new Intl.NumberFormat("ja-JP");
+row.cells[5].textContent = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+row.cells[6].textContent = formatter.format(Math.round(cutCost));
+row.cells[7].textContent = formatter.format(Math.round(bendCost));
+row.cells[8].textContent = formatter.format(Math.round(materialCost));
+row.cells[9].textContent = formatter.format(Math.round(totalCost));
+    return {
+      weight: totalWeight,
+      cutCost,
+      bendCost,
+      materialCost,
+      totalCost
+    };
+  }
+
+function getBendCountFromShape(shape) {
+  const bendMap = {
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5 
+  };
+  return bendMap[shape] || 0;
+}
+function calculateAll() {
+  const rows = document.querySelectorAll("#dataBody tr");
+  let totalWeight = 0, totalCutCost = 0, totalBendCost = 0, totalMaterialCost = 0, totalSum = 0;
+
+  rows.forEach((row, index) => {
+    row.cells[0].textContent = index + 1;
+    const result = calculateRow(row);
+    totalWeight += result.weight;
+    totalCutCost += result.cutCost;
+    totalBendCost += result.bendCost;
+    totalMaterialCost += result.materialCost;
+    totalSum += result.totalCost;
+  });
+
+  const formatter = new Intl.NumberFormat("ja-JP", { minimumFractionDigits: 0 });
+  const weightFormatted = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const transportSelect = document.getElementById("transport-select");
+  const transportUnit = parseInt(transportSelect?.value || 0);
+  const transportMultiplier = Math.ceil(totalWeight / 5000); 
+  const transportCost = transportUnit * transportMultiplier;
+
+  const finalSum = totalSum + transportCost;
+  document.getElementById("total-weight").textContent = weightFormatted + ' kg';
+  document.getElementById("total-cut-cost").textContent = formatter.format(Math.round(totalCutCost)) + ' 円';
+  document.getElementById("total-bend-cost").textContent = formatter.format(Math.round(totalBendCost)) + ' 円';
+  document.getElementById("total-material-cost").textContent = formatter.format(Math.round(totalMaterialCost)) + ' 円';
+
+  const totalSumCell = document.querySelector("#total-sum .sum-value");
+  if (totalSumCell) totalSumCell.textContent = formatter.format(Math.round(finalSum)) + ' 円';
+  const sumNote = document.querySelector("#total-sum .sum-note");
+  if (sumNote) {
+    if (transportMultiplier > 1 && transportUnit > 0) {
+      sumNote.textContent = `(運搬費含 - ${transportMultiplier}回)`;
+    } else if (transportUnit > 0) {
+      sumNote.textContent = `(運搬費含)`;
+    } else {
+      sumNote.textContent = ``; 
+    }
+  }
+}
+
+function deleteCurrentPopupRow() {
+  if (!selectedCanvas) return;
+  const row = selectedCanvas.closest("tr");
+  if (row && row.parentNode) {
+    row.remove();
+    closePopup(); 
+    calculateAll();
+  }
+}
+
+function showContextMenu(x, y) {
+  contextMenu.style.top = y + "px";
+  contextMenu.style.left = x + "px";
+  contextMenu.style.display = "block";
+}
+
+function deleteRow() {
+      if (currentRow) currentRow.remove();
+	calculateAll()
+    }
+
+function moveUp() {
+      if (currentRow && currentRow.previousElementSibling) {
+        table.tBodies[0].insertBefore(currentRow, currentRow.previousElementSibling);
+      }
+	calculateAll()
+    }
+
+function moveDown() {
+      if (currentRow && currentRow.nextElementSibling) {
+        table.tBodies[0].insertBefore(currentRow.nextElementSibling, currentRow);
+      }
+	calculateAll()
+    }
+
+function insertBelow() {
+      if (currentRow) {
+        const newRow = currentRow.cloneNode(true);
+        table.tBodies[0].insertBefore(newRow, currentRow.nextElementSibling);
+      }
+	calculateAll()
+    }
+
+function addRow() {
+  const row = document.querySelector("#dataBody tr");
+  const clone = row.cloneNode(true);
+  for (let i = 2; i <= 8; i++) {
+    clone.cells[i].textContent = "";
+  }
+  const canvas = clone.querySelector("canvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const keys = ['a', 'b', 'c', 'd', 'e', 'f', 'shape', 'bend1', 'bend2', 'bend3', 'bend4', 'bend5'];
+    keys.forEach(key => {
+      canvas.dataset[key] = "0";
+    });
+  }
+  document.getElementById("dataBody").appendChild(clone);
+  calculateAll();
+  const shapeCell = clone.querySelector('.shape-cell');
+  if (shapeCell) {
+    shapeCell.setAttribute('tabindex', '0');
+    shapeCell.focus();
+  }
+  return clone;
+}
+
+async function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF("p", "mm", "a4");
+  const margin = 10;
+  const pdfWidth = doc.internal.pageSize.getWidth();
+  const pdfHeight = doc.internal.pageSize.getHeight();
+  const imgWidth = pdfWidth - 2 * margin;
+  const header = document.querySelector(".header-top");
+  const canvasHeader = await html2canvas(header, { scale: 2 });
+  const imgHeader = canvasHeader.toDataURL("image/png");
+  const headerHeight = 45;
+  doc.addImage(imgHeader, "PNG", margin, margin, imgWidth, headerHeight);
+  let currentHeight = headerHeight + 7;
+  const table = document.getElementById("rebarTable");
+  const fullCanvas = await html2canvas(table, { scale: 2, backgroundColor: "#fff" });
+  const fullImgWidth = fullCanvas.width;
+  const fullImgHeight = fullCanvas.height;
+  const thead = table.querySelector("thead");
+  const tbody = table.querySelector("tbody");
+  const tfoot = table.querySelector("tfoot");
+  const theadCanvas = await html2canvas(thead, { scale: 2 });
+  const theadHeightPx = theadCanvas.height;
+  const tfootCanvas = await html2canvas(tfoot, { scale: 2 });
+  const tfootHeightPx = tfootCanvas.height;
+  const tbodyHeightPx = fullImgHeight - theadHeightPx - tfootHeightPx;
+  const rowCount = tbody.querySelectorAll("tr").length;
+  const rowHeightPx = tbodyHeightPx / rowCount;
+  const rowsPerPage = 12;
+  const bodySliceHeightPx = rowHeightPx * rowsPerPage;
+  const totalPages = Math.ceil(rowCount / rowsPerPage);
+  for (let page = 0; page < totalPages; page++) {
+    if (page > 0) {
+      doc.addPage();
+      doc.addImage(imgHeader, "PNG", margin, margin, imgWidth, headerHeight);
+    }
+    const canvasPage = document.createElement("canvas");
+    const ctx = canvasPage.getContext("2d");
+    canvasPage.width = fullImgWidth;
+    canvasPage.height = theadHeightPx + bodySliceHeightPx;
+    ctx.drawImage(fullCanvas, 0, 0, fullImgWidth, theadHeightPx, 0, 0, fullImgWidth, theadHeightPx);
+    const startY = theadHeightPx + page * bodySliceHeightPx;
+    ctx.drawImage(
+      fullCanvas,
+      0, startY,
+      fullImgWidth, bodySliceHeightPx,
+      0, theadHeightPx,
+      fullImgWidth, bodySliceHeightPx
+    );
+    const pageImgData = canvasPage.toDataURL("image/png");
+    const pageImgHeightMM = (canvasPage.height * imgWidth) / canvasPage.width;
+    doc.addImage(pageImgData, "PNG", margin, currentHeight, imgWidth, pageImgHeightMM);
+	doc.setFontSize(10);
+	const footerText = `No. ${page + 1} / ${totalPages}`;
+	const textWidth = doc.getTextWidth(footerText);
+	doc.text(footerText, pdfWidth - margin - textWidth, pdfHeight - 5);
+  }
+  const projectName = document.getElementById("project-name").value.trim() || "工事名";
+  const contactRaw = document.getElementById("contact").value.trim() || "担当者";
+  const today = new Date().toISOString().split("T")[0];
+  const sanitize = str => str.replace(/[\\/:*?"<>|()\s]/g, "_");
+  const contactFormatted = contactRaw.replace(/\s*\(?(\d{2,4})\s*(\d{2,4})\s*(\d{3,4})\)?/, "-$1$2$3");
+  const fileName = `${sanitize(projectName)}_${sanitize(contactFormatted)}_${today}.pdf`;
+	  alert("鉄筋積算書をご送付の上、LINE（090-3660-1790）までご連絡いただけますと幸いです。");
+	  doc.save(fileName);
+	  
+}
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </div>
+</body>
+</html>
