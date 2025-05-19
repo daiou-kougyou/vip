@@ -1,10 +1,10 @@
 const CACHE_NAME = 'rebar-app-cache-v1';
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
+  '/vip/',
+  '/vip/index.html',
+  '/vip/manifest.json',
+  '/vip/icon-192.png',
+  '/vip/icon-512.png',
   // thêm file CSS, JS, fonts nếu cần
 ];
 
