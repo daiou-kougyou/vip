@@ -561,6 +561,8 @@ input[type=number] {
 
 body.popup-open {
   overflow-x: hidden;
+  position: fixed; 
+  width: 100vw; 
 }
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -1247,8 +1249,6 @@ function initAnglePresets() {
         if (!bendInput) break;
         bendInput.value = angles[i] ?? angles[angles.length - 1] ?? '';
       }
-	  const shapeInputs = shapesByTab[tab][shapeName];
-		updateHighlightedInputs(shapeInputs);
 
       updateLength(tabIndex);
 
@@ -1651,7 +1651,7 @@ function openPopup(cell) {
   calculateAll();
   popup.addEventListener('keydown', handlePopupKeys);
   setupTabInputsNavigation();
-  if (window.innerWidth <= 1024) {
+  if (window.innerWidth <= 768) {
     document.body.classList.add('popup-open-mobile');
   }
 	const diaInput = document.getElementById("dia");
@@ -1662,7 +1662,7 @@ function closePopup() {
   overlay.style.display = "none";
   popup.style.display = "none";
   popup.removeEventListener('keydown', handlePopupKeys);
-  if (window.innerWidth <= 1024) {
+  if (window.innerWidth <= 768) {
     document.body.classList.remove('popup-open-mobile');
   }
 }
