@@ -1,12 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>鉄筋積算書｜大桜工業株式会社</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#007bff">
 <meta name="generator" content="Studio.Design">
 <meta name="robots" content="all">
 <meta property="og:site_name" content="大桜工業株式会社">
@@ -536,12 +537,6 @@ select.angle-preset {
   text-decoration: underline;
   text-decoration-color: red;
 }
-body.popup-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-}
-
 /* Chrome, Safari, Edge, Opera */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
@@ -564,11 +559,11 @@ input[type=number] {
   color: #666;        
 }
 
+
+
 /* Responsive Adjustments */
-@media (max-width: 768px) {
-  html, body {
-    max-width: 100vw;
-  }
+@media (max-width: 1024px) {
+ 
   th, td {
     font-size: 12px;
     padding: 6px;
@@ -581,32 +576,24 @@ input[type=number] {
     max-width: none;
     font-size: 14px;
    }
-	input[type="number"],
-	input[type="text"] {
+input[type="number"],
+input[type="text"] {
     font-size: 16px;
-    width: 100%;
   #shapePopup {
-    top: 0;
-    left: 0;
-    transform: none;
     width: 100vw;
     height: 100vh;
-    border-radius: 0;
     padding: 1rem;
-    overflow-y: auto;
+    border-radius: 0; 
   }
 
   .tab-layout {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    width: 100%;
-    overflow-x: hidden;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .tab-col {
     width: 100%;
-    max-width: 100%;
+    max-width: 320px;
   }
 
   .tab-col.shape-col {
@@ -635,11 +622,6 @@ input[type=number] {
     -moz-appearance: none;
     pointer-events: none;
   }
-}
-
-
-.hidden {
-  display: none !important;
 }
 </style>
 </head>
@@ -793,9 +775,9 @@ input[type=number] {
   <div class="tab-layout">
     <div class="tab-col dim-col">
       <label class="tab-col-header">寸法</label>
-      <label data-param="a"><span>a</span><input type="number" id="s2a" value="a" /></label>
-      <label data-param="b"><span class="highlight-label">b</span><input type="number" id="s2b" value="b" /></label>
-      <label data-param="c"><span>c</span><input type="number" id="s2c" value="c" /></label>
+      <label><span>a</span><input type="number" id="s2a" value="a" /></label>
+      <label><span class="highlight-label">b</span><input type="number" id="s2b" value="b" /></label>
+      <label><span>c</span><input type="number" id="s2c" value="c" /></label>
     </div>
     <div class="tab-col angle-col">
       <label class="tab-col-header">角度</label>
@@ -824,10 +806,10 @@ input[type=number] {
   <div class="tab-layout">
     <div class="tab-col dim-col">
       <label class="tab-col-header">寸法</label>
-      <label data-param="a"><span>a</span><input type="number" id="s3a" value="a" /></label>
-      <label data-param="b"><span class="highlight-label">b</span><input type="number" id="s3b" value="b" /></label>
-      <label data-param="c"><span class="highlight-label">c</span><input type="number" id="s3c" value="c" /></label>
-      <label data-param="d"><span>d</span><input type="number" id="s3d" value="d" /></label>
+      <label><span>a</span><input type="number" id="s3a" value="a" /></label>
+      <label><span class="highlight-label">b</span><input type="number" id="s3b" value="b" /></label>
+      <label><span class="highlight-label">c</span><input type="number" id="s3c" value="c" /></label>
+      <label><span>d</span><input type="number" id="s3d" value="d" /></label>
     </div>
     <div class="tab-col angle-col">
       <label class="tab-col-header">角度</label>
@@ -861,11 +843,11 @@ input[type=number] {
   <div class="tab-layout">
     <div class="tab-col dim-col">
       <label class="tab-col-header">寸法</label>
-      <label data-param="a"><span>a</span><input type="number" id="s4a" value="a" /></label>
-      <label data-param="b"><span>b</span><input type="number" id="s4b" value="b" /></label>
-      <label data-param="c"><span class="highlight-label">c</span><input type="number" id="s4c" value="c" /></label>
-      <label data-param="d"><span class="highlight-label">d</span><input type="number" id="s4d" value="d" /></label>
-      <label data-param="e"><span>e</span><input type="number" id="s4e" value="e" /></label>
+      <label><span>a</span><input type="number" id="s4a" value="a" /></label>
+      <label><span>b</span><input type="number" id="s4b" value="b" /></label>
+      <label><span class="highlight-label">c</span><input type="number" id="s4c" value="c" /></label>
+      <label><span class="highlight-label">d</span><input type="number" id="s4d" value="d" /></label>
+      <label><span>e</span><input type="number" id="s4e" value="e" /></label>
     </div>
     <div class="tab-col angle-col">
       <label class="tab-col-header">角度</label>
@@ -904,12 +886,12 @@ input[type=number] {
   <div class="tab-layout">
     <div class="tab-col dim-col">
       <label class="tab-col-header">寸法</label>
-      <label data-param="a"><span>a</span><input type="number" id="s5a" value="a" /></label>
-      <label data-param="b"><span>b</span><input type="number" id="s5b" value="b" /></label>
-      <label data-param="c"><span class="highlight-label">c</span><input type="number" id="s5c" value="c" /></label>
-      <label data-param="d"><span class="highlight-label">d</span><input type="number" id="s5d" value="d" /></label>
-      <label data-param="e"><span>e</span><input type="number" id="s5e" value="e" /></label>
-      <label data-param="f"><span>f</span><input type="number" id="s5f" value="f" /></label>
+      <label><span>a</span><input type="number" id="s5a" value="a" /></label>
+      <label><span>b</span><input type="number" id="s5b" value="b" /></label>
+      <label><span class="highlight-label">c</span><input type="number" id="s5c" value="c" /></label>
+      <label><span class="highlight-label">d</span><input type="number" id="s5d" value="d" /></label>
+      <label><span>e</span><input type="number" id="s5e" value="e" /></label>
+      <label><span>f</span><input type="number" id="s5f" value="f" /></label>
     </div>
     <div class="tab-col angle-col">
       <label class="tab-col-header">角度</label>
@@ -1044,12 +1026,6 @@ const shapesByTab = {
       angles: [-135, -90],
       params: ['b', 'dBar'],
       calculate: ({ b, dBar }) => b + 18 * dBar,
-      highlight: ['b']
-    },
-    '中子': {
-      angles: [180, 180],
-      params: ['b', 'dBar'],
-      calculate: ({ b, dBar }) => b + 20 * dBar,
       highlight: ['b']
     },
     '吊り': {
@@ -1196,26 +1172,8 @@ function updateLength(tabIndex) {
 
   if (lenInput) lenInput.value = roundTo5(finalLength);
 }
-function updateHighlightedInputs(shape) {
-  const highlights = shape.highlight || [];
-  const labels = document.querySelectorAll('label[data-param]');
 
-  labels.forEach(label => {
-    const param = label.getAttribute('data-param');
-    if (highlights.includes(param)) {
-      label.classList.remove('hidden'); // hiện label
-    } else {
-      label.classList.add('hidden'); // ẩn label
-    }
-  });
-}
-function resetAllInputVisibility(tabIndex) {
-  const tabContent = document.querySelector(`.tab-content[data-content="${tabIndex}"]`);
-  if (!tabContent) return;
 
-  const labels = tabContent.querySelectorAll('.dim-col label');
-  labels.forEach(label => label.classList.remove('hidden'));
-}
 
 function initAnglePresets() {
   const selects = document.querySelectorAll('.angle-preset');
@@ -1254,8 +1212,6 @@ function initAnglePresets() {
         if (!bendInput) break;
         bendInput.value = angles[i] ?? angles[angles.length - 1] ?? '';
       }
-	  const shapeInputs = shapesByTab[tab][shapeName];
-		updateHighlightedInputs(shapeInputs);
 
       updateLength(tabIndex);
 
@@ -1291,13 +1247,7 @@ if (diaInput) {
   });
 }
 }
-document.querySelectorAll("input").forEach(input => {
-  input.addEventListener("focus", () => {
-    setTimeout(() => {
-      input.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 300);
-  });
-});
+
 document.querySelectorAll(selector).forEach(input => {
   input.addEventListener("input", drawSample);
 });
@@ -1656,14 +1606,12 @@ function openPopup(cell) {
   setupTabInputsNavigation();
 	const diaInput = document.getElementById("dia");
 		diaInput?.focus();
-document.body.classList.add("popup-open");
 }
 
 function closePopup() {
   overlay.style.display = "none";
   popup.style.display = "none";
   popup.removeEventListener('keydown', handlePopupKeys);
-  document.body.classList.remove("popup-open");
 }
 
 function setupCanvas(canvas) {
