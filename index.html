@@ -1651,9 +1651,8 @@ function openPopup(cell) {
   calculateAll();
   popup.addEventListener('keydown', handlePopupKeys);
   setupTabInputsNavigation();
-  if (window.innerWidth <= 768) {
-    document.body.classList.add('popup-open-mobile');
-  }
+  document.body.classList.add('popup-open');
+  
 	const diaInput = document.getElementById("dia");
 		diaInput?.focus();
 }
@@ -1662,9 +1661,8 @@ function closePopup() {
   overlay.style.display = "none";
   popup.style.display = "none";
   popup.removeEventListener('keydown', handlePopupKeys);
-  if (window.innerWidth <= 768) {
-    document.body.classList.remove('popup-open-mobile');
-  }
+  document.body.classList.remove('popup-open');
+  
 }
 
 function setupCanvas(canvas) {
