@@ -559,6 +559,11 @@ input[type=number] {
   color: #666;        
 }
 
+body.popup-open {
+  overflow-x: hidden;
+  position: fixed; 
+  width: 100vw; 
+}
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   html, body {
@@ -1648,6 +1653,7 @@ function openPopup(cell) {
   calculateAll();
   popup.addEventListener('keydown', handlePopupKeys);
   setupTabInputsNavigation();
+  document.body.classList.add("popup-open");
 	const diaInput = document.getElementById("dia");
 		diaInput?.focus();
 }
@@ -1656,6 +1662,7 @@ function closePopup() {
   overlay.style.display = "none";
   popup.style.display = "none";
   popup.removeEventListener('keydown', handlePopupKeys);
+  document.body.classList.remove("popup-open");
 }
 
 function setupCanvas(canvas) {
