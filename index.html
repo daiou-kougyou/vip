@@ -819,10 +819,10 @@ body.popup-open {
   <div class="tab-layout">
     <div class="tab-col dim-col">
       <label class="tab-col-header">寸法</label>
-      <label data-param="a"><span>a</span><input type="number" id="s3a" value="a" /></label>
+      <label data-param="a"><span class="highlight-label">a</span><input type="number" id="s3a" value="a" /></label>
       <label data-param="b"><span class="highlight-label">b</span><input type="number" id="s3b" value="b" /></label>
       <label data-param="c"><span class="highlight-label">c</span><input type="number" id="s3c" value="c" /></label>
-      <label data-param="d"><span>d</span><input type="number" id="s3d" value="d" /></label>
+      <label data-param="d"><span class="highlight-label">d</span><input type="number" id="s3d" value="d" /></label>
     </div>
     <div class="tab-col angle-col">
       <label class="tab-col-header">角度</label>
@@ -833,17 +833,17 @@ body.popup-open {
       </label>
       <label><span>1</span>
         <div class="input-wrap">
-          <input type="number" id="s3bend1" value="180" /><span class="suffix">°</span>
+          <input type="number" id="s3bend1" value="135" /><span class="suffix">°</span>
         </div>
       </label>
       <label><span>2</span>
         <div class="input-wrap">
-          <input type="number" id="s3bend2" value="90" /><span class="suffix">°</span>
+          <input type="number" id="s3bend2" value="-135" /><span class="suffix">°</span>
         </div>
       </label>
       <label><span>3</span>
         <div class="input-wrap">
-          <input type="number" id="s3bend3" value="90" /><span class="suffix">°</span>
+          <input type="number" id="s3bend3" value="135" /><span class="suffix">°</span>
         </div>
       </label>
     </div>
@@ -970,6 +970,7 @@ body.popup-open {
   let isCanvasScaled = false; 
   let currentRow = null;
   let touchTimer = null;
+  
   const fixedAddress = "福岡県那珂川西畑1054番地1";
   const addressInput = document.getElementById("site-address");
   const transportLabel = document.getElementById("transport-label");
@@ -1035,8 +1036,20 @@ const shapesByTab = {
       calculate: ({ a, b, c, dBar }) => a + b + c - 2 * 2 * dBar,
       highlight: ['a', 'b', 'c']
     },
+    '逆への字': {
+      angles: [45, -45],
+      params: ['a','b','c'],
+      calculate: ({ a, b, c}) => a + b + c,
+      highlight: ['b']
+    },
     '幅止め': {
       angles: [-135, -90],
+      params: ['b', 'dBar'],
+      calculate: ({ b, dBar }) => b + 18 * dBar,
+      highlight: ['b']
+    },
+    '両フック': {
+      angles: [-135, -135],
       params: ['b', 'dBar'],
       calculate: ({ b, dBar }) => b + 18 * dBar,
       highlight: ['b']
@@ -1061,6 +1074,12 @@ const shapesByTab = {
     }
   },
   3: {
+    '段筋': {
+      angles: [135, -135, 135],
+      params: ['a', 'b', 'c', 'd', 'dBar'],
+      calculate: ({ a, b, d, dBar }) => a*d + b*d + 40*dBar,
+      highlight: ['a','b','c', 'd']
+    },
     '壁-ＳＴ': {
       angles: [180, 90, 90],
       params: ['b', 'c', 'd', 'dBar'],
@@ -1251,7 +1270,7 @@ function initAnglePresets() {
       }
 
       updateLength(tabIndex);
-
+	  shapesByTab[tabIndex] = selected;
       drawSample();
     });
 
@@ -1846,6 +1865,27 @@ function drawShape3(ctx, a, b, c, d, bend1, bend2, bend3) {
   const x0 = 15, y0 = 30;
   const radius = 5;
   const x1 = x0 + 45, y1 = y0;
+
+  // Trường hợp đặc biệt: Tam giác với các góc
+  if (bend1 === 135 && bend2 === -135 && bend3 === 135) {
+	const x0 = 16, y0 = 16;
+	const x1 = x0 + 40, y1 = y0;
+	const x2 = 45, y2 = 45;
+	const x3 = 12, y3 = 12;
+	const x4 = 49, y4 = 49;
+	drawLineWithLabel(ctx, x1, y1, x0, y0, a);
+	
+	drawLineWithLabel(ctx, x2, y2, x1, y1, b);
+	
+	drawLineWithLabel(ctx, x3, y3, x4, y4, c);
+	ctx.font = '12px Arial';
+	ctx.fillStyle = 'black';
+	const labelText = d + '段';
+	ctx.fillText(labelText, 60, 13);
+    return; // Kết thúc không vẽ các phần còn lại
+  }
+
+  // Phần xử lý vẽ các hình bình thường
   drawLineWithLabel(ctx, x0, y0, x1, y1, b);
   if (bend1 === 180) {
     drawLineWithLabel(ctx, x0, y0 - 10, x1 - 35, y1 - 10, 0);
@@ -1883,12 +1923,12 @@ function drawShape3(ctx, a, b, c, d, bend1, bend2, bend3) {
       false
     );
     ctx.stroke();
-  const startAngle = angle - Math.PI / 2;
-  const endX = arcCenterX + Math.cos(startAngle) * radius;
-  const endY = arcCenterY + Math.sin(startAngle) * radius;
-  const nextX = endX - Math.cos(angle) * 5;
-  const nextY = endY - Math.sin(angle) * 5;
-  drawLineWithLabel(ctx, endX, endY, nextX, nextY, 0);
+    const startAngle = angle - Math.PI / 2;
+    const endX = arcCenterX + Math.cos(startAngle) * radius;
+    const endY = arcCenterY + Math.sin(startAngle) * radius;
+    const nextX = endX - Math.cos(angle) * 5;
+    const nextY = endY - Math.sin(angle) * 5;
+    drawLineWithLabel(ctx, endX, endY, nextX, nextY, 0);
   } else {
     const rad3 = (bend2 + bend3) * Math.PI / 180;
     const dx1 = dx0 + Math.cos(rad3) * 20;
@@ -1896,6 +1936,8 @@ function drawShape3(ctx, a, b, c, d, bend1, bend2, bend3) {
     drawLineWithLabel(ctx, dx1, dy1, dx0, dy0, d, bend3);
   }
 }
+
+
 
 function drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4) {
   const x0 = 22; 
@@ -2084,8 +2126,10 @@ for (let i = 1; i <= 5; i++) {
   selectedCanvas.dataset[`bend${i}`] = bendInput ? bendInput.value || "0" : "0";
 }
 selectedCanvas.dataset.shape = shape;
-
-
+  const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
+  if (presetSelect) {
+    selectedCanvas.dataset.shapeName = presetSelect.value || "";
+  }
 
   const row = selectedCanvas.closest("tr");
   if (!row) return;
@@ -2104,44 +2148,54 @@ selectedCanvas.dataset.shape = shape;
     lastInsertedRow = addRow();
   }
 }
-
 function calculateRow(row) {
-    const D = parseFloat(row.cells[2].textContent) || 0;
-    const length = parseFloat(row.cells[3].textContent) || 0;
-    const count = parseInt(row.cells[4].textContent) || 0;
-    const kgPerMeter = kgPerMeterMap[D] || 0;
-    const weightPerPiece = (length / 1000) * kgPerMeter;
-    const totalWeight = weightPerPiece * count;
-    const shapeCanvas = row.querySelector("canvas");
-    const shape = parseInt(shapeCanvas?.dataset?.shape || 0);
-	const exemptLengths = [];
-for (let i = 3500; i <= 12000; i += 500) {
-  exemptLengths.push(i);
-}
-let cutCost = cutPricePerBend * count;
-if (exemptLengths.includes(length)) {
-  cutCost = 0;
-}
-    const bends = getBendCountFromShape(shape);
-    const bendCost = bends * bendPricePerBend * count;
-    const materialCost = totalWeight * materialPricePerKg;
-    const totalCost = bendCost + materialCost + cutCost;
-	const formatter = new Intl.NumberFormat("ja-JP");
-row.cells[5].textContent = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-row.cells[6].textContent = formatter.format(Math.round(cutCost));
-row.cells[7].textContent = formatter.format(Math.round(bendCost));
-row.cells[8].textContent = formatter.format(Math.round(materialCost));
-row.cells[9].textContent = formatter.format(Math.round(totalCost));
-    return {
-      weight: totalWeight,
-      cutCost,
-      bendCost,
-      materialCost,
-      totalCost
-    };
+  const D = parseFloat(row.cells[2].textContent) || 0;
+  const length = parseFloat(row.cells[3].textContent) || 0;
+  const count = parseInt(row.cells[4].textContent) || 0;
+  const kgPerMeter = kgPerMeterMap[D] || 0;
+  const weightPerPiece = (length / 1000) * kgPerMeter;
+  const totalWeight = weightPerPiece * count;
+
+  const shapeCanvas = row.querySelector("canvas");
+  const shape = parseInt(shapeCanvas?.dataset?.shape || 0);
+  
+	const shapeName = parseInt(shapeCanvas?.dataset?.shapeName) || 0;
+	const d = parseFloat(shapeCanvas?.dataset?.d) || 0;
+	const bend1 = parseFloat(shapeCanvas?.dataset?.bend1) || 0;
+	const bend2 = parseFloat(shapeCanvas?.dataset?.bend2) || 0;
+	const bend3 = parseFloat(shapeCanvas?.dataset?.bend3) || 0;
+
+  // Số lần cắt miễn phí với các chiều dài sau:
+  const exemptLengths = [];
+  for (let i = 3500; i <= 12000; i += 500) {
+    exemptLengths.push(i);
   }
 
-function getBendCountFromShape(shape) {
+  let cutCost = cutPricePerBend * count;
+  if (exemptLengths.includes(length)) {
+    cutCost = 0;
+  }
+
+  const bends = getBendCountFromShape(shape, bend1, bend2, bend3, d);
+  const bendCost = bends * bendPricePerBend * count;
+  const materialCost = totalWeight * materialPricePerKg;
+  const totalCost = bendCost + materialCost + cutCost;
+
+  const formatter = new Intl.NumberFormat("ja-JP");
+  row.cells[5].textContent = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  row.cells[6].textContent = formatter.format(Math.round(cutCost));
+  row.cells[7].textContent = formatter.format(Math.round(bendCost));
+  row.cells[8].textContent = formatter.format(Math.round(materialCost));
+  row.cells[9].textContent = formatter.format(Math.round(totalCost));
+
+  return {
+    weight: totalWeight,
+    cutCost,
+    bendCost,
+    materialCost,
+    totalCost
+  };
+}function getBendCountFromShape(shape, bend1, bend2, bend3, d, shapeName) {
   const bendMap = {
     0: 0,
     1: 1,
@@ -2150,6 +2204,12 @@ function getBendCountFromShape(shape) {
     4: 4,
     5: 5 
   };
+
+    if (bend1 === 135 && bend2 === -135 && bend3 === 135&& shape === 3) {
+      return isNaN(d) ? 0 : d * 2;
+    }
+   
+
   return bendMap[shape] || 0;
 }
 function calculateAll() {
