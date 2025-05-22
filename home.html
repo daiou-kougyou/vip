@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>鉄筋積算書｜大桜工業株式会社</title>
+<title>加工帳｜大桜工業株式会社</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ffffff">
@@ -36,46 +36,350 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  width: 100%;
   background: white;
 }
 .a4-container {
-  width: 210mm;
-  min-height: 297mm;
+  width: 1123px;
+  min-height: 794px;
   margin: 0 auto;
   background: white;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0px;
+
+.header-full {
+
+  width: 1108px;
 }
-table input[type="number"],
-table input[type="text"] {
+@media (max-width: 768px) {
+  .header-full {
+  margin-left: 40;
+    box-sizing: border-box;
+  }
+}
+.header {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  padding-top: 10px;
+}
+
+.header-right {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  text-align: right;
+  align-items: flex-end;
+}
+.info-vip {
+  font-size: 20px;
+  white-space: nowrap;
+}
+.info-text {
+  font-size: 20px;
+  padding-right: 25px;
+  word-spacing: 44px; 
+  white-space: nowrap;
+}
+.info-item {
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+
+.header-2 {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  word-spacing: 20px; /* Tăng giãn cách giữa các từ */
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.header-left {
+  width: 65%;
+  position: relative;
+  left: 0;
   box-sizing: border-box;
+}
+.title {
+  font-size: 40px;
+  text-align: right;
+  padding-right: 10px;
+  letter-spacing: 40px; /* dãn chữ */
+  
+}
+.info-no.underline1 {
+
+  font-size: 25px;
+  position: relative;
+  padding-left: 60px; /* đẩy nội dung sang phải */
+  padding-bottom: 4px;
+  display: inline-block;
+  min-width: 250px;
+  margin-bottom: 12px;
+  word-spacing: 50px; 
+  letter-spacing: 2px;
+  margin-top: 20px;
+  align-items: flex-start;
+}
+
+.info-no.underline1::before {
+  content: "";
+  position: absolute;
+  left: 40px; /* đường kẻ bắt đầu từ 100px */
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: black;
+  
+}
+
+.info-name.underline {
+  font-size: 25px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 40px; /* Đẩy nội dung và đường kẻ sang phải */
+  padding-bottom: 4px;
+  min-width: 280px;
+  gap: 100px;
+  letter-spacing: 2px;
+  margin-top: 15px;
+  align-items: flex-start;
+}
+
+.info-name.underline::before {
+  content: "";
+  position: absolute;
+  left: 20px; /* Bắt đầu đường kẻ từ 50px */
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: black;
+}
+
+#project-name {
+  flex: 1;
   border: none;
   outline: none;
-  padding: 4px;
-  font-size: 16px;
+  font-size: 20px;
+  background: transparent;
+  margin-top: 10px;
+  height: 30px;           /* sửa chính tả */
+  line-height: 30px;      /* căn chỉnh chữ nằm giữa */
+  padding: 0 5px;         /* đảm bảo không bị sát mép */
+  box-sizing: border-box; /* để padding không làm vượt height */
+  letter-spacing: 5px;
 }
-th, td {
-  border: 1px solid #999;
+
+
+
+
+/* Căn giữa bảng theo chiều ngang */
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+#rebarTable {
+  border-collapse: collapse;
+  table-layout: fixed; /* Rất quan trọng để cố định kích thước cột */
+  width: 1023px; /* hoặc set chiều rộng cố định nếu bạn muốn */
+}
+
+/* Cố định chiều cao cho hàng tiêu đề */
+#rebarTable thead th {
+  height: 48px;
+  background-color: #ffffff;
+  font-weight: bold;
+  border: 1.5px solid #000;
   padding: 4px;
-  border-style: inset;
-  text-align: center;
-  font-size: 14px;
+}
+
+/* Cố định chiều cao cho các hàng dữ liệu */
+#rebarTable tbody td {
+  height: 82px;
+  border: 1.5px solid #000;
+  padding: 4px;
   vertical-align: middle;
 }
-td[contenteditable="true"] {
-  outline: none;
-  min-width: 60px;
+
+/* Cố định kích thước từng cột (tùy theo số lượng cột bạn có) */
+#rebarTable th:nth-child(1),
+#rebarTable td:nth-child(1),
+#rebarTable th:nth-child(4),
+#rebarTable td:nth-child(4) {
+  width: 155px; /* 部位・階 切寸法 */
 }
-td canvas {
+
+#rebarTable th:nth-child(2),
+#rebarTable td:nth-child(2) {
+  width: 279px; /* 形状 */
+}
+#rebarTable th:nth-child(3),
+#rebarTable td:nth-child(3),
+#rebarTable th:nth-child(6),
+#rebarTable td:nth-child(6)  {
+  width: 62px; ケ所 */
+}
+/* Áp dụng chung cho mọi ô chia */
+td[class^="split-"] {
+  font-size: 35px;
+  height: 82px;
+  white-space: nowrap;
+  letter-spacing: 10px;
+  padding-right: 10px;
+  text-align: right;
+}
+td.split-2 {
+  background-image: linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 50% 100%;
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+}
+
+td.split-3 {
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 33.33% 100%;
+  background-position: 100% 0%, 52% 0%;
+  background-repeat: no-repeat;
+}
+
+td.split-4 {
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 25% 100%;
+  background-position: 100% 0%, 67% 0%, 33% 0%;
+  background-repeat: no-repeat;
+}
+
+td.split-5 {
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 2px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 20% 100%;
+  background-position: 100% 0%, 75% 0%, 50% 0%, 25% 0%;
+  background-repeat: no-repeat;
+}
+td.split-5-2 {
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),  /* cột 100% */
+    linear-gradient(to right, black 1px, transparent 1px),  /* cột 75% */
+    linear-gradient(to right, black 1px, transparent 1px),  /* cột 50% */
+    linear-gradient(to right, black 1px, transparent 1px),  /* cột 25% */
+    linear-gradient(to top, transparent 49%, black 50%, transparent 51%); /* đường ngang nửa dưới */
+    
+  background-size: 20% 50%, 20% 50%, 20% 50%, 20% 50%, 100% 100%;
+  background-position: 100% 0%, 75% 0%, 50% 0%, 25% 0%, 0% 100%;
+  background-repeat: no-repeat;
+  
+  position: relative;
+  vertical-align: bottom;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+.input-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 41px;
+  width: 146px;
+}
+
+.bottom-input {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-size: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  line-height: 1;     
+  box-sizing: border-box;
+  letter-spacing: 3px;
+}
+
+.shokucho-wrapper {
+  width: 105px;
+  height: 65px;
+  display: inline-block;
+}
+
+.input-shokucho {
+  width: 105px;
+  height: 65px;
+  border: 2px solid black;
+  box-sizing: border-box;
+  font-size: 35px;
+  letter-spacing: 10px;
+  text-align: right;
+  padding-left: 5px;
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 33.33% 100%;
+  background-position: 100% 0%, 52% 0%;
+  background-repeat: no-repeat;
+}
+
+.hannyu-wrapper {
+  width: 210px;
+  height: 65px;
+  display: inline-block;
+}
+.input-hannyu {
+  width: 210px;
+  height: 65px;
+  border: 2px solid black;
+  box-sizing: border-box;
+  font-size: 35px;
+  letter-spacing: 10px;
+  text-align: right;
+  padding-left: 5px;
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to right, black 1px, transparent 1px);
+  background-size: 16.8% 100%;
+  background-position: 100% 0%, 80% 0%, 61% 0%, 41% 0%, 21% 0%;
+  background-repeat: no-repeat;
+}
+
+
+
+#rebarTable th:nth-child(5),
+#rebarTable td:nth-child(5) {
+  width: 124px; /* 本数 */
+}
+#rebarTable th:nth-child(7),
+#rebarTable td:nth-child(7),
+#rebarTable th:nth-child(8),
+#rebarTable td:nth-child(8)  {
+  width: 93px; /* 定尺, 圧接 */
+}
+/* Nếu muốn canvas nằm giữa ô */
+.shape-cell canvas {
   display: block;
   margin: 0 auto;
-  max-width: 100%;
 }
+
+
+
 #shapePopup, .popup {
   display: none;
   position: fixed;
@@ -201,64 +505,7 @@ td canvas {
 .context-menu ul li:hover {
   background: #eee;
 }
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-}
-.header-body {
-	flex: 1 1 60%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.header-left {
-  flex: 1;
-}
-.header-right {
-flex: 1 1 35%;
-  display: flex;
-  flex-direction: column;
-  gap: 13px; 
-  text-align: left;
-}
-.header-body .info-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: nowrap;
-  font-size: 14px;
-}
-.header-body .info-item input[type="text"],
-.header-body .info-item input[type="tel"],
-.header-body .info-item input[type="date"],
-.header-body .info-item input[type="time"] {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-}
-.header-body .info-item label {
-  width: 90px;
-  color: #000;
-}
-.header-body .info-item input::placeholder {
-  color: #888;
-  font-weight: normal;
-}
-.header-top {
-  text-align: center;
-}
-.header-top h1 {
-  font-size: 25px;
-  color: #000;
-  letter-spacing: 25px;
-}
+
 .fixed-buttons {
   position: fixed;
   bottom: 20px;
@@ -569,10 +816,6 @@ body.popup-open {
   html, body {
     max-width: 100vw;
   }
-  th, td {
-    font-size: 12px;
-    padding: 6px;
-  }
   .shape-option input,
   #applyBtn,
   #cancelBtn,
@@ -635,91 +878,77 @@ body.popup-open {
     pointer-events: none;
   }
 }
+.nested-wrapper {
+  width: 155px;
+  height: 81px;
+  overflow: hidden;  /* ẩn phần tràn nếu có */
+}
 
 </style>
 </head>
 <body>
 <div class="a4-container">
-<div class="header-top">
-  <h1>鉄筋積算書</h1>
-  <div class="header">
-    <div class="header-body">
-      <div class="info-item">
-        工事名：<input type="text" id="project-name" placeholder="大桜工業株式会社" />
-      </div>
-      <div class="info-item">
-        現場住所：<input type="text" id="site-address" placeholder="福岡県那珂川西畑1054番地1" />
-      </div>
-      <div class="info-item">
-        担当者(電話)：<input type="text" id="contact" placeholder="山田 太郎 (080 1234 5678)" />
-      </div>
-      <div class="info-date">
-        <label id="transport-label">運搬:</label>
-        <select id="transport-select">
-          <option value="">お引取り</option>
-          <option value="5000">軽トラック(5,000)</option>
-          <option value="15000">3トン車(15,000)</option>
-          <option value="20000">4トン車(20,000)</option>
-		  
-        </select>
-		
-        <label id="date-label">搬入日:</label>
-        <input type="date" id="delivery-date" />
-      </div>
-    </div>
-    <div class="header-right">
-      <div class="info-item">大桜工業株式会社</div>
-      <div class="info-item">福岡県那珂川西畑1054番地1</div>
-      <div class="info-item">Tel: 092-951-0727 || Fax: 092-951-0728</div>
-      <div class="info-item">Email: momo.cheri@w2.dion.ne.jp</div>
-    </div>
+ <div class="header-full">
+ <div class="header">
+  <div class="header-left">
+    <div class="title">鉄筋積算書</div>
+    <div class="info-no underline1">加工帳NO:	/	</div>
+    <div class="info-name underline">工事名：<input type="text" id="project-name" placeholder="大桜工業株式会社" /></div>
+  </div>
+  <div class="header-right">
+    <div class="info-vip">職長NO
+		<span class="shokucho-wrapper">
+          <input type="text" class="input-shokucho" />
+         </span>
+</div>
+    <div class="info-text">（西暦）	年	月	日</div>
+    <div class="info-item">搬入日
+		<span class="hannyu-wrapper">
+          <input id="hannyu" type="text" class="input-hannyu" />
+         </span>
+</div>
   </div>
 </div>
-  <table id="rebarTable">
+
+ <div class="header-2">
+ ①基礎	②柱	③壁	④スラブ	⑤梁	⑥階段	⑦手すり	⑧雜工事	⑨擁壁	⑩CP プロック
+</div>
+</div>
+<div class="table-container">
+ <table id="rebarTable">
     <thead>
       <tr>
-		<th>番号<br><span class="sub">(No.)</span></th>
+		<th>部位 ・ 階</th>
           <th>形状</th>
-          <th>径</th>
+          <th>D</th>
           <th>切寸法</th>
           <th>本数</th>
-          <th>重量<br><span class="sub">(kg)</span></th>
-          <th>切断<br><span class="sub">30円/回</span></th>
-          <th>折曲<br><span class="sub">30円/回</span></th>
-          <th>材料<br><span class="sub">115円/kg</span></th>
-          <th>合計<br><span class="sub">材料+切断＋折曲</span></th>
+          <th>ケ所</th>
+          <th>定尺</th>
+          <th>压 接</th>
       </tr>
     </thead>
     <tbody id="dataBody">
       <tr>
-        <td></td>
+		
+		<td class="split-5-2">
+		<div class="input-wrapper">
+		<input type="text" id="input-no"  class="bottom-input">
+	    </div>
+		</td>
         <td class="shape-cell" onclick="openPopup(this)">
           <canvas width="100" height="50" data-a="a" data-b="b" data-c="c" data-d="d" data-e="e" data-f="f"  data-shape="0"></canvas>
         </td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+		<td  contenteditable="true" class="split-2"></td>
+        <td contenteditable="true" class="split-5"></td>
+        <td contenteditable="true" class="split-4"></td>
+		<td  contenteditable="true" class="split-2"></td>
+        <td contenteditable="true" class="split-3"></td>
+        <td contenteditable="true" class="split-3"></td>
       </tr>
     </tbody>
-	<tfoot id="tableFooter">
-        <tr>
-          <td colspan="5" class="bold">合計</td>
-          <td id="total-weight">0</td>
-          <td id="total-cut-cost">0</td>
-          <td id="total-bend-cost">0</td>
-          <td id="total-material-cost">0</td>
-		  <td id="total-sum">
-			<div class="sum-value">0</div>
-			<div class="sum-note"></div>
-		  </td>
-        </tr>
-      </tfoot>
   </table>
+</div>
   <div class="context-menu" id="contextMenu">
     <ul>
       <li onclick="addRow()"><i class="fas fa-plus"></i> 形状追加</li>
@@ -963,10 +1192,11 @@ body.popup-open {
     <i class="fas fa-print"></i> 印刷
   </button>
   <button class="btn add-row" onclick="exportTable()">
-    <i class="fas fa-book"></i> 加工帳
+    <i class="fas fa-book"></i> 積算書
   </button>
 </div>
 <script>
+
 
   let lastInsertedRow = null;
   let selectedCanvas = null;
@@ -1404,15 +1634,7 @@ document.querySelectorAll(".header-body input, .header-body select").forEach((el
   });
 });
 
-document.getElementById("rebarTable").addEventListener("input", () => {
-  calculateAll();
-});
 
-document.getElementById("transport-select").addEventListener("change", () => {
-  calculateAll();
-});
-
-document.getElementById("delivery-date").value = today;
 
 document.getElementById("rebarTable").addEventListener("input", (event) => {
     const targetCell = event.target.closest("td");
@@ -1452,7 +1674,6 @@ document.getElementById("rebarTable").addEventListener("input", (event) => {
         targetCell.title = "";
       }
     }
-    calculateAll();
   });
   
 document.getElementById("rebarTable").addEventListener("keydown", (event) => {
@@ -1671,7 +1892,7 @@ function openPopup(cell) {
   drawSample();
   overlay.style.display = "block";
   popup.style.display = "block";
-  calculateAll();
+  ;
   popup.addEventListener('keydown', handlePopupKeys);
   setupTabInputsNavigation();
   document.body.classList.add('popup-open');
@@ -2098,7 +2319,11 @@ function applyShape() {
   if (!selectedCanvas) return;
   const shape = selectedCanvas.dataset.shape;
   const ctx = setupCanvas(selectedCanvas);
+  
   ctx.clearRect(0, 0, selectedCanvas.width, selectedCanvas.height);
+  
+  
+  
 const segments = ["a", "b", "c", "d", "e", "f"];
 const [a, b, c, d, e, f] = segments.map(seg => {
   const val = parseFloat(document.getElementById(`s${shape}${seg}`)?.value || "0");
@@ -2144,116 +2369,11 @@ selectedCanvas.dataset.shape = shape;
   if (lenInput && row.cells[3]) row.cells[3].textContent = lenInput.value;
   if (qtyInput && row.cells[4]) row.cells[4].textContent = qtyInput.value;
   closePopup();
-  calculateAll();
   const tbody = document.getElementById("dataBody");
   const rows = tbody.querySelectorAll("tr");
   const lastRow = rows[rows.length - 1];
   if (row === lastRow) {
     lastInsertedRow = addRow();
-  }
-}
-function calculateRow(row) {
-  const D = parseFloat(row.cells[2].textContent) || 0;
-  const length = parseFloat(row.cells[3].textContent) || 0;
-  const count = parseInt(row.cells[4].textContent) || 0;
-  const kgPerMeter = kgPerMeterMap[D] || 0;
-  const weightPerPiece = (length / 1000) * kgPerMeter;
-  const totalWeight = weightPerPiece * count;
-
-  const shapeCanvas = row.querySelector("canvas");
-  const shape = parseInt(shapeCanvas?.dataset?.shape || 0);
-  
-	const shapeName = parseInt(shapeCanvas?.dataset?.shapeName) || 0;
-	const d = parseFloat(shapeCanvas?.dataset?.d) || 0;
-	const bend1 = parseFloat(shapeCanvas?.dataset?.bend1) || 0;
-	const bend2 = parseFloat(shapeCanvas?.dataset?.bend2) || 0;
-	const bend3 = parseFloat(shapeCanvas?.dataset?.bend3) || 0;
-
-  // Số lần cắt miễn phí với các chiều dài sau:
-  const exemptLengths = [];
-  for (let i = 3500; i <= 12000; i += 500) {
-    exemptLengths.push(i);
-  }
-
-  let cutCost = cutPricePerBend * count;
-  if (exemptLengths.includes(length)) {
-    cutCost = 0;
-  }
-
-  const bends = getBendCountFromShape(shape, bend1, bend2, bend3, d);
-  const bendCost = bends * bendPricePerBend * count;
-  const materialCost = totalWeight * materialPricePerKg;
-  const totalCost = bendCost + materialCost + cutCost;
-
-  const formatter = new Intl.NumberFormat("ja-JP");
-  row.cells[5].textContent = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  row.cells[6].textContent = formatter.format(Math.round(cutCost));
-  row.cells[7].textContent = formatter.format(Math.round(bendCost));
-  row.cells[8].textContent = formatter.format(Math.round(materialCost));
-  row.cells[9].textContent = formatter.format(Math.round(totalCost));
-
-  return {
-    weight: totalWeight,
-    cutCost,
-    bendCost,
-    materialCost,
-    totalCost
-  };
-}function getBendCountFromShape(shape, bend1, bend2, bend3, d, shapeName) {
-  const bendMap = {
-    0: 0,
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5 
-  };
-
-    if (bend1 === 135 && bend2 === -135 && bend3 === 135&& shape === 3) {
-      return isNaN(d) ? 0 : d * 2;
-    }
-   
-
-  return bendMap[shape] || 0;
-}
-function calculateAll() {
-  const rows = document.querySelectorAll("#dataBody tr");
-  let totalWeight = 0, totalCutCost = 0, totalBendCost = 0, totalMaterialCost = 0, totalSum = 0;
-
-  rows.forEach((row, index) => {
-    row.cells[0].textContent = index + 1;
-    const result = calculateRow(row);
-    totalWeight += result.weight;
-    totalCutCost += result.cutCost;
-    totalBendCost += result.bendCost;
-    totalMaterialCost += result.materialCost;
-    totalSum += result.totalCost;
-  });
-
-  const formatter = new Intl.NumberFormat("ja-JP", { minimumFractionDigits: 0 });
-  const weightFormatted = totalWeight.toLocaleString("ja-JP", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const transportSelect = document.getElementById("transport-select");
-  const transportUnit = parseInt(transportSelect?.value || 0);
-  const transportMultiplier = Math.ceil(totalWeight / 5000); 
-  const transportCost = transportUnit * transportMultiplier;
-
-  const finalSum = totalSum + transportCost;
-  document.getElementById("total-weight").textContent = weightFormatted + ' kg';
-  document.getElementById("total-cut-cost").textContent = formatter.format(Math.round(totalCutCost)) + ' 円';
-  document.getElementById("total-bend-cost").textContent = formatter.format(Math.round(totalBendCost)) + ' 円';
-  document.getElementById("total-material-cost").textContent = formatter.format(Math.round(totalMaterialCost)) + ' 円';
-
-  const totalSumCell = document.querySelector("#total-sum .sum-value");
-  if (totalSumCell) totalSumCell.textContent = formatter.format(Math.round(finalSum)) + ' 円';
-  const sumNote = document.querySelector("#total-sum .sum-note");
-  if (sumNote) {
-    if (transportMultiplier > 1 && transportUnit > 0) {
-      sumNote.textContent = `(運搬費含 - ${transportMultiplier}回)`;
-    } else if (transportUnit > 0) {
-      sumNote.textContent = `(運搬費含)`;
-    } else {
-      sumNote.textContent = ``; 
-    }
   }
 }
 
@@ -2263,7 +2383,6 @@ function deleteCurrentPopupRow() {
   if (row && row.parentNode) {
     row.remove();
     closePopup(); 
-    calculateAll();
   }
 }
 
@@ -2275,21 +2394,21 @@ function showContextMenu(x, y) {
 
 function deleteRow() {
       if (currentRow) currentRow.remove();
-	calculateAll()
+	
     }
 
 function moveUp() {
       if (currentRow && currentRow.previousElementSibling) {
         table.tBodies[0].insertBefore(currentRow, currentRow.previousElementSibling);
       }
-	calculateAll()
+	
     }
 
 function moveDown() {
       if (currentRow && currentRow.nextElementSibling) {
         table.tBodies[0].insertBefore(currentRow.nextElementSibling, currentRow);
       }
-	calculateAll()
+	
     }
 
 function insertBelow() {
@@ -2297,14 +2416,18 @@ function insertBelow() {
         const newRow = currentRow.cloneNode(true);
         table.tBodies[0].insertBefore(newRow, currentRow.nextElementSibling);
       }
-	calculateAll()
+	
     }
 
 function addRow() {
   const row = document.querySelector("#dataBody tr");
   const clone = row.cloneNode(true);
-  for (let i = 2; i <= 8; i++) {
+  for (let i = 2; i <= 7; i++) {
     clone.cells[i].textContent = "";
+  }
+  const input = clone.querySelector('.input-wrapper input.bottom-input');
+  if (input) {
+    input.value = "";
   }
   const canvas = clone.querySelector("canvas");
   if (canvas) {
@@ -2316,7 +2439,7 @@ function addRow() {
     });
   }
   document.getElementById("dataBody").appendChild(clone);
-  calculateAll();
+  ;
   const shapeCell = clone.querySelector('.shape-cell');
   if (shapeCell) {
     shapeCell.setAttribute('tabindex', '0');
@@ -2329,37 +2452,35 @@ function addRow() {
 async function exportPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
-  const margin = 10;
+  const margin = 8.5;
+  const topMargin = 5; 
   const pdfWidth = doc.internal.pageSize.getWidth();
   const pdfHeight = doc.internal.pageSize.getHeight();
   const imgWidth = pdfWidth - 2 * margin;
-  const header = document.querySelector(".header-top");
+  const header = document.querySelector(".header-full");
   const canvasHeader = await html2canvas(header, { scale: 2 });
   const imgHeader = canvasHeader.toDataURL("image/png");
-  const headerHeight = 45;
-  doc.addImage(imgHeader, "PNG", margin, margin, imgWidth, headerHeight);
-  let currentHeight = headerHeight + 7;
+  const headerHeight = 30;
+  doc.addImage(imgHeader, "PNG", margin, topMargin, imgWidth, headerHeight);
+  let currentHeight = headerHeight + 8;
   const table = document.getElementById("rebarTable");
   const fullCanvas = await html2canvas(table, { scale: 2, backgroundColor: "#fff" });
   const fullImgWidth = fullCanvas.width;
   const fullImgHeight = fullCanvas.height;
   const thead = table.querySelector("thead");
   const tbody = table.querySelector("tbody");
-  const tfoot = table.querySelector("tfoot");
   const theadCanvas = await html2canvas(thead, { scale: 2 });
   const theadHeightPx = theadCanvas.height;
-  const tfootCanvas = await html2canvas(tfoot, { scale: 2 });
-  const tfootHeightPx = tfootCanvas.height;
-  const tbodyHeightPx = fullImgHeight - theadHeightPx - tfootHeightPx;
+  const tbodyHeightPx = fullImgHeight - theadHeightPx;
   const rowCount = tbody.querySelectorAll("tr").length;
   const rowHeightPx = tbodyHeightPx / rowCount;
-  const rowsPerPage = 12;
+  const rowsPerPage = 15;
   const bodySliceHeightPx = rowHeightPx * rowsPerPage;
   const totalPages = Math.ceil(rowCount / rowsPerPage);
   for (let page = 0; page < totalPages; page++) {
     if (page > 0) {
       doc.addPage();
-      doc.addImage(imgHeader, "PNG", margin, margin, imgWidth, headerHeight);
+      doc.addImage(imgHeader, "PNG", margin, topMargin, imgWidth, headerHeight);
     }
     const canvasPage = document.createElement("canvas");
     const ctx = canvasPage.getContext("2d");
@@ -2377,19 +2498,22 @@ async function exportPDF() {
     const pageImgData = canvasPage.toDataURL("image/png");
     const pageImgHeightMM = (canvasPage.height * imgWidth) / canvasPage.width;
     doc.addImage(pageImgData, "PNG", margin, currentHeight, imgWidth, pageImgHeightMM);
-	doc.setFontSize(10);
-	const footerText = `No. ${page + 1} / ${totalPages}`;
+	doc.setFontSize(14);
+	const footerText = `${page + 1}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${totalPages}`;
 	const textWidth = doc.getTextWidth(footerText);
-	doc.text(footerText, pdfWidth - margin - textWidth, pdfHeight - 5);
+	doc.text(footerText, 56, 20, { align: "center" }); ;
   }
-  const projectName = document.getElementById("project-name").value.trim() || "工事名";
-  const contactRaw = document.getElementById("contact").value.trim() || "担当者";
-  const today = new Date().toISOString().split("T")[0];
-  const sanitize = str => str.replace(/[\\/:*?"<>|()\s]/g, "_");
-  const contactFormatted = contactRaw.replace(/\s*\(?(\d{2,4})\s*(\d{2,4})\s*(\d{3,4})\)?/, "-$1$2$3");
-  const fileName = `${sanitize(projectName)}_${sanitize(contactFormatted)}_${today}.pdf`;
-	  alert("鉄筋積算書をご送付の上、LINE（090-3660-1790）までご連絡いただけますと幸いです。");
-	  doc.save(fileName);
+const projectName = document.getElementById("project-name").value.trim() || "工事名";
+const hannyu = document.getElementById("hannyu").value.trim() || "搬入日";
+
+// Thay thế các ký tự đặc biệt thành dấu gạch dưới cho an toàn tên file
+const sanitize = str => str.replace(/[\\/:*?"<>|()\s]/g, "_");
+
+// Tạo tên file đơn giản gồm project-name và hannyu
+const fileName = `${sanitize(projectName)}_${sanitize(hannyu)}.pdf`;
+
+alert("鉄筋積算書をご送付の上、LINE（090-3660-1790）までご連絡いただけますと幸いです。");
+doc.save(fileName);
 	  
 }
 
@@ -2402,6 +2526,7 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+
 
 function exportTable() {
   const rows = document.querySelectorAll("#dataBody tr");
@@ -2432,7 +2557,7 @@ function exportTable() {
   });
 
   localStorage.setItem("rebarRows", JSON.stringify(data));
-  window.location.href = "home.html"; 
+  window.location.href = "index.html"; 
 }
 
 function importTable() {
