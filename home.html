@@ -2528,6 +2528,76 @@ if ('serviceWorker' in navigator) {
 }
 
 
+function deleteEmptyRows() {
+  const tbody = document.getElementById("dataBody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.forEach(row => {
+    if (!row.querySelector("canvas")) {
+      row.remove();
+    }
+  });
+}
+function applyShapeToCanvas(canvas) {
+  if (!canvas) return;
+
+  const shape = canvas.dataset.shape;
+  const ctx = setupCanvas(canvas);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Đọc các đoạn chiều dài
+  const segments = ["a", "b", "c", "d", "e", "f"];
+  const [a, b, c, d, e, f] = segments.map(seg => {
+    const val = parseFloat(document.getElementById(`s${shape}${seg}`)?.value || "0");
+    return isNaN(val) ? 0 : val;
+  });
+
+  // Đọc các góc/lần bẻ
+  const [bend1, bend2, bend3, bend4, bend5] = [1, 2, 3, 4, 5].map(i => {
+    const val = parseFloat(document.getElementById(`s${shape}bend${i}`)?.value || "0");
+    return isNaN(val) ? 0 : val;
+  });
+
+  // Vẽ theo loại shape
+  switch (shape) {
+    case "0": drawShape0(ctx, a); break;
+    case "1": drawShape1(ctx, a, b, bend1); break;
+    case "2": drawShape2(ctx, a, b, c, bend1, bend2); break;
+    case "3": drawShape3(ctx, a, b, c, d, bend1, bend2, bend3); break;
+    case "4": drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4); break;
+    case "5": drawShape5(ctx, a, b, c, d, e, f, bend1, bend2, bend3, bend4, bend5); break;
+  }
+
+  // Lưu lại giá trị vào dataset của canvas
+  segments.forEach(seg => {
+    const input = document.getElementById(`s${shape}${seg}`);
+    canvas.dataset[seg] = input ? input.value || "0" : "0";
+  });
+
+  for (let i = 1; i <= 5; i++) {
+    const input = document.getElementById(`s${shape}bend${i}`);
+    canvas.dataset[`bend${i}`] = input ? input.value || "0" : "0";
+  }
+
+  // Gán tên preset nếu có
+  const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
+  if (presetSelect) {
+    canvas.dataset.shapeName = presetSelect.value || "";
+  }
+
+  // Gán thông số vật tư cho bảng
+  const row = canvas.closest("tr");
+  if (row) {
+    const diaInput = document.getElementById("dia");
+    const lenInput = document.getElementById("len");
+    const qtyInput = document.getElementById("qty");
+    if (row.cells[2] && diaInput) row.cells[2].textContent = diaInput.value;
+    if (row.cells[3] && lenInput) row.cells[3].textContent = lenInput.value;
+    if (row.cells[4] && qtyInput) row.cells[4].textContent = qtyInput.value;
+  }
+}
+
+
 function exportTable() {
   const rows = document.querySelectorAll("#dataBody tr");
   const data = [];
@@ -2603,10 +2673,10 @@ function importTable() {
 
     // Gán selectedCanvas tạm thời để applyShape vẽ đúng
     selectedCanvas = canvas;
-    applyShape();
+    applyShapeToCanvas(canvas);
 	localStorage.removeItem("rebarRows");
+    deleteEmptyRows();
   });
-
 }
 
 </script>
