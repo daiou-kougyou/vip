@@ -38,6 +38,7 @@ body {
   padding: 0;
   width: 100%;
   background: white;
+  padding-bottom: 280px;
 }
 .a4-container {
   width: 210mm;
@@ -261,11 +262,15 @@ flex: 1 1 35%;
 }
 .fixed-buttons {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 65px;
   display: flex;
   gap: 10px;
   z-index: 999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
 }
 .fixed-buttons .btn {
   padding: 10px 16px;
@@ -636,6 +641,54 @@ body.popup-open {
   }
 }
 
+#footer {
+  background-color: white; /* nền trắng */
+  color: black;            /* chữ đen */
+  position: fixed;
+  bottom: 0;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+footer {
+  position: fixed;      /* cố định */
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  bottom: 0;            /* sát đáy */
+  width: 100vw;         /* full chiều ngang viewport */
+  height: 50px;         /* chiều cao cố định */
+  background-color: #fff; /* màu nền */
+  color: #000;          /* màu chữ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;      /* font-size cố định */
+  user-select: none;    /* tùy chọn, không cho chọn */
+  z-index: 1000;
+}
+.footer-content {
+  text-align: center;
+}
+
+.footer-logo {
+  width: 140px;
+  height: auto;
+  margin: 0 auto 6px auto;
+  display: block;
+}
+
+#footer p {
+  margin: 0;
+  font-size: 14px;
+  color: black; /* chắc chắn chữ đen */
+}
 </style>
 </head>
 <body>
@@ -965,6 +1018,24 @@ body.popup-open {
   <button class="btn add-row" onclick="exportTable()">
     <i class="fas fa-book"></i> 加工帳
   </button>
+<button class="btn calc-btn" onclick="goToToolPage()">
+  <i class="fas fa-calculator"></i> 計算
+</button>
+  
+  <button class="btn save-btn" onclick="exportTableToFile()">
+    <i class="fas fa-save"></i> 保存
+  </button>
+  <button class="btn open-btn" onclick="document.getElementById('fileInput').click()">
+    <i class="fas fa-folder-open"></i> 開く
+  </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFromFile(this)">
+</div>
+
+<div id="footer">
+  <div class="footer-content">
+    <img class="footer-logo" src="https://storage.googleapis.com/studio-design-asset-files/projects/xmaZoKkAWR/s-840x131_v-fs_webp_e2de4307-8f3d-4c90-b3f0-0daec577ddd4_small.webp" alt="Logo">
+    <p>©︎DAIOU KOUGYOU All rights reserved</p>
+  </div>
 </div>
 <script>
 
@@ -2151,6 +2222,7 @@ selectedCanvas.dataset.shape = shape;
   if (row === lastRow) {
     lastInsertedRow = addRow();
   }
+  mergeDuplicateRows();
 }
 function calculateRow(row) {
   const D = parseFloat(row.cells[2].textContent) || 0;
@@ -2402,16 +2474,13 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-
-function deleteEmptyRows() {
+function deleteFirstRow() {
   const tbody = document.getElementById("dataBody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
+  const firstRow = tbody.querySelector("tr");
 
-  rows.forEach(row => {
-    if (!row.querySelector("canvas")) {
-      row.remove();
-    }
-  });
+  if (firstRow) {
+    firstRow.remove();
+  }
 }
 function applyShapeToCanvas(canvas) {
   if (!canvas) return;
@@ -2460,19 +2529,9 @@ function applyShapeToCanvas(canvas) {
     canvas.dataset.shapeName = presetSelect.value || "";
   }
 
-  // Gán thông số vật tư cho bảng
-  const row = canvas.closest("tr");
-  if (row) {
-    const diaInput = document.getElementById("dia");
-    const lenInput = document.getElementById("len");
-    const qtyInput = document.getElementById("qty");
-    if (row.cells[2] && diaInput) row.cells[2].textContent = diaInput.value;
-    if (row.cells[3] && lenInput) row.cells[3].textContent = lenInput.value;
-    if (row.cells[4] && qtyInput) row.cells[4].textContent = qtyInput.value;
-  }
 }
 
-function exportTable() {
+function exportTable(skipRedirect = false) {
   const rows = document.querySelectorAll("#dataBody tr");
   const data = [];
 
@@ -2500,17 +2559,42 @@ function exportTable() {
     });
   });
 
-  localStorage.setItem("rebarRows", JSON.stringify(data));
-  window.location.href = "home.html"; 
-}
+const projectName = document.getElementById("project-name")?.value || "";
 
+const saveData = {
+  projectName,
+  rows: data
+};
+
+localStorage.setItem("rebarRows", JSON.stringify(saveData));
+
+const info = {
+  projectName,
+  siteAddress: document.getElementById("site-address")?.value || "",
+  contact: document.getElementById("contact")?.value || "",
+  deliveryDate: document.getElementById("delivery-date")?.value || "",
+  transport: document.getElementById("transport-select")?.value || ""
+};
+
+savePartialFormInfo(info);
+
+
+
+if (!skipRedirect) {
+  window.location.href = "home.html";
+  }
+}
 function importTable() {
   const json = localStorage.getItem("rebarRows");
-  if (!json) {
-    return;
-  }
+  if (!json) return;
 
-  const rows = JSON.parse(json);
+  const saved = JSON.parse(json);
+  const rows = saved.rows || [];
+
+  // Gán lại project name
+  if (saved.projectName && document.getElementById("project-name")) {
+    document.getElementById("project-name").value = saved.projectName;
+  }
 
   rows.forEach(data => {
     const row = addRow(); // Hàm có sẵn trong hệ thống của bạn
@@ -2523,7 +2607,7 @@ function importTable() {
       }
     });
 
-    // Gán giá trị vào các input của popup (để applyShape sử dụng được)
+    // Gán giá trị vào các input của popup
     const shape = data.shape;
     const segments = ["a", "b", "c", "d", "e", "f"];
     segments.forEach(seg => {
@@ -2536,23 +2620,190 @@ function importTable() {
       if (bendInput) bendInput.value = data[`bend${i}`] || "0";
     }
 
-    // Gán preset chọn sẵn nếu có
     const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
     if (presetSelect) presetSelect.value = data.shapeName || "";
 
-    // Gán thông số đường kính, chiều dài, số lượng vào bảng
     row.cells[2].textContent = data.dia || "";
     row.cells[3].textContent = data.len || "";
     row.cells[4].textContent = data.qty || "";
 
-    // Gán selectedCanvas tạm thời để applyShape vẽ đúng
     selectedCanvas = canvas;
     applyShapeToCanvas(canvas);
-	localStorage.removeItem("rebarRows");
-    deleteEmptyRows();
   });
+
+  localStorage.removeItem("rebarRows");
+  deleteFirstRow();
+  mergeDuplicateRows();
+  calculateAll()
 }
 
+function savePartialFormInfo(newData) {
+  const existing = JSON.parse(localStorage.getItem("rebarFormInfo") || "{}");
+  const updated = { ...existing, ...newData };
+  localStorage.setItem("rebarFormInfo", JSON.stringify(updated));
+}
+
+function loadFormInfo() {
+  const json = localStorage.getItem("rebarFormInfo");
+  if (!json) return;
+
+  const info = JSON.parse(json);
+  const setValue = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  };
+
+  setValue("project-name", info.projectName || "");
+  setValue("site-address", info.siteAddress || "");
+  setValue("contact", info.contact || "");
+  setValue("delivery-date", info.deliveryDate || "");
+  setValue("transport-select", info.transport || "");
+  setValue("hannyu", info.hannyu || "");
+}
+window.addEventListener("DOMContentLoaded", loadFormInfo);
+function exportTableToFile() {
+  const rows = document.querySelectorAll("#dataBody tr");
+  const data = [];
+
+  rows.forEach(row => {
+    const canvas = row.querySelector("canvas");
+    if (!canvas) return;
+
+    data.push({
+      shape: canvas.dataset.shape,
+      shapeName: canvas.dataset.shapeName || "",
+      a: canvas.dataset.a || "0",
+      b: canvas.dataset.b || "0",
+      c: canvas.dataset.c || "0",
+      d: canvas.dataset.d || "0",
+      e: canvas.dataset.e || "0",
+      f: canvas.dataset.f || "0",
+      bend1: canvas.dataset.bend1 || "0",
+      bend2: canvas.dataset.bend2 || "0",
+      bend3: canvas.dataset.bend3 || "0",
+      bend4: canvas.dataset.bend4 || "0",
+      bend5: canvas.dataset.bend5 || "0",
+      dia: row.cells[2]?.textContent || "",
+      len: row.cells[3]?.textContent || "",
+      qty: row.cells[4]?.textContent || "",
+    });
+  });
+
+  const projectName = document.getElementById("project-name")?.value.trim() || "project";
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+  const saveData = {
+    projectName,
+    siteAddress: document.getElementById("site-address")?.value || "",
+    contact: document.getElementById("contact")?.value || "",
+    deliveryDate: document.getElementById("delivery-date")?.value || "",
+    transport: document.getElementById("transport-select")?.value || "",
+    hannyu: document.getElementById("hannyu")?.value || "",
+    rows: data
+  };
+
+  const blob = new Blob([JSON.stringify(saveData, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+
+  // Đặt tên file: projectName_YYYY-MM-DD.json
+ const safeProjectName = projectName.replace(/[\/\\:*?"<>|]/g, "_");
+  a.download = `${safeProjectName}_${today}.json`;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+
+function loadFromFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const json = e.target.result;
+    const data = JSON.parse(json);
+
+    // Gán thông tin form
+    document.getElementById("project-name").value = data.projectName || "";
+    document.getElementById("site-address").value = data.siteAddress || "";
+    document.getElementById("contact").value = data.contact || "";
+    document.getElementById("delivery-date").value = data.deliveryDate || "";
+    document.getElementById("transport-select").value = data.transport || "";
+
+    // Gán dữ liệu vào bảng
+    (data.rows || []).forEach(d => {
+      const row = addRow(); // hàm đã có sẵn
+      const canvas = row.querySelector("canvas");
+      Object.entries(d).forEach(([key, val]) => {
+        if (key in canvas.dataset) {
+          canvas.dataset[key] = val;
+        }
+      });
+
+      row.cells[2].textContent = d.dia || "";
+      row.cells[3].textContent = d.len || "";
+      row.cells[4].textContent = d.qty || "";
+
+      selectedCanvas = canvas;
+      applyShapeToCanvas(canvas);
+	  calculateAll()
+    });
+mergeDuplicateRows();
+  };
+
+  reader.readAsText(file);
+}
+
+function mergeDuplicateRows() {
+  const rows = document.querySelectorAll("#dataBody tr");
+  const seen = new Map();
+
+  rows.forEach((row, index) => {
+    const canvas = row.querySelector("canvas");
+    if (!canvas) return;
+
+    const key = [
+      canvas.dataset.shape,
+      canvas.dataset.shapeName || "",
+      canvas.dataset.a || "0",
+      canvas.dataset.b || "0",
+      canvas.dataset.c || "0",
+      canvas.dataset.d || "0",
+      canvas.dataset.e || "0",
+      canvas.dataset.f || "0",
+      canvas.dataset.bend1 || "0",
+      canvas.dataset.bend2 || "0",
+      canvas.dataset.bend3 || "0",
+      canvas.dataset.bend4 || "0",
+      canvas.dataset.bend5 || "0",
+      row.cells[2]?.textContent || "", // dia
+      row.cells[3]?.textContent || "", // len
+    ].join("|");
+
+    const qtyCell = row.cells[4];
+    const qty = parseInt(qtyCell?.textContent || "0", 10);
+
+    if (seen.has(key)) {
+      // Nếu đã thấy, cộng dồn số lượng vào dòng đầu tiên
+      const firstRow = seen.get(key);
+      const firstQtyCell = firstRow.cells[4];
+      const oldQty = parseInt(firstQtyCell.textContent || "0", 10);
+      firstQtyCell.textContent = oldQty + qty;
+
+      // Xoá dòng trùng hiện tại
+      row.remove();
+    } else {
+      // Lưu dòng đầu tiên theo key
+      seen.set(key, row);
+    }
+  });
+}
+function goToToolPage() {
+  exportTable(true); // Lưu dữ liệu nhưng không chuyển trang về index.html
+  window.location.href = "tool.html";
+}
 </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

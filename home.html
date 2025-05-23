@@ -37,6 +37,7 @@ body {
   margin: 0;
   padding: 0;
   background: white;
+  padding-bottom: 280px;
 }
 .a4-container {
   width: 1123px;
@@ -297,21 +298,24 @@ td.split-5-2 {
   height: 41px;
   width: 146px;
 }
-
 .bottom-input {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  font-size: 30px;
+  font-size: 25px;
   border: none;
   outline: none;
   background: transparent;
-  text-align: center;
-  line-height: 1;     
-  box-sizing: border-box;
+  text-align: center;   /* căn ngang */
+  line-height: 1;
   letter-spacing: 3px;
+  
+  /* Căn giữa dọc */
+  display: flex;
+  justify-content: center; /* căn ngang (thay thế text-align) */
+  align-items: center;     /* căn dọc */
+  padding: 0;              /* bỏ padding nếu có */
 }
-
 .shokucho-wrapper {
   width: 105px;
   height: 65px;
@@ -336,17 +340,15 @@ td.split-5-2 {
 }
 
 .hannyu-wrapper {
-  width: 210px;
-  height: 65px;
   display: inline-block;
 }
 .input-hannyu {
-  width: 210px;
+  width: 200px;
   height: 65px;
   border: 2px solid black;
   box-sizing: border-box;
   font-size: 35px;
-  letter-spacing: 10px;
+  letter-spacing: 13px;
   text-align: right;
   padding-left: 5px;
   background-image:
@@ -380,7 +382,7 @@ td.split-5-2 {
 
 
 
-#shapePopup, .popup {
+#shapePopup, .popup, #toolPopup, .tool {
   display: none;
   position: fixed;
   top: 0%;
@@ -508,11 +510,15 @@ td.split-5-2 {
 
 .fixed-buttons {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 65px;
   display: flex;
   gap: 10px;
   z-index: 999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
 }
 .fixed-buttons .btn {
   padding: 10px 16px;
@@ -816,6 +822,9 @@ body.popup-open {
   html, body {
     max-width: 100vw;
   }
+  .input-hannyu {
+    letter-spacing: 10px;
+  }
   .shape-option input,
   #applyBtn,
   #cancelBtn,
@@ -883,6 +892,65 @@ body.popup-open {
   height: 81px;
   overflow: hidden;  /* ẩn phần tràn nếu có */
 }
+#footer {
+  background-color: white; /* nền trắng */
+  color: black;            /* chữ đen */
+  position: fixed;
+  bottom: 0;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+footer {
+  position: fixed;      /* cố định */
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  bottom: 0;            /* sát đáy */
+  width: 100vw;         /* full chiều ngang viewport */
+  height: 50px;         /* chiều cao cố định */
+  background-color: #fff; /* màu nền */
+  color: #000;          /* màu chữ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;      /* font-size cố định */
+  user-select: none;    /* tùy chọn, không cho chọn */
+  z-index: 1000;
+}
+.footer-content {
+  text-align: center;
+}
+
+.footer-logo {
+  width: 140px;
+  height: auto;
+  margin: 0 auto 6px auto;
+  display: block;
+}
+
+#footer p {
+  margin: 0;
+  font-size: 14px;
+  color: black; /* chắc chắn chữ đen */
+}
+
+ .hidden { display: none; }
+    .tool {
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      z-index: 9999;
+    }
 
 </style>
 </head>
@@ -898,13 +966,13 @@ body.popup-open {
   <div class="header-right">
     <div class="info-vip">職長NO
 		<span class="shokucho-wrapper">
-          <input type="text" class="input-shokucho" />
+		  <div id="shokucho" class="input-shokucho" contenteditable="true"></div>
          </span>
 </div>
     <div class="info-text">（西暦）	年	月	日</div>
     <div class="info-item">搬入日
 		<span class="hannyu-wrapper">
-          <input id="hannyu" type="text" class="input-hannyu" />
+          <div id="hannyu" class="input-hannyu" contenteditable="true"></div>
          </span>
 </div>
   </div>
@@ -933,7 +1001,7 @@ body.popup-open {
 		
 		<td class="split-5-2">
 		<div class="input-wrapper">
-		<input type="text" id="input-no"  class="bottom-input">
+		<div id="input-no" class="bottom-input" contenteditable="true"></div>
 	    </div>
 		</td>
         <td class="shape-cell" onclick="openPopup(this)">
@@ -1187,6 +1255,131 @@ body.popup-open {
     </button>
   </div>
 </div>
+
+
+
+
+
+<div id="toolPopup" class="tool hidden">
+  <h3>計算フォーム</h3>
+      <label><span>働き寸法</span><input type="number" id="length" value="" /></label>
+      <label><span>使用材</span><input type="number" id="material" value="" /></label>
+      <label><span>継手長さ</span><input type="number" id="joint" value="" /></label>
+      <label><span>ｱﾝｶｰ1</span><input type="number" id="anchor1" value="" /></label>
+      <label><span>ｱﾝｶｰ2</span><input type="number" id="anchor2" value="" /></label>
+
+    <canvas width="120" height="80" id="shapetool"></canvas>
+
+
+  
+    <button id="applyBtn" onclick="calculateRebarPlan()" title="確定">
+      <i class="fas fa-check"></i> 計算
+    </button>
+    <button id="cancelBtn" onclick="closeToolPopup()" title="キャンセル">
+      <i class="fas fa-times"></i> キャンセル
+    </button>
+</div>
+
+  <script>
+    function calculateRebarPlan() {
+  const length = parseInt(document.getElementById("length").value);
+  const material = parseInt(document.getElementById("material").value);
+  const joint = parseInt(document.getElementById("joint").value);
+  const anchor1 = parseInt(document.getElementById("anchor1").value) || 0;
+  const anchor2 = parseInt(document.getElementById("anchor2").value) || 0;
+
+  const totalLength = length + anchor1 + anchor2;
+
+  let n = 1;
+  let effective = 0;
+
+  // Tính số lần sử dụng 使用材 đủ để đạt chiều dài yêu cầu (có tính 継手 trừ dần)
+  while (true) {
+    effective = n * material - (n - 1) * joint;
+    if (effective >= totalLength) break;
+    n++;
+  }
+
+  const mainCount = n - 1;
+  const usedLength = mainCount * material - (mainCount - 1) * joint;
+  const needMore = totalLength - usedLength;
+  const odashi = needMore + joint; // phải nối thêm
+
+  // Xuất kết quả
+  document.getElementById("result").innerText =
+    `使用材 ${material} x ${mainCount} 回 + 追出し ${odashi}`;
+
+  drawCanvas(n, anchor1, anchor2, joint); // gọi vẽ minh họa nếu có
+}
+
+    function drawCanvas(count, anchor1, anchor2, joint) {
+      const canvas = document.getElementById("shapetool");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const startX = 50;
+      const lineLength = 100;
+      const gap = 20;
+      const y = canvas.height / 2;
+
+      for (let i = 0; i < count; i++) {
+        const x = startX + i * (lineLength );
+
+        // Đường chính
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + lineLength, y);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Dấu chéo thể hiện nối
+        if (i > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x, y - 10);
+          ctx.lineTo(x - 10, y + 10);
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
+        // Bẻ móc
+        if (i === 0 && anchor1 > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y + 50);
+          ctx.strokeStyle = "black";
+          ctx.stroke();
+        }
+        if (i === count - 1 && anchor2 > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x + lineLength, y);
+          ctx.lineTo(x + lineLength, y + 50);
+          ctx.strokeStyle = "black";
+          ctx.stroke();
+        }
+      }
+    }
+ function openToolPopup() {
+    const popup = document.getElementById("toolPopup");
+    if (popup) popup.classList.remove("hidden");
+  }
+
+  function closeToolPopup() {
+    const popup = document.getElementById("toolPopup");
+    if (popup) popup.classList.add("hidden");
+  }
+ </script>
+
+
+
+
+
+
+
+
+
+
 <div class="fixed-buttons">
   <button class="btn print" onclick="exportPDF()">
     <i class="fas fa-print"></i> 印刷
@@ -1194,7 +1387,24 @@ body.popup-open {
   <button class="btn add-row" onclick="exportTable()">
     <i class="fas fa-book"></i> 積算書
   </button>
+<button class="btn calc-btn" onclick="openToolPopup()">
+  <i class="fas fa-calculator"></i> 計算
+</button>
+  <button class="btn save-btn" onclick="exportTableToFile()">
+    <i class="fas fa-save"></i> 保存
+  </button>
+  <button class="btn open-btn" onclick="document.getElementById('fileInput').click()">
+    <i class="fas fa-folder-open"></i> 開く
+  </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFromFile(this)">
 </div>
+<div id="footer">
+  <div class="footer-content">
+    <img class="footer-logo" src="https://storage.googleapis.com/studio-design-asset-files/projects/xmaZoKkAWR/s-840x131_v-fs_webp_e2de4307-8f3d-4c90-b3f0-0daec577ddd4_small.webp" alt="Logo">
+    <p>©︎DAIOU KOUGYOU All rights reserved</p>
+  </div>
+</div>
+
 <script>
 
 
@@ -2375,6 +2585,7 @@ selectedCanvas.dataset.shape = shape;
   if (row === lastRow) {
     lastInsertedRow = addRow();
   }
+  mergeDuplicateRows();
 }
 
 function deleteCurrentPopupRow() {
@@ -2527,16 +2738,13 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
-function deleteEmptyRows() {
+function deleteFirstRow() {
   const tbody = document.getElementById("dataBody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
+  const firstRow = tbody.querySelector("tr");
 
-  rows.forEach(row => {
-    if (!row.querySelector("canvas")) {
-      row.remove();
-    }
-  });
+  if (firstRow) {
+    firstRow.remove();
+  }
 }
 function applyShapeToCanvas(canvas) {
   if (!canvas) return;
@@ -2584,21 +2792,132 @@ function applyShapeToCanvas(canvas) {
   if (presetSelect) {
     canvas.dataset.shapeName = presetSelect.value || "";
   }
-
-  // Gán thông số vật tư cho bảng
-  const row = canvas.closest("tr");
-  if (row) {
-    const diaInput = document.getElementById("dia");
-    const lenInput = document.getElementById("len");
-    const qtyInput = document.getElementById("qty");
-    if (row.cells[2] && diaInput) row.cells[2].textContent = diaInput.value;
-    if (row.cells[3] && lenInput) row.cells[3].textContent = lenInput.value;
-    if (row.cells[4] && qtyInput) row.cells[4].textContent = qtyInput.value;
-  }
 }
 
+function exportTable(skipRedirect = false) {
+  const rows = document.querySelectorAll("#dataBody tr");
+  const data = [];
 
-function exportTable() {
+  rows.forEach(row => {
+    const canvas = row.querySelector("canvas");
+    if (!canvas) return;
+
+    data.push({
+      shape: canvas.dataset.shape,
+      shapeName: canvas.dataset.shapeName || "",
+      a: canvas.dataset.a || "0",
+      b: canvas.dataset.b || "0",
+      c: canvas.dataset.c || "0",
+      d: canvas.dataset.d || "0",
+      e: canvas.dataset.e || "0",
+      f: canvas.dataset.f || "0",
+      bend1: canvas.dataset.bend1 || "0",
+      bend2: canvas.dataset.bend2 || "0",
+      bend3: canvas.dataset.bend3 || "0",
+      bend4: canvas.dataset.bend4 || "0",
+      bend5: canvas.dataset.bend5 || "0",
+      dia: row.cells[2]?.textContent || "",
+      len: row.cells[3]?.textContent || "",
+      qty: row.cells[4]?.textContent || "",
+    });
+  });
+const projectName = document.getElementById("project-name")?.value || "";
+  const hannyu = document.getElementById("hannyu")?.value || "";
+
+  // Lưu dữ liệu bảng + projectName
+  const saveData = {
+    projectName,
+    rows: data
+  };
+  localStorage.setItem("rebarRows", JSON.stringify(saveData));
+
+  // Lưu riêng projectName và hannyu để đồng bộ form info
+  savePartialFormInfo({ projectName, hannyu });
+  
+  
+
+if (!skipRedirect) {
+  window.location.href = "index.html";
+  }
+}
+function importTable() {
+  const json = localStorage.getItem("rebarRows");
+  if (!json) return;
+
+  const saved = JSON.parse(json);
+  const rows = saved.rows || [];
+
+  // Gán lại project name
+  if (saved.projectName && document.getElementById("project-name")) {
+    document.getElementById("project-name").value = saved.projectName;
+  }
+
+  rows.forEach(data => {
+    const row = addRow(); // Hàm có sẵn trong hệ thống của bạn
+    const canvas = row.querySelector("canvas");
+
+    // Gán dataset cho canvas
+    Object.entries(data).forEach(([key, val]) => {
+      if (key in canvas.dataset) {
+        canvas.dataset[key] = val;
+      }
+    });
+
+    // Gán giá trị vào các input của popup
+    const shape = data.shape;
+    const segments = ["a", "b", "c", "d", "e", "f"];
+    segments.forEach(seg => {
+      const input = document.getElementById(`s${shape}${seg}`);
+      if (input) input.value = data[seg] || "0";
+    });
+
+    for (let i = 1; i <= 5; i++) {
+      const bendInput = document.getElementById(`s${shape}bend${i}`);
+      if (bendInput) bendInput.value = data[`bend${i}`] || "0";
+    }
+
+    const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
+    if (presetSelect) presetSelect.value = data.shapeName || "";
+
+    row.cells[2].textContent = data.dia || "";
+    row.cells[3].textContent = data.len || "";
+    row.cells[4].textContent = data.qty || "";
+
+    selectedCanvas = canvas;
+    applyShapeToCanvas(canvas);
+  });
+
+  localStorage.removeItem("rebarRows");
+  deleteFirstRow();
+  mergeDuplicateRows();
+}
+function savePartialFormInfo(newData) {
+  const existing = JSON.parse(localStorage.getItem("rebarFormInfo") || "{}");
+  const updated = { ...existing, ...newData };
+  localStorage.setItem("rebarFormInfo", JSON.stringify(updated));
+}
+
+function loadFormInfo() {
+  const json = localStorage.getItem("rebarFormInfo");
+  if (!json) return;
+
+  const info = JSON.parse(json);
+  const setValue = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  };
+
+  setValue("project-name", info.projectName || "");
+  setValue("site-address", info.siteAddress || "");
+  setValue("contact", info.contact || "");
+  setValue("delivery-date", info.deliveryDate || "");
+  setValue("transport-select", info.transport || "");
+  setValue("hannyu", info.hannyu || "");
+}
+window.addEventListener("DOMContentLoaded", loadFormInfo);
+
+
+function exportTableToFile() {
   const rows = document.querySelectorAll("#dataBody tr");
   const data = [];
 
@@ -2626,59 +2945,115 @@ function exportTable() {
     });
   });
 
-  localStorage.setItem("rebarRows", JSON.stringify(data));
-  window.location.href = "index.html"; 
+  const projectName = document.getElementById("project-name")?.value.trim() || "project";
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+  const saveData = {
+    projectName,
+    siteAddress: document.getElementById("site-address")?.value || "",
+    contact: document.getElementById("contact")?.value || "",
+    deliveryDate: document.getElementById("delivery-date")?.value || "",
+    transport: document.getElementById("transport-select")?.value || "",
+    hannyu: document.getElementById("hannyu")?.value || "",
+    rows: data
+  };
+
+  const blob = new Blob([JSON.stringify(saveData, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+
+  // Đặt tên file: projectName_YYYY-MM-DD.json
+  const safeProjectName = projectName.replace(/[\/\\:*?"<>|]/g, "_");
+  a.download = `${safeProjectName}_${today}.json`;
+  a.click();
+
+  URL.revokeObjectURL(url);
 }
+function loadFromFile(input) {
+  const file = input.files[0];
+  if (!file) return;
 
-function importTable() {
-  const json = localStorage.getItem("rebarRows");
-  if (!json) {
-    return;
-  }
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const json = e.target.result;
+    const data = JSON.parse(json);
 
-  const rows = JSON.parse(json);
+    // Gán thông tin form
+    document.getElementById("project-name").value = data.projectName || "";
+    document.getElementById("hannyu").value = data.hannyu || "";
 
-  rows.forEach(data => {
-    const row = addRow(); // Hàm có sẵn trong hệ thống của bạn
+    // Gán dữ liệu vào bảng
+    (data.rows || []).forEach(d => {
+      const row = addRow(); // hàm đã có sẵn
+      const canvas = row.querySelector("canvas");
+      Object.entries(d).forEach(([key, val]) => {
+        if (key in canvas.dataset) {
+          canvas.dataset[key] = val;
+        }
+      });
+
+      row.cells[2].textContent = d.dia || "";
+      row.cells[3].textContent = d.len || "";
+      row.cells[4].textContent = d.qty || "";
+
+      selectedCanvas = canvas;
+      applyShapeToCanvas(canvas);
+    });
+
+mergeDuplicateRows();
+  };
+
+  reader.readAsText(file);
+}
+function mergeDuplicateRows() {
+  const rows = document.querySelectorAll("#dataBody tr");
+  const seen = new Map();
+
+  rows.forEach((row, index) => {
     const canvas = row.querySelector("canvas");
+    if (!canvas) return;
 
-    // Gán dataset cho canvas
-    Object.entries(data).forEach(([key, val]) => {
-      if (key in canvas.dataset) {
-        canvas.dataset[key] = val;
-      }
-    });
+    const key = [
+      canvas.dataset.shape,
+      canvas.dataset.shapeName || "",
+      canvas.dataset.a || "0",
+      canvas.dataset.b || "0",
+      canvas.dataset.c || "0",
+      canvas.dataset.d || "0",
+      canvas.dataset.e || "0",
+      canvas.dataset.f || "0",
+      canvas.dataset.bend1 || "0",
+      canvas.dataset.bend2 || "0",
+      canvas.dataset.bend3 || "0",
+      canvas.dataset.bend4 || "0",
+      canvas.dataset.bend5 || "0",
+      row.cells[2]?.textContent || "", // dia
+      row.cells[3]?.textContent || "", // len
+    ].join("|");
 
-    // Gán giá trị vào các input của popup (để applyShape sử dụng được)
-    const shape = data.shape;
-    const segments = ["a", "b", "c", "d", "e", "f"];
-    segments.forEach(seg => {
-      const input = document.getElementById(`s${shape}${seg}`);
-      if (input) input.value = data[seg] || "0";
-    });
+    const qtyCell = row.cells[4];
+    const qty = parseInt(qtyCell?.textContent || "0", 10);
 
-    for (let i = 1; i <= 5; i++) {
-      const bendInput = document.getElementById(`s${shape}bend${i}`);
-      if (bendInput) bendInput.value = data[`bend${i}`] || "0";
+    if (seen.has(key)) {
+      // Nếu đã thấy, cộng dồn số lượng vào dòng đầu tiên
+      const firstRow = seen.get(key);
+      const firstQtyCell = firstRow.cells[4];
+      const oldQty = parseInt(firstQtyCell.textContent || "0", 10);
+      firstQtyCell.textContent = oldQty + qty;
+
+      // Xoá dòng trùng hiện tại
+      row.remove();
+    } else {
+      // Lưu dòng đầu tiên theo key
+      seen.set(key, row);
     }
-
-    // Gán preset chọn sẵn nếu có
-    const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
-    if (presetSelect) presetSelect.value = data.shapeName || "";
-
-    // Gán thông số đường kính, chiều dài, số lượng vào bảng
-    row.cells[2].textContent = data.dia || "";
-    row.cells[3].textContent = data.len || "";
-    row.cells[4].textContent = data.qty || "";
-
-    // Gán selectedCanvas tạm thời để applyShape vẽ đúng
-    selectedCanvas = canvas;
-    applyShapeToCanvas(canvas);
-	localStorage.removeItem("rebarRows");
-    deleteEmptyRows();
   });
 }
-
+function goToToolPage() {
+  exportTable(true); // Lưu dữ liệu nhưng không chuyển trang về index.html
+  window.location.href = "tool.html";
+}
 </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

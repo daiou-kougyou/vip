@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>計算フォーム｜大桜工業株式会社</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffffff">
+<meta name="generator" content="Studio.Design">
+<meta name="robots" content="all">
+<meta property="og:site_name" content="大桜工業株式会社">
+<meta property="og:title" content="大桜工業株式会社">
+<meta property="og:image" content="https://storage.googleapis.com/production-os-assets/assets/749da57f-b4db-467c-9034-d1cca6768b24">
+<meta property="og:description" content="大桜工業株式会社は、福岡県にある鉄筋加工・鉄筋工事を行う会社です。建築・土木・壁構築・住宅・加工販売まで全ての鉄筋工事に対応可能です。お気軽にお問い合わせください。">
+<meta property="og:type" content="website">
+<meta name="description" content="大桜工業株式会社は、福岡県にある鉄筋加工・鉄筋工事を行う会社です。建築・土木・壁構築・住宅・加工販売まで全ての鉄筋工事に対応可能です。お気軽にお問い合わせください。">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://storage.googleapis.com/production-os-assets/assets/749da57f-b4db-467c-9034-d1cca6768b24">
+<meta name="apple-mobile-web-app-title" content="大桜工業株式会社">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="chrome" content="nointentdetection">
+<meta property="og:url" content="/">
+<link rel="icon" type="image/png" href="https://storage.googleapis.com/production-os-assets/assets/a7a22875-c5ae-451e-82f8-a82fcd097111" data-hid="2c9d455">
+<link rel="apple-touch-icon" type="image/png" href="https://storage.googleapis.com/production-os-assets/assets/a7a22875-c5ae-451e-82f8-a82fcd097111" data-hid="74ef90c">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+     * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: white;
+  padding-bottom: 280px;
+}
+.a4-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: white;
+}
+	
+    label {
+      margin-right: 10px;
+    }
+    input {
+      width: 80px;
+      margin-right: 10px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    #canvas {
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      width: 100%;
+      height: 150px;
+    }
+	
+
+.btn,
+#applyBtn,
+#cancelBtn,
+#deleteBtn {
+  padding: 10px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 4px;
+  text-align: center;
+  width: 120px;
+  height: 40px; 
+  box-sizing: border-box;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  text-align: center; 
+}
+#applyBtn,
+.btn.add-row {
+  background-color: #007bff;
+  color: white;
+}
+#applyBtn:hover,
+.btn.add-row:hover {
+  background-color: #0056b3;
+}
+#cancelBtn,
+.btn.print {
+  background-color: #cccccc;
+  color: #333;
+}
+#cancelBtn:hover,
+.btn.print:hover {
+  background-color: #eeeeee;
+}
+#deleteBtn {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+#deleteBtn:hover {
+  background-color: #f5c6cb; 
+}	
+.fixed-buttons {
+  position: fixed;
+  bottom: 65px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+}
+.fixed-buttons .btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #cccccc;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.fixed-buttons .btn:hover {
+  background-color: #eeeeee;
+}
+	
+	
+	
+#footer {
+  background-color: white; /* nền trắng */
+  color: black;            /* chữ đen */
+  position: fixed;
+  bottom: 0;
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+footer {
+  position: fixed;      /* cố định */
+  left: 50%;                        /* căn giữa theo chiều ngang */
+  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  bottom: 0;            /* sát đáy */
+  width: 100vw;         /* full chiều ngang viewport */
+  height: 50px;         /* chiều cao cố định */
+  background-color: #fff; /* màu nền */
+  color: #000;          /* màu chữ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;      /* font-size cố định */
+  user-select: none;    /* tùy chọn, không cho chọn */
+  z-index: 1000;
+}
+.footer-content {
+  text-align: center;
+}
+
+.footer-logo {
+  width: 140px;
+  height: auto;
+  margin: 0 auto 6px auto;
+  display: block;
+}
+
+#footer p {
+  margin: 0;
+  font-size: 14px;
+  color: black; /* chắc chắn chữ đen */
+}
+  </style>
+</head>
+<body>
+<div class="a4-container">
+  <h2>①使用材、継手を指定しての回数、追出し算出 </h2>
+  <div>
+    <label>働き寸法:</label><input type="number" id="length" value="20000">
+    <label>使用材:</label><input type="number" id="material" value="5000">
+    <label>継手長さ:</label><input type="number" id="joint" value="600">
+  </div>
+  
+  <div>
+    <label>ｱﾝｶｰ1:</label><input type="number" id="anchor1" value="250">
+    <label>ｱﾝｶｰ2:</label><input type="number" id="anchor2" value="300">
+    <button onclick="calculateRebarPlan()">計算</button>
+  </div>
+
+  <div id="result"></div>
+  <canvas id="canvas" width="600" height="150"></canvas>
+</div>
+<div class="fixed-buttons">
+  <button class="btn add-row" onclick="goToindexPage()">
+    <i class="fas fa-book"></i> 積算書
+  </button>
+  
+  <button class="btn add-row" onclick="goTohomePage()">
+    <i class="fas fa-book"></i> 加工帳
+  </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadFromFile(this)">
+</div>
+<div id="footer">
+  <div class="footer-content">
+    <img class="footer-logo" src="https://storage.googleapis.com/studio-design-asset-files/projects/xmaZoKkAWR/s-840x131_v-fs_webp_e2de4307-8f3d-4c90-b3f0-0daec577ddd4_small.webp" alt="Logo">
+    <p>©︎DAIOU KOUGYOU All rights reserved</p>
+  </div>
+</div>
+  <script>
+  
+function goToindexPage() {
+  window.location.href = "index.html";
+}
+function goTohomePage() {
+  window.location.href = "home.html";
+}
+calculateRebarPlan();
+    function calculateRebarPlan() {
+  const length = parseInt(document.getElementById("length").value);
+  const material = parseInt(document.getElementById("material").value);
+  const joint = parseInt(document.getElementById("joint").value);
+  const anchor1 = parseInt(document.getElementById("anchor1").value) || 0;
+  const anchor2 = parseInt(document.getElementById("anchor2").value) || 0;
+
+  const totalLength = length + anchor1 + anchor2;
+
+  let n = 1;
+  let effective = 0;
+
+  // Tính số lần sử dụng 使用材 đủ để đạt chiều dài yêu cầu (có tính 継手 trừ dần)
+  while (true) {
+    effective = n * material - (n - 1) * joint;
+    if (effective >= totalLength) break;
+    n++;
+  }
+
+  const mainCount = n - 1;
+  const usedLength = mainCount * material - (mainCount - 1) * joint;
+  const needMore = totalLength - usedLength;
+  const odashi = needMore + joint; // phải nối thêm
+
+  // Xuất kết quả
+  document.getElementById("result").innerText =
+    `使用材 ${material} x ${mainCount} 回 + 追出し ${odashi}`;
+
+  drawCanvas(n, anchor1, anchor2, joint); // gọi vẽ minh họa nếu có
+}
+
+    function drawCanvas(count, anchor1, anchor2, joint) {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const startX = 50;
+      const lineLength = 100;
+      const gap = 20;
+      const y = canvas.height / 2;
+
+      for (let i = 0; i < count; i++) {
+        const x = startX + i * (lineLength );
+
+        // Đường chính
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + lineLength, y);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Dấu chéo thể hiện nối
+        if (i > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x, y - 10);
+          ctx.lineTo(x - 10, y + 10);
+          ctx.strokeStyle = "red";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
+        // Bẻ móc
+        if (i === 0 && anchor1 > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y + 50);
+          ctx.strokeStyle = "black";
+          ctx.stroke();
+        }
+        if (i === count - 1 && anchor2 > 0) {
+          ctx.beginPath();
+          ctx.moveTo(x + lineLength, y);
+          ctx.lineTo(x + lineLength, y + 50);
+          ctx.strokeStyle = "black";
+          ctx.stroke();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
