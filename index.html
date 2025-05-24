@@ -264,7 +264,7 @@ flex: 1 1 35%;
   position: fixed;
   bottom: 65px;
   display: flex;
-  gap: 10px;
+  gap: 2px;
   z-index: 999;
   justify-content: center;
   align-items: center;
@@ -689,6 +689,53 @@ footer {
   font-size: 14px;
   color: black; /* chắc chắn chữ đen */
 }
+
+
+
+
+
+
+.tool-section {
+  margin-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.tool-header {
+  padding: 10px;
+  background: #f9f9f9;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tool-body {
+  padding: 10px;
+  display: none;
+  background: #fff;
+}
+
+.tool-section.active .tool-body {
+  display: block;
+}
+
+.close-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ccc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -1011,6 +1058,61 @@ footer {
     </button>
   </div>
 </div>
+
+
+
+
+
+
+
+
+<!-- TOOL POPUP -->
+<div id="toolPopup" class="popup">
+  <div class="popup-content">
+    <h2>Công cụ hỗ trợ</h2>
+
+    <div class="tool-section">
+      <div class="tool-header">📏 Tính chiều dài tổng</div>
+      <div class="tool-body">
+        <label>Nhập các đoạn: </label>
+        <input type="text" placeholder="a + b + c + ..." style="width: 100%;">
+        <p><button>Tính</button></p>
+      </div>
+    </div>
+
+    <div class="tool-section">
+      <div class="tool-header">📐 Tính chiều dài đoạn móc</div>
+      <div class="tool-body">
+        <label>Đường kính (D): </label>
+        <input type="number" placeholder="VD: 13" style="width: 100%;">
+        <p><button>Tính</button></p>
+      </div>
+    </div>
+
+    <div class="tool-section">
+      <div class="tool-header">⚙️ Chuyển đổi đơn vị</div>
+      <div class="tool-body">
+        <label>Nhập mét: </label>
+        <input type="number" placeholder="VD: 5.5" style="width: 100%;">
+        <p><button>Chuyển sang mm</button></p>
+      </div>
+    </div>
+
+    <button class="close-btn" onclick="closeToolPopup()">Đóng</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="fixed-buttons">
   <button class="btn print" onclick="exportPDF()">
     <i class="fas fa-print"></i> 印刷
@@ -1018,7 +1120,7 @@ footer {
   <button class="btn add-row" onclick="exportTable()">
     <i class="fas fa-book"></i> 加工帳
   </button>
-<button class="btn calc-btn" onclick="goToToolPage()">
+<button class="btn calc-btn" onclick="openToolPopup()">
   <i class="fas fa-calculator"></i> 計算
 </button>
   
@@ -1034,10 +1136,39 @@ footer {
 <div id="footer">
   <div class="footer-content">
     <img class="footer-logo" src="https://storage.googleapis.com/studio-design-asset-files/projects/xmaZoKkAWR/s-840x131_v-fs_webp_e2de4307-8f3d-4c90-b3f0-0daec577ddd4_small.webp" alt="Logo">
-    <p>©︎DAIOU KOUGYOU All rights reserved</p>
   </div>
 </div>
 <script>
+
+
+
+
+
+
+// Toggle ẩn/hiện từng phần
+document.querySelectorAll('.tool-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('active');
+  });
+});
+
+// Mở & Đóng popup
+function openToolPopup() {
+  document.getElementById('toolPopup').style.display = 'block';
+}
+
+function closeToolPopup() {
+  document.getElementById('toolPopup').style.display = 'none';
+}
+
+
+
+
+
+
+
+
+
 
   let lastInsertedRow = null;
   let selectedCanvas = null;
@@ -1583,19 +1714,27 @@ table.addEventListener("contextmenu", (e) => {
 });
 
 table.querySelectorAll(".shape-cell canvas").forEach(canvas => {
+  let touchTimer;
+  
   canvas.addEventListener("touchstart", (e) => {
-  touchTimer = setTimeout(() => {
-    const td = canvas.closest(".shape-cell");
-    if (td) {
-      currentRow = td.parentElement;
-      const touch = e.touches[0];
-      showContextMenu(touch.pageX, touch.pageY);
-    }
-  }, 600);
- });
+    e.preventDefault();  // ngăn chặn hành vi mặc định (nếu cần)
+    touchTimer = setTimeout(() => {
+      const td = canvas.closest(".shape-cell");
+      if (td) {
+        currentRow = td.parentElement;
+        const touch = e.touches[0];
+        showContextMenu(touch.pageX, touch.pageY);
+      }
+    }, 300);
+  });
+  
   canvas.addEventListener("touchend", () => clearTimeout(touchTimer));
   canvas.addEventListener("touchmove", () => clearTimeout(touchTimer));
+  
+  // Ngăn menu mặc định chuột phải (desktop)
+  canvas.addEventListener("contextmenu", e => e.preventDefault());
 });
+
 
 document.body.addEventListener("click", () => {
   contextMenu.style.display = "none";
@@ -2716,6 +2855,58 @@ function exportTableToFile() {
 }
 
 
+
+function applyfileToCanvas(canvas) {
+  if (!canvas) return;
+
+  const shape = canvas.dataset.shape;
+  const ctx = setupCanvas(canvas);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Đọc chiều dài từ dataset (không dùng input vì có thể chưa được cập nhật)
+  const segments = ["a", "b", "c", "d", "e", "f"];
+  const [a, b, c, d, e, f] = segments.map(seg => {
+    const val = parseFloat(canvas.dataset[seg] || "0");
+    return isNaN(val) ? 0 : val;
+  });
+
+  // Đọc góc từ dataset
+  const [bend1, bend2, bend3, bend4, bend5] = [1, 2, 3, 4, 5].map(i => {
+    const val = parseFloat(canvas.dataset[`bend${i}`] || "0");
+    return isNaN(val) ? 0 : val;
+  });
+
+  // Vẽ theo loại shape
+  switch (shape) {
+    case "0": drawShape0(ctx, a); break;
+    case "1": drawShape1(ctx, a, b, bend1); break;
+    case "2": drawShape2(ctx, a, b, c, bend1, bend2); break;
+    case "3": drawShape3(ctx, a, b, c, d, bend1, bend2, bend3); break;
+    case "4": drawShape4(ctx, a, b, c, d, e, bend1, bend2, bend3, bend4); break;
+    case "5": drawShape5(ctx, a, b, c, d, e, f, bend1, bend2, bend3, bend4, bend5); break;
+  }
+
+  // Cập nhật lại input nếu cần (ngược lại)
+  segments.forEach(seg => {
+    const input = document.getElementById(`s${shape}${seg}`);
+    if (input) input.value = canvas.dataset[seg] || "0";
+  });
+
+  for (let i = 1; i <= 5; i++) {
+    const input = document.getElementById(`s${shape}bend${i}`);
+    if (input) input.value = canvas.dataset[`bend${i}`] || "0";
+  }
+
+  // Gán tên preset nếu có
+  const presetSelect = document.querySelector(`.angle-preset[data-tab="${shape}"]`);
+  if (presetSelect) {
+    presetSelect.value = canvas.dataset.shapeName || "";
+  }
+}
+
+
+
+
 function loadFromFile(input) {
   const file = input.files[0];
   if (!file) return;
@@ -2747,7 +2938,7 @@ function loadFromFile(input) {
       row.cells[4].textContent = d.qty || "";
 
       selectedCanvas = canvas;
-      applyShapeToCanvas(canvas);
+      applyfileToCanvas(canvas);
 	  calculateAll()
     });
 mergeDuplicateRows();
