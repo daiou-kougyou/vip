@@ -516,7 +516,7 @@ td.split-5-2 {
 
 .fixed-buttons {
   position: fixed;
-  bottom: 65px;
+  bottom: 45px;
   display: flex;
   gap: 2px;
   z-index: 999;
@@ -527,18 +527,22 @@ td.split-5-2 {
   transform: translateX(-50%);  
 }
 .fixed-buttons .btn {
-  padding: 10px 16px;
-  font-size: 14px;
-  border: none;
+  padding: 10px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;     /* Viền nhẹ màu xám */
   border-radius: 6px;
-  background-color: #cccccc;
-  color: #333;
+  background-color: #f5f5f5;   /* Màu nền nhạt */
+  color: #555;                 /* Màu chữ nhạt */
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Bóng nhẹ */
 }
+
 .fixed-buttons .btn:hover {
-  background-color: #eeeeee;
+  background-color: #fafafa;   /* Sáng hơn khi hover */
+  border-color: #bbb;          /* Viền hover đậm hơn một chút */
 }
+
+
   .tabs {
     display: flex;
     margin-bottom: 0.5rem;
@@ -893,18 +897,14 @@ body.popup-open {
     pointer-events: none;
   }
 }
-.nested-wrapper {
-  width: 155px;
-  height: 81px;
-  overflow: hidden;  /* ẩn phần tràn nếu có */
-}
+
 #footer {
-  background-color: white; /* nền trắng */
-  color: black;            /* chữ đen */
+  background-color: white; 
+  color: black;           
   position: fixed;
   bottom: 0;
-  left: 50%;                        /* căn giữa theo chiều ngang */
-  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  left: 50%;                    
+  transform: translateX(-50%);     
   width: 100vw;
   box-sizing: border-box;
   padding: 10px 0;
@@ -914,37 +914,11 @@ body.popup-open {
   align-items: center;
   border-top: 1px solid #ccc;
 }
-footer {
-  position: fixed;      /* cố định */
-  left: 50%;                        /* căn giữa theo chiều ngang */
-  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
-  bottom: 0;            /* sát đáy */
-  width: 100vw;         /* full chiều ngang viewport */
-  height: 50px;         /* chiều cao cố định */
-  background-color: #fff; /* màu nền */
-  color: #000;          /* màu chữ */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;      /* font-size cố định */
-  user-select: none;    /* tùy chọn, không cho chọn */
-  z-index: 1000;
-}
-.footer-content {
-  text-align: center;
-}
-
 .footer-logo {
   width: 140px;
   height: auto;
-  margin: 0 auto 6px auto;
+  margin: 0 auto 0px auto;
   display: block;
-}
-
-#footer p {
-  margin: 0;
-  font-size: 14px;
-  color: black; /* chắc chắn chữ đen */
 }
 
 
@@ -971,32 +945,28 @@ footer {
 
 @media (max-width: 767px) {
   #toolPopup {
-    width: 91%;
+    width: 90%;
   }
 }
 
 
-
-/* Khi 1 mục không active thì ẩn header của nó */
 .tool-section:not(.active) > .tool-header {
   display: none;
 }
 
-/* Khi không có mục nào active (tức không có class active nào) thì hiển thị hết */
 body.no-active .tool-header {
   display: block !important;
 }
 
 .tool-section {
   margin-top: 15px;
-  border-top: 1px solid #ddd;
 }
 
 .tool-header {
   padding: 10px;
   background: #f9f9f9;
   cursor: pointer;
-  font-weight: bold;
+  border: 1px solid #ccc;
 }
 
 .tool-body {
@@ -1023,10 +993,10 @@ body.no-active .tool-header {
 }
 #toolPopup .close-btn {
   background: transparent;
-  border: 1px solid #666;   /* viền */
-  border-radius: 6px;       /* bo tròn */
+  border: 1px solid #666;  
+  border-radius: 6px;     
   font-weight: normal;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   line-height: 1;
   padding: 4px 12px;
@@ -1037,7 +1007,7 @@ body.no-active .tool-header {
 
 #toolPopup .close-btn:hover {
   color: #f00;
-  border-color: #f00;       /* đổi màu viền khi hover */
+  border-color: #f00;     
 }
 
 .form-layout {
@@ -1046,38 +1016,31 @@ body.no-active .tool-header {
   gap: 10px;
   margin-top: 10px;
 }
-
-.form-column {
-  flex: 1 1 300px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .form-header {
+  display: block;
+  width: 100%;  
   font-weight: bold;
   font-size: 16px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 4px;
   margin-bottom: 8px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 2px;
 }
-
 .input-row {
   display: flex;
-  justify-content: center; /* căn giữa theo chiều ngang */
-  align-items: center;
+  justify-content: center;
+  align-items: center;  
   gap: 20px;
   flex-wrap: nowrap;
-  font-size: 14px;
+  font-size: 16px;
   align-items: flex-end;
 }
 .result-row {
   display: flex;
-  justify-content: center; /* căn giữa theo chiều ngang */
+  justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 20px;
   flex-wrap: nowrap;
-  font-size: 14px;
+  font-size: 16px;
   align-items: flex-end;
 }
 
@@ -1088,10 +1051,12 @@ body.no-active .tool-header {
   align-items: center;
   width: 70px;
 }
+.input-col.wide-col {
+  min-width: 158px;
+}
 
 .input-col span {
   margin-bottom: 4px;
-  font-weight: 600;
   text-align: center;
   user-select: none;
 }
@@ -1099,10 +1064,11 @@ body.no-active .tool-header {
 .input-col input {
   width: 100%;
   padding: 6px 4px;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 4px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .math-symbol {
@@ -1117,23 +1083,27 @@ body.no-active .tool-header {
   margin: 0 4px;
 }
 
-.unit {
-  font-size: 14px;
-  margin-left: 4px;
-  user-select: none;
-  align-self: center;
-  margin-top: 6px;
-}
 .canvas-col {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 10px;
   width: 158px;
   height: 65px;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
-
+.canvas-col.wide-col {
+  min-width: 250px;
+  min-height: 150px;
+}
+input[readonly] {
+  background-color: #f9f9f9;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px; 
+  padding: 4px 8px;
+}
 
 
 
@@ -1478,14 +1448,14 @@ body.no-active .tool-header {
         </div>
         <div class="input-row">
           <div class="input-col">
-            <span>ｱﾝｶｰ１</span>
+            <span>ｱﾝｶ</span>
             <input type="number" id="input_anchor1" />
           </div>
           <div class="canvas-col">
             <canvas id="anchorCanvas" width="120" height="60"></canvas>
           </div>
           <div class="input-col">
-            <span>ｱﾝｶｰ2</span>
+            <span>ｱﾝｶ</span>
             <input type="number" id="input_anchor2" />
           </div>
         </div>
@@ -1499,17 +1469,14 @@ body.no-active .tool-header {
             <span>追出指定</span>
             <input type="number" id="result_extra_specified" readonly />
           </div>
-          <div class="math-symbol">＋</div>
           <div class="input-col">
             <span>使用材</span>
             <input type="number" id="result_material_length" readonly />
           </div>
-          <div class="math-symbol">×</div>
           <div class="input-col">
             <span>回数</span>
             <input type="number" id="result_repeat_count" readonly />
           </div>
-          <div class="math-symbol">＋</div>
           <div class="input-col">
             <span>残追出</span>
             <input type="number" id="result_remain_extra" readonly />
@@ -1522,7 +1489,7 @@ body.no-active .tool-header {
 
 	
 <div class="tool-section">
-  <div class="tool-header">② 蹴上・踏面・スラブ厚 → 階段段筋算出</div>
+  <div class="tool-header">②階段 蹴上・踏面・スラブ厚 → 段筋算出</div>
   <div class="tool-body">
     <div class="form-layout">
       <!-- Nhập liệu -->
@@ -1541,6 +1508,10 @@ body.no-active .tool-header {
             <span>スラブ厚</span>
             <input type="number" id="input_slab_thickness" />
           </div>
+          <div class="input-col">
+            <span>段数</span>
+            <input type="number" id="input_step_count" />
+          </div>
         </div>
       </div>
 
@@ -1549,8 +1520,8 @@ body.no-active .tool-header {
         <label class="form-header">結果</label>
 
         <div class="result-row">
-          <div class="canvas-col">
-            <canvas id="stairCanvas" width="120" height="60"></canvas>
+          <div class="canvas-col  wide-col">
+            <canvas id="stairCanvas" width="220" height="120"></canvas>
           </div>
         </div>
 
@@ -1567,6 +1538,10 @@ body.no-active .tool-header {
             <span>斜辺</span>
             <input type="number" id="result_hypotenuse" readonly />
           </div>
+          <div class="input-col">
+            <span>切寸法</span>
+            <input type="number" id="result_cutlength" readonly />
+          </div>
         </div>
       </div>
     </div>
@@ -1574,6 +1549,192 @@ body.no-active .tool-header {
 </div>
 	
 	
+<div class="tool-section">
+  <div class="tool-header">③ 柱幅・柱間距離 → 梁主筋算出</div>
+  <div class="tool-body">
+    <div class="form-layout">
+      <!-- Nhập liệu -->
+      <div class="form-column">
+        <label class="form-header">入力項目</label>
+        <div class="input-row">
+          <div class="input-col">
+            <span>定着上</span>
+            <input type="number" id="input_anchorage_top" />
+          </div>
+          <div class="input-col">
+            <span>定着下</span>
+            <input type="number" id="input_anchorage_bottom" />
+          </div>
+          <div class="input-col">
+            <span>径</span>
+            <input type="number" id="input_diameter" />
+          </div>  
+          <div class="input-col">
+            <span>引き込み</span>
+            <input type="number" id="input_pullback" />
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="input-col">
+            <span>柱幅</span>
+            <input type="number" id="input_column_width_start" />
+          </div>
+          <div class="input-col">
+            <span>内法寸法</span>
+            <input type="number" id="input_column_spacing" />
+          </div>
+          <div class="input-col">
+            <span>柱幅</span>
+            <input type="number" id="input_column_width_end" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="form-column">
+        <label class="form-header">結果</label>
+
+        <div class="result-row">
+          <div class="input-col">
+            <span>上アンカ</span>
+            <input type="number" id="output_anchor_top1" readonly />
+          </div>
+          <div class="input-col wide-col">
+            <span>働き寸法</span>
+            <input type="number" id="output_effective_length" readonly />
+          </div>
+          <div class="input-col">
+            <span>上アンカ</span>
+            <input type="number" id="output_anchor_top2" readonly />
+          </div>
+        </div>
+
+        <div class="result-row">
+          <div class="input-col">
+            <span>下アンカ</span>
+            <input type="number" id="output_anchor_bottom1" readonly />
+          </div>
+          <div class="canvas-col">
+            <canvas id="beamCanvas" width="120" height="60"></canvas>
+          </div>
+          <div class="input-col">
+            <span>下アンカ</span>
+            <input type="number" id="output_anchor_bottom2" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+	
+<div class="tool-section">
+  <div class="tool-header">④ 短辺・長辺→ 壁・スラブ配筋図</div>
+  <div class="tool-body">
+    <div class="form-layout">
+      <!-- Nhập liệu -->
+      <div class="form-column">
+        <label class="form-header">入力項目</label>
+        <div class="input-row">
+		
+          <div class="input-col">
+            <span>短辺</span>
+            <input type="number" id="input_pullback" />
+          </div>
+          <div class="input-col">
+            <span>＠</span>
+            <input type="number" id="input_anchorage_top" />
+          </div>
+          <div class="input-col">
+            <span>径</span>
+            <input type="number" id="input_anchorage_bottom" />
+          </div>
+          <div class="input-col">
+            <span>上定着</span>
+            <input type="number" id="input_diameter" />
+          </div>  
+        </div>
+        <div class="input-row">
+          <div class="input-col">
+            <span>長辺</span>
+            <input type="number" id="input_diameter" />
+          </div>  
+          <div class="input-col">
+            <span>＠</span>
+            <input type="number" id="input_anchorage_top" />
+          </div>
+          <div class="input-col">
+            <span>径</span>
+            <input type="number" id="input_anchorage_bottom" />
+          </div>
+          <div class="input-col">
+            <span>下定着</span>
+            <input type="number" id="input_pullback" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="form-column">
+        <label class="form-header">結果</label>
+		<div class="result-row">
+          <div class="canvas-col wide-col">
+            <canvas id="stairCanvas" width="220" height="130"></canvas>
+          </div>
+        </div>
+        <div class="result-row">
+          <div class="input-col">
+            <span>主筋</span>
+          </div>
+        </div>
+
+        <div class="result-row">
+          <div class="input-col">
+            <span>下筋</span>
+            <input type="number" id="output_anchor_bottom1" readonly />
+          </div>
+          <div class="input-col">
+            <span>本数</span>
+            <input type="number" id="output_anchor_bottom2" readonly />
+          </div>
+          <div class="input-col">
+            <span>上筋</span>
+            <input type="number" id="output_anchor_bottom1" readonly />
+          </div>
+          <div class="input-col">
+            <span>本数</span>
+            <input type="number" id="output_anchor_bottom2" readonly />
+          </div>
+        </div>
+		<div class="result-row">
+          <div class="input-col">
+            <span>配力</span>
+          </div>
+        </div>
+
+        <div class="result-row">
+          <div class="input-col">
+            <span>下筋</span>
+            <input type="number" id="output_anchor_bottom1" readonly />
+          </div>
+          <div class="input-col">
+            <span>本数</span>
+            <input type="number" id="output_anchor_bottom2" readonly />
+          </div>
+          <div class="input-col">
+            <span>上筋</span>
+            <input type="number" id="output_anchor_bottom1" readonly />
+          </div>
+          <div class="input-col">
+            <span>本数</span>
+            <input type="number" id="output_anchor_bottom2" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+		
   </div>
 </div>
 
