@@ -388,7 +388,7 @@ td.split-5-2 {
 
 
 
-#shapePopup, .popup, #toolPopup, .tool {
+#shapePopup, .popup {
   display: none;
   position: fixed;
   top: 0%;
@@ -951,7 +951,41 @@ footer {
 
 
 
+#toolPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #aaa;
+  padding: 16px;
+  z-index: 1001;
+  border-radius: 10px;
+  width: 375px;
+  max-width: 100vw; 
+  max-height: 100vh;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
 
+@media (max-width: 767px) {
+  #toolPopup {
+    width: 91%;
+  }
+}
+
+
+
+/* Khi 1 mục không active thì ẩn header của nó */
+.tool-section:not(.active) > .tool-header {
+  display: none;
+}
+
+/* Khi không có mục nào active (tức không có class active nào) thì hiển thị hết */
+body.no-active .tool-header {
+  display: block !important;
+}
 
 .tool-section {
   margin-top: 15px;
@@ -974,20 +1008,131 @@ footer {
 .tool-section.active .tool-body {
   display: block;
 }
+#toolPopup .popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
 
-.close-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background: #ccc;
-  border: none;
-  border-radius: 5px;
+#toolPopup .popup-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+#toolPopup .close-btn {
+  background: transparent;
+  border: 1px solid #666;   /* viền */
+  border-radius: 6px;       /* bo tròn */
+  font-weight: normal;
+  font-size: 14px;
   cursor: pointer;
+  line-height: 1;
+  padding: 4px 12px;
+  color: #666;
+  user-select: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+#toolPopup .close-btn:hover {
+  color: #f00;
+  border-color: #f00;       /* đổi màu viền khi hover */
+}
+
+.form-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-column {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-header {
+  font-weight: bold;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.input-row {
+  display: flex;
+  justify-content: center; /* căn giữa theo chiều ngang */
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+  font-size: 14px;
+  align-items: flex-end;
+}
+.result-row {
+  display: flex;
+  justify-content: center; /* căn giữa theo chiều ngang */
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  font-size: 14px;
+  align-items: flex-end;
 }
 
 
+.input-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+}
 
+.input-col span {
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-align: center;
+  user-select: none;
+}
 
+.input-col input {
+  width: 100%;
+  padding: 6px 4px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 
+.math-symbol {
+  font-size: 24px;
+  user-select: none;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  margin: 0 4px;
+}
+
+.unit {
+  font-size: 14px;
+  margin-left: 4px;
+  user-select: none;
+  align-self: center;
+  margin-top: 6px;
+}
+.canvas-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 158px;
+  height: 65px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
 
 
@@ -1299,43 +1444,138 @@ footer {
 
 
 
-
-<!-- TOOL POPUP -->
 <div id="toolPopup" class="popup">
   <div class="popup-content">
-    <h2>Công cụ hỗ trợ</h2>
-
-    <div class="tool-section">
-      <div class="tool-header">📏 Tính chiều dài tổng</div>
-      <div class="tool-body">
-        <label>Nhập các đoạn: </label>
-        <input type="text" placeholder="a + b + c + ..." style="width: 100%;">
-        <p><button>Tính</button></p>
-      </div>
+    <div class="popup-header">
+      <h2>計算フォーム</h2>
+      <button class="close-btn" onclick="closeToolPopup()">閉じる</button>
     </div>
 
-    <div class="tool-section">
-      <div class="tool-header">📐 Tính chiều dài đoạn móc</div>
-      <div class="tool-body">
-        <label>Đường kính (D): </label>
-        <input type="number" placeholder="VD: 13" style="width: 100%;">
-        <p><button>Tính</button></p>
+<div class="tool-section">
+  <div class="tool-header">① 使用材・継手・追出指定 → 回数・追出算出</div>
+  <div class="tool-body">
+    <div class="form-layout">
+      <!-- Nhập liệu -->
+      <div class="form-column">
+        <label class="form-header">入力項目</label>
+        <div class="input-row">
+          <div class="input-col">
+            <span>働き寸法</span>
+            <input type="number" id="input_working_length" />
+          </div>
+          <div class="input-col">
+            <span>追出指定</span>
+            <input type="number" id="input_extra_specified" />
+          </div>
+          <div class="input-col">
+            <span>使用材</span>
+            <input type="number" id="input_material_length" />
+          </div>
+          <div class="input-col">
+            <span>継手長さ</span>
+            <input type="number" id="input_splice_length" />
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="input-col">
+            <span>ｱﾝｶｰ１</span>
+            <input type="number" id="input_anchor1" />
+          </div>
+          <div class="canvas-col">
+            <canvas id="anchorCanvas" width="120" height="60"></canvas>
+          </div>
+          <div class="input-col">
+            <span>ｱﾝｶｰ2</span>
+            <input type="number" id="input_anchor2" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="form-column">
+        <label class="form-header">結果</label>
+        <div class="result-row">
+          <div class="input-col">
+            <span>追出指定</span>
+            <input type="number" id="result_extra_specified" readonly />
+          </div>
+          <div class="math-symbol">＋</div>
+          <div class="input-col">
+            <span>使用材</span>
+            <input type="number" id="result_material_length" readonly />
+          </div>
+          <div class="math-symbol">×</div>
+          <div class="input-col">
+            <span>回数</span>
+            <input type="number" id="result_repeat_count" readonly />
+          </div>
+          <div class="math-symbol">＋</div>
+          <div class="input-col">
+            <span>残追出</span>
+            <input type="number" id="result_remain_extra" readonly />
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="tool-section">
-      <div class="tool-header">⚙️ Chuyển đổi đơn vị</div>
-      <div class="tool-body">
-        <label>Nhập mét: </label>
-        <input type="number" placeholder="VD: 5.5" style="width: 100%;">
-        <p><button>Chuyển sang mm</button></p>
-      </div>
-    </div>
-
-    <button class="close-btn" onclick="closeToolPopup()">Đóng</button>
   </div>
 </div>
 
+	
+<div class="tool-section">
+  <div class="tool-header">② 蹴上・踏面・スラブ厚 → 階段段筋算出</div>
+  <div class="tool-body">
+    <div class="form-layout">
+      <!-- Nhập liệu -->
+      <div class="form-column">
+        <label class="form-header">入力項目</label>
+        <div class="input-row">
+          <div class="input-col">
+            <span>蹴上</span>
+            <input type="number" id="input_kegai" />
+          </div>
+          <div class="input-col">
+            <span>踏面</span>
+            <input type="number" id="input_fumizen" />
+          </div>
+          <div class="input-col">
+            <span>スラブ厚</span>
+            <input type="number" id="input_slab_thickness" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Kết quả -->
+      <div class="form-column">
+        <label class="form-header">結果</label>
+
+        <div class="result-row">
+          <div class="canvas-col">
+            <canvas id="stairCanvas" width="120" height="60"></canvas>
+          </div>
+        </div>
+
+        <div class="result-row">
+          <div class="input-col">
+            <span>蹴上</span>
+            <input type="number" id="result_kegai" readonly />
+          </div>
+          <div class="input-col">
+            <span>踏面</span>
+            <input type="number" id="result_fumizen" readonly />
+          </div>
+          <div class="input-col">
+            <span>斜辺</span>
+            <input type="number" id="result_hypotenuse" readonly />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
+  </div>
+</div>
 
 
 
@@ -1368,15 +1608,34 @@ footer {
 <script>
 
 
+const sections = document.querySelectorAll('.tool-section');
+const body = document.body;
 
-
-
-// Toggle ẩn/hiện từng phần
-document.querySelectorAll('.tool-header').forEach(header => {
+sections.forEach(section => {
+  const header = section.querySelector('.tool-header');
   header.addEventListener('click', () => {
-    header.parentElement.classList.toggle('active');
+    const isActive = section.classList.contains('active');
+    
+    if (isActive) {
+      // Đang active, click để tắt
+      section.classList.remove('active');
+      // Nếu không còn mục active nào, bật lại toàn bộ header
+      if (![...sections].some(s => s.classList.contains('active'))) {
+        body.classList.add('no-active');
+      }
+    } else {
+      // Có mục active rồi, reset hết
+      sections.forEach(s => s.classList.remove('active'));
+      // active mục hiện tại
+      section.classList.add('active');
+      // tắt class no-active để ẩn header khác
+      body.classList.remove('no-active');
+    }
   });
 });
+
+// Khi trang load, bật no-active để hiện hết header
+body.classList.add('no-active');
 
 // Mở & Đóng popup
 function openToolPopup() {
