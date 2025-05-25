@@ -40,52 +40,47 @@ body {
   padding-bottom: 280px;
 }
 .a4-container {
-  width: 1123px;
-  min-height: 794px;
+  width: 830.2px;
   margin: 0 auto;
   background: white;
 }
 
 .header-full {
 
-  width: 1108px;
-}
-@media (max-width: 768px) {
-  .header-full {
-  margin-left: 40;
-    box-sizing: border-box;
-  }
+  width: 830.2px;
+  justify-content: center;
+  align-items: center; 
+  box-sizing: border-box;
 }
 .header {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   font-family: sans-serif;
-  padding-top: 10px;
 }
 
 .header-right {
   width: 35%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
   position: relative;
   text-align: right;
   align-items: flex-end;
 }
 .info-vip {
-  font-size: 20px;
+  font-size: 16px;
   white-space: nowrap;
 }
 .info-text {
-  font-size: 20px;
-  padding-right: 25px;
-  word-spacing: 44px; 
+  font-size: 16px;
+  padding-right: 15px;
+  word-spacing: 25px; 
   white-space: nowrap;
 }
 .info-item {
-  font-size: 20px;
+  font-size: 16px;
   white-space: nowrap;
 }
 
@@ -95,10 +90,9 @@ body {
   width: fit-content;
   margin: 0 auto;
   text-align: center;
-  font-size: 18px;
-  word-spacing: 20px; /* Tăng giãn cách giữa các từ */
+  font-size: 15px;
+  word-spacing: 5px; /* Tăng giãn cách giữa các từ */
   letter-spacing: 2px;
-  margin-bottom: 10px;
 }
 
 .header-left {
@@ -108,31 +102,29 @@ body {
   box-sizing: border-box;
 }
 .title {
-  font-size: 40px;
+  font-size: 30px;
   text-align: right;
-  padding-right: 10px;
-  letter-spacing: 40px; /* dãn chữ */
+  letter-spacing: 28px; /* dãn chữ */
+  margin-right: -50px;
   
 }
 .info-no.underline1 {
 
-  font-size: 25px;
+  font-size: 18px;
   position: relative;
   padding-left: 60px; /* đẩy nội dung sang phải */
-  padding-bottom: 4px;
   display: inline-block;
-  min-width: 250px;
-  margin-bottom: 12px;
-  word-spacing: 50px; 
+  margin-top: 5px;
+  min-width: 200px;
+  word-spacing: 35px; 
   letter-spacing: 2px;
-  margin-top: 20px;
   align-items: flex-start;
 }
 
 .info-no.underline1::before {
   content: "";
   position: absolute;
-  left: 40px; /* đường kẻ bắt đầu từ 100px */
+  left: 30px; /* đường kẻ bắt đầu từ 100px */
   right: 0;
   bottom: 0;
   height: 1px;
@@ -141,23 +133,22 @@ body {
 }
 
 .info-name.underline {
-  font-size: 25px;
+  font-size: 18px;
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: 40px; /* Đẩy nội dung và đường kẻ sang phải */
-  padding-bottom: 4px;
-  min-width: 280px;
+  padding-left: 30px; /* Đẩy nội dung và đường kẻ sang phải */
+  margin-top: 15px;
+  min-width: 300px;
   gap: 100px;
   letter-spacing: 2px;
-  margin-top: 15px;
   align-items: flex-start;
 }
 
 .info-name.underline::before {
   content: "";
   position: absolute;
-  left: 20px; /* Bắt đầu đường kẻ từ 50px */
+  left: 0px; /* Bắt đầu đường kẻ từ 50px */
   right: 0;
   bottom: 0;
   height: 1px;
@@ -168,9 +159,8 @@ body {
   flex: 1;
   border: none;
   outline: none;
-  font-size: 20px;
+  font-size: 18px;
   background: transparent;
-  margin-top: 10px;
   height: 30px;           /* sửa chính tả */
   line-height: 30px;      /* căn chỉnh chữ nằm giữa */
   padding: 0 5px;         /* đảm bảo không bị sát mép */
@@ -189,12 +179,12 @@ body {
 #rebarTable {
   border-collapse: collapse;
   table-layout: fixed; /* Rất quan trọng để cố định kích thước cột */
-  width: 1023px; /* hoặc set chiều rộng cố định nếu bạn muốn */
+  width: 830.2px; /* hoặc set chiều rộng cố định nếu bạn muốn */
 }
 
 /* Cố định chiều cao cho hàng tiêu đề */
 #rebarTable thead th {
-  height: 48px;
+  height: 37px;
   background-color: #ffffff;
   font-weight: bold;
   border: 1.5px solid #000;
@@ -203,7 +193,7 @@ body {
 
 /* Cố định chiều cao cho các hàng dữ liệu */
 #rebarTable tbody td {
-  height: 82px;
+  height: 67px;
   border: 1.5px solid #000;
   padding: 4px;
   vertical-align: middle;
@@ -214,30 +204,29 @@ body {
 #rebarTable td:nth-child(1),
 #rebarTable th:nth-child(4),
 #rebarTable td:nth-child(4) {
-  width: 155px; /* 部位・階 切寸法 */
+  width: 115px; /* 部位・階 切寸法 */
 }
 
 #rebarTable th:nth-child(2),
 #rebarTable td:nth-child(2) {
-  width: 279px; /* 形状 */
+  width: 207px; /* 形状 */
 }
 #rebarTable th:nth-child(3),
 #rebarTable td:nth-child(3),
 #rebarTable th:nth-child(6),
 #rebarTable td:nth-child(6)  {
-  width: 62px; ケ所 */
+  width: 46px; ケ所 */
 }
 /* Áp dụng chung cho mọi ô chia */
 td[class^="split-"] {
-  font-size: 35px;
-  height: 82px;
+  font-size: 30px;
+  height: 64px;
   white-space: nowrap;
-  letter-spacing: 10px;
-  padding-right: 10px;
+  letter-spacing: 5px;
   text-align: right;
 }
 td.split-2 {
-  background-image: linear-gradient(to right, black 1px, transparent 1px);
+  background-image: linear-gradient(to right, black 1px, transparent 0px);
   background-size: 50% 100%;
   background-position: 100% 0%;
   background-repeat: no-repeat;
@@ -245,8 +234,8 @@ td.split-2 {
 
 td.split-3 {
   background-image:
-    linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to right, black 1px, transparent 1px);
+    linear-gradient(to right, black 1px, transparent 0px),
+    linear-gradient(to right, black 1px, transparent 0px);
   background-size: 33.33% 100%;
   background-position: 100% 0%, 52% 0%;
   background-repeat: no-repeat;
@@ -254,9 +243,9 @@ td.split-3 {
 
 td.split-4 {
   background-image:
-    linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to right, black 1px, transparent 1px);
+    linear-gradient(to right, black 1px, transparent 0px),
+    linear-gradient(to right, black 1px, transparent 0px),
+    linear-gradient(to right, black 1px, transparent 0px);
   background-size: 25% 100%;
   background-position: 100% 0%, 67% 0%, 33% 0%;
   background-repeat: no-repeat;
@@ -264,20 +253,20 @@ td.split-4 {
 
 td.split-5 {
   background-image:
-    linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to right, black 2px, transparent 1px),
-    linear-gradient(to right, black 1px, transparent 1px);
+    linear-gradient(to right, black 1px, transparent 0px),
+    linear-gradient(to right, black 1px, transparent 0px),
+    linear-gradient(to right, black 2px, transparent 0px),
+    linear-gradient(to right, black 1px, transparent 0px);
   background-size: 20% 100%;
   background-position: 100% 0%, 75% 0%, 50% 0%, 25% 0%;
   background-repeat: no-repeat;
 }
 td.split-5-2 {
   background-image:
-    linear-gradient(to right, black 1px, transparent 1px),  /* cột 100% */
-    linear-gradient(to right, black 1px, transparent 1px),  /* cột 75% */
-    linear-gradient(to right, black 1px, transparent 1px),  /* cột 50% */
-    linear-gradient(to right, black 1px, transparent 1px),  /* cột 25% */
+    linear-gradient(to right, black 1px, transparent 0px),  /* cột 100% */
+    linear-gradient(to right, black 1px, transparent 0px),  /* cột 75% */
+    linear-gradient(to right, black 1px, transparent 0px),  /* cột 50% */
+    linear-gradient(to right, black 1px, transparent 0px),  /* cột 25% */
     linear-gradient(to top, transparent 49%, black 50%, transparent 51%); /* đường ngang nửa dưới */
     
   background-size: 20% 50%, 20% 50%, 20% 50%, 20% 50%, 100% 100%;
@@ -295,8 +284,8 @@ td.split-5-2 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  height: 41px;
-  width: 146px;
+  height: 32px;
+  width: 115px;
 }
 .bottom-input {
   width: 100%;
@@ -315,39 +304,39 @@ td.split-5-2 {
   justify-content: center; /* căn ngang (thay thế text-align) */
   align-items: center;     /* căn dọc */
   padding: 0;              /* bỏ padding nếu có */
+
+  white-space: nowrap;
 }
 .shokucho-wrapper {
-  width: 105px;
-  height: 65px;
   display: inline-block;
 }
 
 .input-shokucho {
-  width: 105px;
-  height: 65px;
+  width: 77px;
+  height: 45px;
   border: 2px solid black;
   box-sizing: border-box;
-  font-size: 35px;
+  font-size: 22px;
   letter-spacing: 10px;
   text-align: right;
-  padding-left: 5px;
   background-image:
     linear-gradient(to right, black 1px, transparent 1px),
     linear-gradient(to right, black 1px, transparent 1px);
   background-size: 33.33% 100%;
   background-position: 100% 0%, 52% 0%;
   background-repeat: no-repeat;
+  white-space: nowrap;
 }
 
 .hannyu-wrapper {
   display: inline-block;
 }
 .input-hannyu {
-  width: 200px;
-  height: 65px;
+  width: 153px;
+  height: 45px;
   border: 2px solid black;
   box-sizing: border-box;
-  font-size: 35px;
+  font-size: 22px;
   letter-spacing: 13px;
   text-align: right;
   padding-left: 5px;
@@ -360,19 +349,20 @@ td.split-5-2 {
   background-size: 16.8% 100%;
   background-position: 100% 0%, 80% 0%, 61% 0%, 41% 0%, 21% 0%;
   background-repeat: no-repeat;
+  white-space: nowrap;
 }
 
 
 
 #rebarTable th:nth-child(5),
 #rebarTable td:nth-child(5) {
-  width: 124px; /* 本数 */
+  width: 92px; /* 本数 */
 }
 #rebarTable th:nth-child(7),
 #rebarTable td:nth-child(7),
 #rebarTable th:nth-child(8),
 #rebarTable td:nth-child(8)  {
-  width: 93px; /* 定尺, 圧接 */
+  width: 69px; /* 定尺, 圧接 */
 }
 /* Nếu muốn canvas nằm giữa ô */
 .shape-cell canvas {
@@ -635,7 +625,7 @@ canvas {
   align-items: center;
   justify-content: center;
   padding: 1px;
-  min-width: 200px; 
+  min-width: 120px; 
   box-sizing: border-box;
   border-bottom: 1px solid #ccc;
 }
@@ -1021,7 +1011,7 @@ footer {
     <thead>
       <tr>
 		<th>部位 ・ 階</th>
-          <th>形状</th>
+          <th>形　　　状</th>
           <th>D</th>
           <th>切寸法</th>
           <th>本数</th>
@@ -2659,7 +2649,7 @@ async function exportPDF() {
   const header = document.querySelector(".header-full");
   const canvasHeader = await html2canvas(header, { scale: 2 });
   const imgHeader = canvasHeader.toDataURL("image/png");
-  const headerHeight = 30;
+  const headerHeight = 30.2;
   doc.addImage(imgHeader, "PNG", margin, topMargin, imgWidth, headerHeight);
   let currentHeight = headerHeight + 8;
   const table = document.getElementById("rebarTable");
@@ -2698,9 +2688,10 @@ async function exportPDF() {
     const pageImgHeightMM = (canvasPage.height * imgWidth) / canvasPage.width;
     doc.addImage(pageImgData, "PNG", margin, currentHeight, imgWidth, pageImgHeightMM);
 	doc.setFontSize(14);
-	const footerText = `${page + 1}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${totalPages}`;
-	const textWidth = doc.getTextWidth(footerText);
-	doc.text(footerText, 56, 20, { align: "center" }); ;
+	const pageText = `${page + 1}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${totalPages}`;
+	doc.text(pageText, 59, 19, { align: "center" }); ;
+	
+	
   }
 const projectName = document.getElementById("project-name").value.trim() || "工事名";
 const hannyu = document.getElementById("hannyu").value.trim() || "搬入日";
