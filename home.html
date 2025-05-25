@@ -186,10 +186,15 @@ body {
 #rebarTable thead th {
   height: 37px;
   background-color: #ffffff;
-  font-weight: bold;
   border: 1px solid #000;
   padding: 4px;
 }
+@media (max-width: 768px) {
+  #rebarTable thead th {
+    height: 32px;
+  }
+}
+
 
 /* Cố định chiều cao cho các hàng dữ liệu */
 #rebarTable tbody td {
@@ -198,7 +203,11 @@ body {
   padding: 0px;
   vertical-align: middle;
 }
-
+@media (max-width: 768px) {
+  #rebarTable tbody td {
+    height: 68px;  
+  }
+}
 /* Cố định kích thước từng cột (tùy theo số lượng cột bạn có) */
 #rebarTable th:nth-child(1),
 #rebarTable td:nth-child(1),
@@ -210,6 +219,12 @@ body {
 #rebarTable th:nth-child(2),
 #rebarTable td:nth-child(2) {
   width: 207px; /* 形状 */
+}
+@media (max-width: 768px) {
+  #rebarTable th:nth-child(2),
+  #rebarTable td:nth-child(2) {
+    width: 225px; /* tăng từ 207px lên */
+  }
 }
 #rebarTable th:nth-child(3),
 #rebarTable td:nth-child(3),
@@ -2643,15 +2658,30 @@ async function exportPDF() {
   ensureMultipleOf15Rows();
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
-  const margin = 8.5;
-  const topMargin = 5; 
+
+
+let margin = 8.5;
+let topMargin = 5;
+let headerHeight = 32;
+let pageX = 59;
+let pageY = 19;
+if (window.innerWidth <= 768) {
+  margin = 11.5;     
+  topMargin = 6; 
+  headerHeight = 34;  
+  pageX = 61;
+  pageY = 22;
+}
+
+
+
+
   const pdfWidth = doc.internal.pageSize.getWidth();
   const pdfHeight = doc.internal.pageSize.getHeight();
   const imgWidth = pdfWidth - 2 * margin;
   const header = document.querySelector(".header-full");
   const canvasHeader = await html2canvas(header, { scale: 2 });
   const imgHeader = canvasHeader.toDataURL("image/png");
-  const headerHeight = 32;
   doc.addImage(imgHeader, "PNG", margin, topMargin, imgWidth, headerHeight);
   let currentHeight = headerHeight + 8;
   const table = document.getElementById("rebarTable");
@@ -2691,7 +2721,7 @@ async function exportPDF() {
     doc.addImage(pageImgData, "PNG", margin, currentHeight, imgWidth, pageImgHeightMM);
 	doc.setFontSize(14);
 	const pageText = `${page + 1}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${totalPages}`;
-	doc.text(pageText, 59, 19, { align: "center" }); ;
+	doc.text(pageText, pageX, pageY, { align: "center" }); ;
 	
 	
   }
