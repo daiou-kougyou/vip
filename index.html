@@ -205,8 +205,9 @@ td canvas {
 .header {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
+  gap: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
   font-size: 14px;
   font-family: Arial, sans-serif;
 }
@@ -223,8 +224,9 @@ td canvas {
 flex: 1 1 35%;
   display: flex;
   flex-direction: column;
-  gap: 13px; 
+  gap: 8px; 
   text-align: left;
+  padding-left: 20px;
 }
 .header-body .info-item {
   display: flex;
@@ -253,12 +255,16 @@ flex: 1 1 35%;
   font-weight: normal;
 }
 .header-top {
+  margin-top: 0px;
   text-align: center;
 }
-.header-top h1 {
-  font-size: 25px;
-  color: #000;
-  letter-spacing: 25px;
+.header-top .title {
+
+  margin-right: 50px;
+  font-size: 30px;
+  text-align: center;
+  letter-spacing: 28px; /* dãn chữ */
+  font-weight: normal;
 }
 .fixed-buttons {
   position: fixed;
@@ -269,8 +275,8 @@ flex: 1 1 35%;
   justify-content: center;
   align-items: center;
   text-align: center;
-  left: 50%;                        /* căn giữa theo chiều ngang */
-  transform: translateX(-50%);      /* dịch ngược 50% chiều rộng để chính giữa */
+  left: 50%;                
+  transform: translateX(-50%);    
 }
 .fixed-buttons .btn {
   padding: 10px 16px;
@@ -741,7 +747,7 @@ footer {
 <body>
 <div class="a4-container">
 <div class="header-top">
-  <h1>鉄筋積算書</h1>
+    <div class="title">鉄筋積算書</div>
   <div class="header">
     <div class="header-body">
       <div class="info-item">

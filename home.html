@@ -76,7 +76,7 @@ body {
 .info-text {
   font-size: 16px;
   padding-right: 15px;
-  word-spacing: 25px; 
+  word-spacing: 32px; 
   white-space: nowrap;
 }
 .info-item {
@@ -2639,6 +2639,7 @@ function addRow() {
 
 
 async function exportPDF() {
+  ensureMultipleOf15Rows();
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
   const margin = 8.5;
@@ -3087,6 +3088,20 @@ function mergeDuplicateRows() {
 function goToToolPage() {
   exportTable(true);
   window.location.href = "tool.html";
+}
+function ensureMultipleOf15Rows() {
+  const tbody = document.getElementById("dataBody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+  const totalRows = rows.length;
+
+  // Nếu không phải bội số của 15 => thêm dòng cho đủ
+  const remainder = totalRows % 15;
+  if (remainder !== 0) {
+    const toAdd = 15 - remainder;
+    for (let i = 0; i < toAdd; i++) {
+      addRow();
+    }
+  }
 }
 </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
