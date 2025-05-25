@@ -1767,6 +1767,12 @@ input[readonly] {
 </div>
 
 <script>
+window.addEventListener('beforeunload', function(e) {
+  const message = 'データを保存しますか？';
+  e.preventDefault();
+  e.returnValue = message;
+  return message;     
+});
 
 
 const sections = document.querySelectorAll('.tool-section');
