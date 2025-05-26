@@ -3822,6 +3822,138 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+
+
+function drawstairCanvas(ctx, a, b, c, d) {
+
+  const x0 = 16, y0 = 16;
+  const x1 = x0 + 120, y1 = y0;
+  const x2 = 115, y2 = 115;
+  const x3 = 10, y3 = 10;
+  const x4 = 125, y4 = 125;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Xóa canvas
+
+  drawLineWithLabel(ctx, x1, y1, x0, y0, a); // Đoạn a
+  drawLineWithLabel(ctx, x2, y2, x1, y1, b); // Đoạn b
+  drawLineWithLabel(ctx, x3, y3, x4, y4, c); // Đoạn c
+
+  ctx.font = '16px Arial';
+  ctx.fillStyle = 'black';
+  const labelText = d + '段';
+  ctx.fillText(labelText, x1 + 15, y0 - 3); // Hiển thị số段
+}
+function updateStairCanvas() {
+  const a = document.getElementById("result_fumizen").value;
+  const b = document.getElementById("result_kegai").value;
+  const c = document.getElementById("result_hypotenuse").value;
+  const d = document.getElementById("input_step_count").value;
+
+  const canvas = document.getElementById("stairCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Kiểm tra nếu tất cả đều > 0 thì vẽ với nhãn thật, nếu không thì dùng a,b,c,d
+  if (a > 0 && b > 0 && c > 0 && d > 0) {
+    drawstairCanvas(ctx, a, b, c, d);
+  } else {
+    drawstairCanvas(ctx, 'a', 'b', 'c', 'd');
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  ["result_fumizen", "result_kegai", "result_hypotenuse", "input_step_count"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateStairCanvas);
+  });
+});
+window.addEventListener("DOMContentLoaded", () => {
+  // Vẽ mẫu ban đầu
+  const canvas = document.getElementById("stairCanvas");
+  const ctx = canvas.getContext("2d");
+  drawstairCanvas(ctx, 'a', 'b', 'c', 'd');
+
+  // Gắn sự kiện input để cập nhật lại nếu có đủ dữ liệu
+  const ids = [
+    "result_fumizen", "result_kegai", "result_hypotenuse", "input_step_count"
+  ];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", updateStairCanvas);
+    }
+  });
+});
+
+
+function drawAnchorCanvas(ctx, anchor1, anchor2) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  // Đường ngang cố định từ (20, 20) đến (140, 20)
+  drawLineWithLabel(ctx, 20, 20, 100, 20, '');
+  drawLineWithLabel(ctx, 40, 15, 50, 15, '');
+  drawLineWithLabel(ctx, 70, 15, 80, 15, '');
+
+  // Nếu có anchor1 > 0 → vẽ đường đứng bên trái
+  if (anchor1 > 0) {
+    drawLineWithLabel(ctx, 20, 20, 20, 45, anchor1);
+  }
+
+  // Nếu có anchor2 > 0 → vẽ đường đứng bên phải
+  if (anchor2 > 0) {
+    drawLineWithLabel(ctx,  100, 45, 100, 20, anchor2);
+  }
+
+}
+
+function updateAnchorCanvas() {
+  const val1 = parseFloat(document.getElementById("input_anchor1").value);
+  const val2 = parseFloat(document.getElementById("input_anchor2").value);
+
+  const canvas = document.getElementById("anchorCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const anchor1 = (val1 > 0) ? val1 : 0;
+  const anchor2 = (val2 > 0) ? val2 : 0;
+
+  drawAnchorCanvas(ctx, anchor1, anchor2);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Vẽ mặc định khi load trang
+  const canvas = document.getElementById("anchorCanvas");
+  const ctx = canvas.getContext("2d");
+  drawAnchorCanvas(ctx, 0, 0); // Không có giá trị ban đầu
+
+  // Gắn sự kiện tự động cập nhật
+  ["input_anchor1", "input_anchor2"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", updateAnchorCanvas);
+    }
+  });
+});
+
+
+
+function drawBeamCanvas(ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+
+    drawLineWithLabel(ctx, 20, 20, 100, 20, 0);
+
+    drawLineWithLabel(ctx, 20, 20, 20, 45, 0);
+
+    drawLineWithLabel(ctx,  100, 45, 100, 20, 0);
+
+}
+window.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("beamCanvas");
+  const ctx = canvas.getContext("2d");
+  drawBeamCanvas(ctx);
+});
+
+
 </script>
 
 
