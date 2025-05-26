@@ -1414,7 +1414,6 @@ input[readonly] {
 
 
 
-
 <div id="toolPopup" class="popup">
   <div class="popup-content">
     <div class="popup-header">
@@ -3161,7 +3160,7 @@ const sanitize = str => str.replace(/[\\/:*?"<>|()\s]/g, "_");
 // Tạo tên file đơn giản gồm project-name và hannyu
 const fileName = `${sanitize(projectName)}_${sanitize(hannyu)}.pdf`;
 
-alert("鉄筋積算書をご送付の上、LINE（090-3660-1790）までご連絡いただけますと幸いです。");
+alert("鉄筋積算書をご送付の上、LINE（092-951-0727）までご連絡いただけますと幸いです。");
 doc.save(fileName);
 	  
 }
@@ -3562,6 +3561,137 @@ function ensureMultipleOf15Rows() {
   }
 }
 </script>
+
+<script>
+function parseInput(id) {
+  const el = document.getElementById(id);
+  if (!el) return 0;
+  const val = parseFloat(el.value);
+  return isNaN(val) ? 0 : val;
+}
+
+function calculateMaterialUsage() {
+  // Lấy dữ liệu nhập
+  const workingLength = parseInput('input_working_length');
+  const extraSpecified = parseInput('input_extra_specified');
+  const materialLength = parseInput('input_material_length');
+  const spliceLength = parseInput('input_splice_length');
+  const anchor1 = parseInput('input_anchor1');
+  const anchor2 = parseInput('input_anchor2');
+
+  // Kiểm tra input quan trọng
+  if (workingLength <= 0 || materialLength <= 0 || spliceLength <= 0) {
+    clearResults(); // xoá kết quả nếu thiếu input quan trọng
+    return;
+  }
+
+  // Tính chiều dài cần thiết cho 1 đoạn
+  let baseLength = workingLength;
+  if (anchor1 > 0) baseLength += anchor1;
+  if (anchor2 > 0) baseLength += anchor2;
+
+  if (extraSpecified > 0) {
+    baseLength -= extraSpecified;
+    baseLength += spliceLength;
+  }
+
+  // Tính số lần lặp
+  let repeatCount = 0;
+  let totalUsed = 0;
+
+  while (true) {
+    const spliceCount = repeatCount;
+    const predictedLength = materialLength * repeatCount - spliceLength * (repeatCount-1);
+    if (predictedLength > baseLength) break;
+    repeatCount++;
+  }
+  repeatCount = repeatCount - 1;
+  totalUsed = repeatCount * materialLength - spliceLength * (repeatCount-1)
+  const remainExtra = baseLength - totalUsed + spliceLength;
+
+  // Hiển thị kết quả
+  document.getElementById('result_extra_specified').value = extraSpecified;
+  document.getElementById('result_material_length').value = materialLength;
+  document.getElementById('result_repeat_count').value = repeatCount;
+  document.getElementById('result_remain_extra').value = remainExtra;
+}
+
+function clearResults() {
+  document.getElementById('result_extra_specified').value = '';
+  document.getElementById('result_material_length').value = '';
+  document.getElementById('result_repeat_count').value = '';
+  document.getElementById('result_remain_extra').value = '';
+}
+
+// Đợi đến khi DOM đã sẵn sàng
+window.addEventListener('DOMContentLoaded', () => {
+  [
+    'input_working_length',
+    'input_extra_specified',
+    'input_material_length',
+    'input_splice_length',
+    'input_anchor1',
+    'input_anchor2'
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateMaterialUsage);
+  });
+});
+
+function calculateStairValues() {
+  const kegai = parseInput('input_kegai');
+  const fumizen = parseInput('input_fumizen');
+  const slab = parseInput('input_slab_thickness');
+  const stepCount = parseInput('input_step_count'); // nếu không có => 0
+
+  // Kiểm tra input quan trọng
+  if (kegai <= 0 || fumizen <= 0 || slab <= 0) {
+    clearStairResults();
+    return;
+  }
+
+  const adjust = slab / 3;
+  const resultKegai = kegai + adjust;
+  const resultFumizen = fumizen + adjust;
+  const hypotenuse = Math.sqrt(kegai ** 2 + fumizen ** 2);
+
+  let cutLength = 0;
+  if (stepCount > 0) {
+    cutLength = (resultKegai + resultFumizen) * stepCount + 600;
+  }
+
+  // Hiển thị kết quả
+  document.getElementById('result_kegai').value = resultKegai.toFixed(0);
+  document.getElementById('result_fumizen').value = resultFumizen.toFixed(0);
+  document.getElementById('result_hypotenuse').value = hypotenuse.toFixed(0);
+  document.getElementById('result_cutlength').value = cutLength.toFixed(0);
+}
+
+function clearStairResults() {
+  document.getElementById('result_kegai').value = '';
+  document.getElementById('result_fumizen').value = '';
+  document.getElementById('result_hypotenuse').value = '';
+  document.getElementById('result_cutlength').value = '';
+}
+
+// Đợi DOM sẵn sàng rồi gán sự kiện
+window.addEventListener('DOMContentLoaded', () => {
+  [
+    'input_kegai',
+    'input_fumizen',
+    'input_slab_thickness',
+    'input_step_count'
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calculateStairValues);
+  });
+});
+
+</script>
+
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   </div>
