@@ -678,6 +678,34 @@ body.popup-open {
 
 
 
+
+
+
+#toolPopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #aaa;
+  padding: 16px;
+  z-index: 1001;
+  border-radius: 10px;
+  width: 375px;
+  max-width: 100vw; 
+  max-height: 100vh;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  #toolPopup {
+    width: 90%;
+  }
+}
+
+
 .tool-section:not(.active) > .tool-header {
   display: none;
 }
@@ -833,10 +861,6 @@ input[readonly] {
   border-radius: 4px; 
   padding: 4px 8px;
 }
-
-
-
-
 
 
 
@@ -1171,7 +1195,6 @@ input[readonly] {
 
 
 
-
 <div id="toolPopup" class="popup">
   <div class="popup-content">
     <div class="popup-header">
@@ -1385,49 +1408,51 @@ input[readonly] {
   </div>
 </div>
 
-	
 <div class="tool-section">
-  <div class="tool-header">④ 短辺・長辺→ 壁・スラブ配筋図</div>
+  <div class="tool-header">④ 短辺・長辺 → 壁・スラブ配筋図</div>
   <div class="tool-body">
     <div class="form-layout">
       <!-- Nhập liệu -->
       <div class="form-column">
         <label class="form-header">入力項目</label>
+
+        <!-- 短辺入力 -->
         <div class="input-row">
-		
           <div class="input-col">
             <span>短辺</span>
-            <input type="number" id="input_pullback" />
+            <input type="number" id="input_short_length" />
           </div>
           <div class="input-col">
             <span>＠</span>
-            <input type="number" id="input_anchorage_top" />
+            <input type="number" id="input_short_spacing" />
           </div>
           <div class="input-col">
             <span>径</span>
-            <input type="number" id="input_anchorage_bottom" />
+            <input type="number" id="input_short_diameter" />
           </div>
           <div class="input-col">
             <span>上定着</span>
-            <input type="number" id="input_diameter" />
-          </div>  
+            <input type="number" id="input_wall_anchorage_top" />
+          </div>
         </div>
+
+        <!-- 長辺入力 -->
         <div class="input-row">
           <div class="input-col">
             <span>長辺</span>
-            <input type="number" id="input_diameter" />
-          </div>  
+            <input type="number" id="input_long_length" />
+          </div>
           <div class="input-col">
             <span>＠</span>
-            <input type="number" id="input_anchorage_top" />
+            <input type="number" id="input_long_spacing" />
           </div>
           <div class="input-col">
             <span>径</span>
-            <input type="number" id="input_anchorage_bottom" />
+            <input type="number" id="input_long_diameter" />
           </div>
           <div class="input-col">
             <span>下定着</span>
-            <input type="number" id="input_pullback" />
+            <input type="number" id="input_wall_anchorage_bottom" />
           </div>
         </div>
       </div>
@@ -1435,68 +1460,66 @@ input[readonly] {
       <!-- Kết quả -->
       <div class="form-column">
         <label class="form-header">結果</label>
-		<div class="result-row">
+
+        <div class="result-row">
           <div class="canvas-col wide-col">
-            <canvas id="stairCanvas" width="220" height="130"></canvas>
+            <canvas id="wallCanvas" width="220" height="130"></canvas>
           </div>
         </div>
+
+        <!-- 主筋 -->
         <div class="result-row">
-          <div class="input-col">
-            <span>主筋</span>
-          </div>
+          <div class="input-col"><span>主筋</span></div>
         </div>
 
         <div class="result-row">
           <div class="input-col">
             <span>下筋</span>
-            <input type="number" id="output_anchor_bottom1" readonly />
+            <input type="number" id="main_rebar_bottom_dan" readonly />
           </div>
           <div class="input-col">
             <span>本数</span>
-            <input type="number" id="output_anchor_bottom2" readonly />
+            <input type="number" id="main_rebar_count" readonly />
           </div>
           <div class="input-col">
             <span>上筋</span>
-            <input type="number" id="output_anchor_bottom1" readonly />
+            <input type="number" id="main_rebar_top_dan" readonly />
           </div>
           <div class="input-col">
             <span>本数</span>
-            <input type="number" id="output_anchor_bottom2" readonly />
+            <input type="number" id="main_rebar_count1" readonly />
           </div>
         </div>
-		<div class="result-row">
-          <div class="input-col">
-            <span>配力</span>
-          </div>
+
+        <!-- 配力筋 -->
+        <div class="result-row">
+          <div class="input-col"><span>配力</span></div>
         </div>
 
         <div class="result-row">
           <div class="input-col">
             <span>下筋</span>
-            <input type="number" id="output_anchor_bottom1" readonly />
+            <input type="number" id="distribution_rebar_bottom_dan" readonly />
           </div>
           <div class="input-col">
             <span>本数</span>
-            <input type="number" id="output_anchor_bottom2" readonly />
+            <input type="number" id="distribution_rebar_count" readonly />
           </div>
           <div class="input-col">
             <span>上筋</span>
-            <input type="number" id="output_anchor_bottom1" readonly />
+            <input type="number" id="distribution_rebar_top_dan" readonly />
           </div>
           <div class="input-col">
             <span>本数</span>
-            <input type="number" id="output_anchor_bottom2" readonly />
+            <input type="number" id="distribution_rebar_count1" readonly />
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-		
-  </div>
 </div>
-
-
+</div>
 
 
 
@@ -3543,7 +3566,143 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+
+function roundUpTo50(value) {
+  return Math.ceil(value / 50) * 50;
+}
+
+function calculateBeamMainBar() {
+  // --- Lấy dữ liệu input ---
+  const diameter = parseInput("input_diameter");
+  const anchorageTop = parseInput("input_anchorage_top");
+  const anchorageBottom = parseInput("input_anchorage_bottom");
+  const pullback = parseInput("input_pullback");
+
+  const colWidthStart = parseInput("input_column_width_start");
+  const colWidthEnd = parseInput("input_column_width_end");
+  const columnSpacing = parseInput("input_column_spacing");
+
+ if (
+  colWidthStart > 0 &&
+  colWidthEnd > 0 &&
+  columnSpacing > 0
+) {
+  const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
+  document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
+} else {
+  document.getElementById("output_effective_length").value = "";
+}
+const enoughForAnchor = (
+  diameter > 0 &&
+  anchorageTop > 0 &&
+  anchorageBottom > 0 &&
+  pullback > 0 && 
+  colWidthStart > 0 &&
+  colWidthEnd > 0
+);
+  if (enoughForAnchor) {
+    // Top anchor
+    const topMin = roundUpTo50(diameter * 11);
+    const top1_calc = roundUpTo50(anchorageTop * diameter - colWidthStart + pullback);
+    const top2_calc = roundUpTo50(anchorageTop * diameter - colWidthEnd + pullback);
+    const anchorTop1 = Math.max(topMin, top1_calc);
+    const anchorTop2 = Math.max(topMin, top2_calc);
+
+    // Bottom anchor
+    const bottom1 = roundUpTo50(anchorageBottom * diameter - colWidthStart + pullback);
+    const bottom2 = roundUpTo50(anchorageBottom * diameter - colWidthEnd + pullback);
+	const anchorbottom1 = Math.max(topMin, bottom1);
+    const anchorbottom2 = Math.max(topMin, bottom2);
+
+    // Gán kết quả
+    document.getElementById("output_anchor_top1").value = anchorTop1;
+    document.getElementById("output_anchor_top2").value = anchorTop2;
+    document.getElementById("output_anchor_bottom1").value = anchorbottom1;
+    document.getElementById("output_anchor_bottom2").value = anchorbottom2;
+  } else {
+    // Clear nếu chưa đủ input
+    document.getElementById("output_anchor_top1").value = "";
+    document.getElementById("output_anchor_top2").value = "";
+    document.getElementById("output_anchor_bottom1").value = "";
+    document.getElementById("output_anchor_bottom2").value = "";
+  }
+}
+
+// --- Gán sự kiện tự động cập nhật ---
+window.addEventListener("DOMContentLoaded", () => {
+  [
+    "input_diameter", "input_anchorage_top", "input_anchorage_bottom",
+    "input_pullback", "input_column_width_start", "input_column_width_end",
+    "input_column_spacing"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", calculateBeamMainBar);
+  });
+});
+
+
+
+function calculateWallRebars() {
+  // Lấy giá trị input
+  const shortLength = +document.getElementById("input_short_length").value;
+  const shortSpacing = +document.getElementById("input_short_spacing").value;
+  const shortDiameter = +document.getElementById("input_short_diameter").value;
+  const anchorageTop = +document.getElementById("input_wall_anchorage_top").value;
+
+  const longLength = +document.getElementById("input_long_length").value;
+  const longSpacing = +document.getElementById("input_long_spacing").value;
+  const longDiameter = +document.getElementById("input_long_diameter").value;
+  const anchorageBottom = +document.getElementById("input_wall_anchorage_bottom").value;
+
+  const valid =
+    shortLength > 0 && shortSpacing > 0 && shortDiameter > 0 && anchorageTop > 0 &&
+    longLength > 0 && longSpacing > 0 && longDiameter > 0 && anchorageBottom > 0;
+
+  if (!valid) {
+    // Nếu không đủ dữ liệu thì xoá kết quả
+    [
+      "main_rebar_bottom_dan", "main_rebar_top_dan", "main_rebar_count",
+      "distribution_rebar_bottom_dan", "distribution_rebar_top_dan", "distribution_rebar_count"
+    ].forEach(id => document.getElementById(id).value = "");
+    return;
+  }
+
+  // 主筋 (Main rebar)
+  const mainBottomDan = shortLength + anchorageBottom * shortDiameter * 2;
+  const mainTopDan = shortLength + anchorageTop * shortDiameter * 2;
+  const mainCount = Math.ceil(longLength / shortSpacing) + 1;
+
+  // 配力筋 (Distribution rebar)
+  const distBottomDan = longLength + anchorageBottom * longDiameter * 2;
+  const distTopDan = longLength + anchorageTop * longDiameter * 2;
+  const distCount = Math.ceil(shortLength / longSpacing) + 1;
+
+  // Gán giá trị kết quả
+  document.getElementById("main_rebar_bottom_dan").value = mainBottomDan;
+  document.getElementById("main_rebar_top_dan").value = mainTopDan;
+  document.getElementById("main_rebar_count").value = mainCount;
+  document.getElementById("main_rebar_count1").value = mainCount;
+
+  document.getElementById("distribution_rebar_bottom_dan").value = distBottomDan;
+  document.getElementById("distribution_rebar_top_dan").value = distTopDan;
+  document.getElementById("distribution_rebar_count").value = distCount;
+  document.getElementById("distribution_rebar_count1").value = distCount;
+}
+
+// --- Gán sự kiện tự động cập nhật cho tường/sàn ---
+window.addEventListener("DOMContentLoaded", () => {
+  [
+    "input_short_length", "input_short_spacing", "input_short_diameter", "input_wall_anchorage_top",
+    "input_long_length", "input_long_spacing", "input_long_diameter", "input_wall_anchorage_bottom"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", calculateWallRebars);
+  });
+});
+
 </script>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
