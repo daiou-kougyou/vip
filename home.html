@@ -1448,14 +1448,14 @@ input[readonly] {
         </div>
         <div class="input-row">
           <div class="input-col">
-            <span>ｱﾝｶ</span>
+            <span>ｱﾝｶ－</span>
             <input type="number" id="input_anchor1" />
           </div>
           <div class="canvas-col">
             <canvas id="anchorCanvas" width="120" height="60"></canvas>
           </div>
           <div class="input-col">
-            <span>ｱﾝｶ</span>
+            <span>ｱﾝｶ－</span>
             <input type="number" id="input_anchor2" />
           </div>
         </div>
@@ -3707,7 +3707,7 @@ function calculateBeamMainBar() {
 ) {
   const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
   document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
-  updateBeamCanvas();
+  
 } else {
   document.getElementById("output_effective_length").value = "";
 }
@@ -3730,14 +3730,14 @@ const enoughForAnchor = (
     // Bottom anchor
     const bottom1 = roundUpTo50(anchorageBottom * diameter - colWidthStart + pullback);
     const bottom2 = roundUpTo50(anchorageBottom * diameter - colWidthEnd + pullback);
-	const anchorbottom1 = Math.max(topMin, bottom1);
-    const anchorbottom2 = Math.max(topMin, bottom2);
+	const anchorBottom1 = Math.max(topMin, bottom1);
+    const anchorBottom2 = Math.max(topMin, bottom2);
 
     // Gán kết quả
     document.getElementById("output_anchor_top1").value = anchorTop1;
     document.getElementById("output_anchor_top2").value = anchorTop2;
-    document.getElementById("output_anchor_bottom1").value = anchorbottom1;
-    document.getElementById("output_anchor_bottom2").value = anchorbottom2;
+    document.getElementById("output_anchor_bottom1").value = anchorBottom1;
+    document.getElementById("output_anchor_bottom2").value = anchorBottom2;
   } else {
     // Clear nếu chưa đủ input
     document.getElementById("output_anchor_top1").value = "";
@@ -3745,8 +3745,8 @@ const enoughForAnchor = (
     document.getElementById("output_anchor_bottom1").value = "";
     document.getElementById("output_anchor_bottom2").value = "";
   }
+  updateBeamCanvas();
 }
-
 // --- Gán sự kiện tự động cập nhật ---
 window.addEventListener("DOMContentLoaded", () => {
   [
@@ -3932,29 +3932,40 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function drawBeamCanvas(ctx, output_effective_length) {
+function drawBeamCanvas(ctx, top_length, bottom_length) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Vẽ khung dầm
-  drawLineWithLabel(ctx, 10, 10, 110, 10, 0);   // Trên ngang
-  drawLineWithLabel(ctx, 10, 10, 10, 45, 0);    // Trái đứng
-  drawLineWithLabel(ctx, 110, 45, 110, 10, 0);  // Phải đứng
+  drawLineWithLabel(ctx, 5, 5, 110, 5, 0);   // Trên ngang
+  drawLineWithLabel(ctx, 5, 5, 5, 45, 0);    // Trái đứng
+  drawLineWithLabel(ctx, 110, 45, 110, 5, 0);  // Phải đứng
 
-  drawLineWithLabel(ctx, 15, 50, 105, 50, 0);   // Dưới ngang
-  drawLineWithLabel(ctx, 15, 50, 15, 25, 0);    // Dưới trái đứng
-  drawLineWithLabel(ctx, 105, 50, 105, 25, 0);  // Dưới phải đứng
+  drawLineWithLabel(ctx, 10, 60, 105, 60, 0);   // Dưới ngang
+  drawLineWithLabel(ctx, 10, 60, 10, 25, 0);    // Dưới trái đứng
+  drawLineWithLabel(ctx, 105, 60, 105, 25, 0);  // Dưới phải đứng
 
   // Nhãn chiều dài hiệu dụng
   ctx.font = '16px Arial';
   ctx.fillStyle = 'black';
-  ctx.fillText(output_effective_length, 45, 35);
+  toplength = '全' + top_length;
+  bottomlength ='全' + bottom_length;
+  ctx.fillText(toplength, 30, 22);
+  ctx.fillText(bottomlength, 30, 52);
 }
-
 function updateBeamCanvas() {
   const canvas = document.getElementById("beamCanvas");
   const ctx = canvas.getContext("2d");
-  const value = document.getElementById("output_effective_length").value || "";
-  drawBeamCanvas(ctx, value);
+
+  const effective_length = parseFloat(document.getElementById("output_effective_length").value) || 0;
+  const anchorTop1 = parseFloat(document.getElementById("output_anchor_top1").value) || 0;
+  const anchorTop2 = parseFloat(document.getElementById("output_anchor_top2").value) || 0;
+  const anchorBottom1 = parseFloat(document.getElementById("output_anchor_bottom1").value) || 0;
+  const anchorBottom2 = parseFloat(document.getElementById("output_anchor_bottom2").value) || 0;
+
+  const top_length = effective_length + anchorTop1 + anchorTop2;
+  const bottom_length = effective_length + anchorBottom1 + anchorBottom2;
+
+  drawBeamCanvas(ctx, top_length, bottom_length);
 }
 window.addEventListener("DOMContentLoaded", () => {
   updateBeamCanvas(); // Vẽ ban đầu
@@ -3986,7 +3997,6 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
