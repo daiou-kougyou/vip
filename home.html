@@ -2111,10 +2111,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const table = document.querySelector("#rebarTable");
   if (!table) return;
 
-  const targetCols = [5, 6, 7]; // Index bắt đầu từ 0
+  const targetCols = [5, 6, 7]; // Các cột: ケ所, 定尺, 压 接
   const editableCells = [];
 
-  // Duyệt từng dòng để lấy đúng ô contenteditable ở 3 cột mục tiêu
   const rows = table.querySelectorAll("tbody tr");
   rows.forEach(row => {
     const cells = row.children;
@@ -2126,19 +2125,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Gắn sự kiện Enter
+  // Gán sự kiện cho từng ô
   editableCells.forEach((cell, idx) => {
     cell.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        e.preventDefault(); // Ngăn xuống dòng
+        e.preventDefault(); // Không xuống dòng
         const next = editableCells[idx + 1];
         if (next) {
-          next.focus();
+          next.focus();     
+        } else {
         }
       }
     });
   });
 });
+
+
 
 document.querySelectorAll("input").forEach(input => {
   input.addEventListener("focus", () => {
