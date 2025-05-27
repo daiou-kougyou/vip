@@ -2108,38 +2108,32 @@ if (diaInput) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const table = document.querySelector("table");
-
+  const table = document.querySelector("#rebarTable");
   if (!table) return;
 
-  // Danh sách cột cần điều hướng: cột 5, 6, 7 (theo index từ 0)
-  const targetColIndexes = [5, 6, 7];
+  const targetCols = [5, 6, 7]; // Index bắt đầu từ 0
+  const editableCells = [];
 
-  // Thu thập tất cả input theo đúng thứ tự dòng → cột 5→6→7
-  const inputs = [];
+  // Duyệt từng dòng để lấy đúng ô contenteditable ở 3 cột mục tiêu
   const rows = table.querySelectorAll("tbody tr");
-
   rows.forEach(row => {
     const cells = row.children;
-    targetColIndexes.forEach(colIdx => {
+    targetCols.forEach(colIdx => {
       const cell = cells[colIdx];
-      if (cell) {
-        const input = cell.querySelector("input");
-        if (input) {
-          inputs.push(input);
-        }
+      if (cell && cell.isContentEditable) {
+        editableCells.push(cell);
       }
     });
   });
 
-  // Gán sự kiện Enter
-  inputs.forEach((input, idx) => {
-    input.addEventListener("keydown", (e) => {
+  // Gắn sự kiện Enter
+  editableCells.forEach((cell, idx) => {
+    cell.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
-        e.preventDefault();
-        const nextInput = inputs[idx + 1];
-        if (nextInput) {
-          nextInput.focus();
+        e.preventDefault(); // Ngăn xuống dòng
+        const next = editableCells[idx + 1];
+        if (next) {
+          next.focus();
         }
       }
     });
