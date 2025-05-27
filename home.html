@@ -1587,6 +1587,10 @@ input[readonly] {
             <span>柱幅</span>
             <input type="number" id="input_column_width_end" />
           </div>
+          <div class="input-col">
+            <span>ST@</span>
+            <input type="number" id="input_st_spacing" />
+          </div>
         </div>
       </div>
 
@@ -1599,9 +1603,13 @@ input[readonly] {
             <span>上アンカ</span>
             <input type="number" id="output_anchor_top1" readonly />
           </div>
-          <div class="input-col wide-col">
+          <div class="input-col">
             <span>働き寸法</span>
             <input type="number" id="output_effective_length" readonly />
+          </div>
+          <div class="input-col">
+            <span>ST-枚数</span>
+            <input type="number" id="output_st_count" readonly />
           </div>
           <div class="input-col">
             <span>上アンカ</span>
@@ -3731,6 +3739,8 @@ function calculateBeamMainBar() {
   const colWidthStart = parseInput("input_column_width_start");
   const colWidthEnd = parseInput("input_column_width_end");
   const columnSpacing = parseInput("input_column_spacing");
+  
+  const stSpacing = parseInput("input_st_spacing");
 
  if (
   colWidthStart > 0 &&
@@ -3739,9 +3749,16 @@ function calculateBeamMainBar() {
 ) {
   const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
   document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
-  
+  // ✅ Tính output_st_count nếu stSpacing > 0
+  if (stSpacing > 0) {
+    const stCount = Math.ceil(columnSpacing / stSpacing) + 1;
+    document.getElementById("output_st_count").value = stCount;
+  } else {
+    document.getElementById("output_st_count").value = "";
+  }
 } else {
   document.getElementById("output_effective_length").value = "";
+  document.getElementById("output_st_count").value = "";
 }
 const enoughForAnchor = (
   diameter > 0 &&
@@ -3784,7 +3801,7 @@ window.addEventListener("DOMContentLoaded", () => {
   [
     "input_diameter", "input_anchorage_top", "input_anchorage_bottom",
     "input_pullback", "input_column_width_start", "input_column_width_end",
-    "input_column_spacing"
+    "input_column_spacing", "input_st_spacing"
   ].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("input", calculateBeamMainBar);
