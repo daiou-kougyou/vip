@@ -1763,58 +1763,6 @@ input[readonly] {
 </div>
 
 <script>
-window.addEventListener('beforeunload', function(e) {
-  const message = 'データを保存しますか？';
-  e.preventDefault();
-  e.returnValue = message;
-  return message;     
-});
-
-
-const sections = document.querySelectorAll('.tool-section');
-const body = document.body;
-
-sections.forEach(section => {
-  const header = section.querySelector('.tool-header');
-  header.addEventListener('click', () => {
-    const isActive = section.classList.contains('active');
-    
-    if (isActive) {
-      // Đang active, click để tắt
-      section.classList.remove('active');
-      // Nếu không còn mục active nào, bật lại toàn bộ header
-      if (![...sections].some(s => s.classList.contains('active'))) {
-        body.classList.add('no-active');
-      }
-    } else {
-      // Có mục active rồi, reset hết
-      sections.forEach(s => s.classList.remove('active'));
-      // active mục hiện tại
-      section.classList.add('active');
-      // tắt class no-active để ẩn header khác
-      body.classList.remove('no-active');
-    }
-  });
-});
-
-// Khi trang load, bật no-active để hiện hết header
-body.classList.add('no-active');
-
-// Mở & Đóng popup
-function openToolPopup() {
-  document.getElementById('toolPopup').style.display = 'block';
-}
-
-function closeToolPopup() {
-  document.getElementById('toolPopup').style.display = 'none';
-}
-
-
-
-
-
-
-
 
 
 
@@ -1892,7 +1840,7 @@ const shapesByTab = {
     '逆への字': {
       angles: [45, -45],
       params: ['a','b','c'],
-      calculate: ({ a, b, c}) => a + b + c,
+      calculate: ({ a, b, c }) => a + b + c,
       highlight: ['b']
     },
     '幅止め': {
@@ -2000,7 +1948,7 @@ const shapesByTab = {
     '閉じる': {
       angles: [90, 90, 90, 90, 90],
       params: [ 'c', 'd', 'dBar'],
-      calculate: ({ c, d, dBar }) => 2*c + 2*d + 10*dBar,
+      calculate: ({ c, d, dBar }) => 2 * c + 2 * d + 10 * dBar,
       highlight: ['c', 'd']
     }
   }
@@ -2063,6 +2011,7 @@ function updateLength(tabIndex) {
 
   if (lenInput) lenInput.value = roundTo5(finalLength);
 }
+
 function updateHighlightedInputs(shape) {
   const highlights = shape.highlight || [];
   const labels = document.querySelectorAll('label[data-param]');
@@ -2076,6 +2025,7 @@ function updateHighlightedInputs(shape) {
     }
   });
 }
+
 function resetAllInputVisibility(tabIndex) {
   const tabContent = document.querySelector(`.tab-content[data-content="${tabIndex}"]`);
   if (!tabContent) return;
@@ -2123,7 +2073,6 @@ function initAnglePresets() {
       }
 
       updateLength(tabIndex);
-	  shapesByTab[tabIndex] = selected;
       drawSample();
     });
 
@@ -2156,6 +2105,7 @@ if (diaInput) {
   });
 }
 }
+
 document.querySelectorAll("input").forEach(input => {
   input.addEventListener("focus", () => {
     setTimeout(() => {
@@ -3559,6 +3509,53 @@ function ensureMultipleOf15Rows() {
 </script>
 
 <script>
+
+window.addEventListener('beforeunload', function(e) {
+  const message = 'データを保存しますか？';
+  e.preventDefault();
+  e.returnValue = message;
+  return message;     
+});
+
+
+const sections = document.querySelectorAll('.tool-section');
+const body = document.body;
+
+sections.forEach(section => {
+  const header = section.querySelector('.tool-header');
+  header.addEventListener('click', () => {
+    const isActive = section.classList.contains('active');
+    
+    if (isActive) {
+      // Đang active, click để tắt
+      section.classList.remove('active');
+      // Nếu không còn mục active nào, bật lại toàn bộ header
+      if (![...sections].some(s => s.classList.contains('active'))) {
+        body.classList.add('no-active');
+      }
+    } else {
+      // Có mục active rồi, reset hết
+      sections.forEach(s => s.classList.remove('active'));
+      // active mục hiện tại
+      section.classList.add('active');
+      // tắt class no-active để ẩn header khác
+      body.classList.remove('no-active');
+    }
+  });
+});
+
+// Khi trang load, bật no-active để hiện hết header
+body.classList.add('no-active');
+
+// Mở & Đóng popup
+function openToolPopup() {
+  document.getElementById('toolPopup').style.display = 'block';
+}
+
+function closeToolPopup() {
+  document.getElementById('toolPopup').style.display = 'none';
+}
+
 function parseInput(id) {
   const el = document.getElementById(id);
   if (!el) return 0;
