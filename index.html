@@ -1549,71 +1549,10 @@ input[readonly] {
 </div>
 <script>
 
-window.addEventListener('beforeunload', function(e) {
-  const message = 'データを保存しますか？';
-  e.preventDefault();
-  e.returnValue = message;
-  return message;     
-});
+  const cutPricePerBend = 30;
+  const bendPricePerBend = 30;
+  const materialPricePerKg = 115;
 
-
-
-
-const sections = document.querySelectorAll('.tool-section');
-const body = document.body;
-
-sections.forEach(section => {
-  const header = section.querySelector('.tool-header');
-  header.addEventListener('click', () => {
-    const isActive = section.classList.contains('active');
-    
-    if (isActive) {
-      // Đang active, click để tắt
-      section.classList.remove('active');
-      // Nếu không còn mục active nào, bật lại toàn bộ header
-      if (![...sections].some(s => s.classList.contains('active'))) {
-        body.classList.add('no-active');
-      }
-    } else {
-      // Có mục active rồi, reset hết
-      sections.forEach(s => s.classList.remove('active'));
-      // active mục hiện tại
-      section.classList.add('active');
-      // tắt class no-active để ẩn header khác
-      body.classList.remove('no-active');
-    }
-  });
-});
-
-// Khi trang load, bật no-active để hiện hết header
-body.classList.add('no-active');
-
-// Mở & Đóng popup
-function openToolPopup() {
-  document.getElementById('toolPopup').style.display = 'block';
-}
-
-function closeToolPopup() {
-  document.getElementById('toolPopup').style.display = 'none';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-  let lastInsertedRow = null;
-  let selectedCanvas = null;
-  let isCanvasScaled = false; 
-  let currentRow = null;
-  let touchTimer = null;
-  
   const fixedAddress = "福岡県那珂川西畑1054番地1";
   const addressInput = document.getElementById("site-address");
   const transportLabel = document.getElementById("transport-label");
@@ -1627,10 +1566,14 @@ function closeToolPopup() {
   const table = document.getElementById("rebarTable");
   const contextMenu = document.getElementById("contextMenu");
   const validDiameters = [10, 13, 16, 19, 22, 25, 29, 32, 35, 38, 41];
-  const cutPricePerBend = 30;
-  const bendPricePerBend = 30;
-  const materialPricePerKg = 115;
   const kgPerMeterMap = {10: 0.56, 13: 0.99, 16: 1.56, 19: 2.25, 22: 3.13, 25: 3.98, 29: 5.04, 32: 6.32, 35: 7.51, 38: 8.89, 41: 10.39};
+  let lastInsertedRow = null;
+  let selectedCanvas = null;
+  let isCanvasScaled = false; 
+  let currentRow = null;
+  let touchTimer = null;
+  let originalHeight = window.innerHeight;
+
 const shapesByTab = {
 	0: {
 		'直筋': {
@@ -1992,7 +1935,6 @@ initAnglePresets();
   });
 });
 
-let originalHeight = window.innerHeight;
 window.addEventListener('resize', () => {
   const currentHeight = window.innerHeight;
   if (currentHeight < originalHeight - 100) {
@@ -3435,6 +3377,52 @@ function goToToolPage() {
 </script>
 
 <script>
+
+window.addEventListener('beforeunload', function(e) {
+  const message = 'データを保存しますか？';
+  e.preventDefault();
+  e.returnValue = message;
+  return message;     
+});
+
+const sections = document.querySelectorAll('.tool-section');
+const body = document.body;
+
+sections.forEach(section => {
+  const header = section.querySelector('.tool-header');
+  header.addEventListener('click', () => {
+    const isActive = section.classList.contains('active');
+    
+    if (isActive) {
+      // Đang active, click để tắt
+      section.classList.remove('active');
+      // Nếu không còn mục active nào, bật lại toàn bộ header
+      if (![...sections].some(s => s.classList.contains('active'))) {
+        body.classList.add('no-active');
+      }
+    } else {
+      // Có mục active rồi, reset hết
+      sections.forEach(s => s.classList.remove('active'));
+      // active mục hiện tại
+      section.classList.add('active');
+      // tắt class no-active để ẩn header khác
+      body.classList.remove('no-active');
+    }
+  });
+});
+
+// Khi trang load, bật no-active để hiện hết header
+body.classList.add('no-active');
+
+// Mở & Đóng popup
+function openToolPopup() {
+  document.getElementById('toolPopup').style.display = 'block';
+}
+
+function closeToolPopup() {
+  document.getElementById('toolPopup').style.display = 'none';
+}
+
 function parseInput(id) {
   const el = document.getElementById(id);
   if (!el) return 0;

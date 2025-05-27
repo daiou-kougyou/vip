@@ -331,8 +331,8 @@ td.split-5-2 {
   height: 45px;
   border: 2px solid black;
   box-sizing: border-box;
-  font-size: 22px;
-  letter-spacing: 10px;
+  font-size: 28px;
+  letter-spacing: 9px;
   text-align: right;
   background-image:
     linear-gradient(to right, black 1px, transparent 1px),
@@ -351,8 +351,8 @@ td.split-5-2 {
   height: 45px;
   border: 2px solid black;
   box-sizing: border-box;
-  font-size: 22px;
-  letter-spacing: 13px;
+  font-size: 28px;
+  letter-spacing: 9px;
   text-align: right;
   padding-left: 5px;
   background-image:
@@ -1763,15 +1763,10 @@ input[readonly] {
 </div>
 
 <script>
+  const cutPricePerBend = 30;
+  const bendPricePerBend = 30;
+  const materialPricePerKg = 115;
 
-
-
-  let lastInsertedRow = null;
-  let selectedCanvas = null;
-  let isCanvasScaled = false; 
-  let currentRow = null;
-  let touchTimer = null;
-  
   const fixedAddress = "福岡県那珂川西畑1054番地1";
   const addressInput = document.getElementById("site-address");
   const transportLabel = document.getElementById("transport-label");
@@ -1785,10 +1780,16 @@ input[readonly] {
   const table = document.getElementById("rebarTable");
   const contextMenu = document.getElementById("contextMenu");
   const validDiameters = [10, 13, 16, 19, 22, 25, 29, 32, 35, 38, 41];
-  const cutPricePerBend = 30;
-  const bendPricePerBend = 30;
-  const materialPricePerKg = 115;
   const kgPerMeterMap = {10: 0.56, 13: 0.99, 16: 1.56, 19: 2.25, 22: 3.13, 25: 3.98, 29: 5.04, 32: 6.32, 35: 7.51, 38: 8.89, 41: 10.39};
+  let lastInsertedRow = null;
+  let selectedCanvas = null;
+  let isCanvasScaled = false; 
+  let currentRow = null;
+  let touchTimer = null;
+  let originalHeight = window.innerHeight;
+
+
+
 const shapesByTab = {
 	0: {
 		'直筋': {
@@ -2106,6 +2107,45 @@ if (diaInput) {
 }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const table = document.querySelector("table");
+
+  if (!table) return;
+
+  // Danh sách cột cần điều hướng: cột 5, 6, 7 (theo index từ 0)
+  const targetColIndexes = [5, 6, 7];
+
+  // Thu thập tất cả input theo đúng thứ tự dòng → cột 5→6→7
+  const inputs = [];
+  const rows = table.querySelectorAll("tbody tr");
+
+  rows.forEach(row => {
+    const cells = row.children;
+    targetColIndexes.forEach(colIdx => {
+      const cell = cells[colIdx];
+      if (cell) {
+        const input = cell.querySelector("input");
+        if (input) {
+          inputs.push(input);
+        }
+      }
+    });
+  });
+
+  // Gán sự kiện Enter
+  inputs.forEach((input, idx) => {
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const nextInput = inputs[idx + 1];
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    });
+  });
+});
+
 document.querySelectorAll("input").forEach(input => {
   input.addEventListener("focus", () => {
     setTimeout(() => {
@@ -2153,7 +2193,6 @@ initAnglePresets();
   });
 });
 
-let originalHeight = window.innerHeight;
 window.addEventListener('resize', () => {
   const currentHeight = window.innerHeight;
   if (currentHeight < originalHeight - 100) {
