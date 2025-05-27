@@ -1461,12 +1461,6 @@ input[readonly] {
       <div class="form-column">
         <label class="form-header">結果</label>
 
-        <div class="result-row">
-          <div class="canvas-col wide-col">
-            <canvas id="wallCanvas" width="220" height="130"></canvas>
-          </div>
-        </div>
-
         <!-- 主筋 -->
         <div class="result-row">
           <div class="input-col"><span>主筋</span></div>
@@ -3590,6 +3584,7 @@ function calculateBeamMainBar() {
 ) {
   const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
   document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
+  updateBeamCanvas();
 } else {
   document.getElementById("output_effective_length").value = "";
 }
@@ -3814,25 +3809,59 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
-function drawBeamCanvas(ctx) {
+function drawBeamCanvas(ctx, output_effective_length) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  
 
-    drawLineWithLabel(ctx, 20, 20, 100, 20, 0);
+  // Vẽ khung dầm
+  drawLineWithLabel(ctx, 10, 10, 110, 10, 0);   // Trên ngang
+  drawLineWithLabel(ctx, 10, 10, 10, 45, 0);    // Trái đứng
+  drawLineWithLabel(ctx, 110, 45, 110, 10, 0);  // Phải đứng
 
-    drawLineWithLabel(ctx, 20, 20, 20, 45, 0);
+  drawLineWithLabel(ctx, 15, 50, 105, 50, 0);   // Dưới ngang
+  drawLineWithLabel(ctx, 15, 50, 15, 25, 0);    // Dưới trái đứng
+  drawLineWithLabel(ctx, 105, 50, 105, 25, 0);  // Dưới phải đứng
 
-    drawLineWithLabel(ctx,  100, 45, 100, 20, 0);
-
+  // Nhãn chiều dài hiệu dụng
+  ctx.font = '16px Arial';
+  ctx.fillStyle = 'black';
+  ctx.fillText(output_effective_length, 45, 35);
 }
-window.addEventListener("DOMContentLoaded", () => {
+
+function updateBeamCanvas() {
   const canvas = document.getElementById("beamCanvas");
   const ctx = canvas.getContext("2d");
-  drawBeamCanvas(ctx);
+  const value = document.getElementById("output_effective_length").value || "";
+  drawBeamCanvas(ctx, value);
+}
+window.addEventListener("DOMContentLoaded", () => {
+  updateBeamCanvas(); // Vẽ ban đầu
+
+  const input = document.getElementById("output_effective_length");
+
+  // Quan sát thay đổi thuộc tính (value) để cập nhật
+  const observer = new MutationObserver(updateBeamCanvas);
+  observer.observe(input, { attributes: true, attributeFilter: ['value'] });
 });
+window.addEventListener("DOMContentLoaded", () => {
+  // Focus vào input đầu tiên
+  const inputs = Array.from(document.querySelectorAll('.form-column input:not([readonly])'));
+  if (inputs.length > 0) {
+    inputs[0].focus();
+  }
 
-
+  // Bắt sự kiện Enter để chuyển sang input tiếp theo
+  inputs.forEach((input, index) => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const next = inputs[index + 1];
+        if (next) {
+          next.focus();
+        }
+      }
+    });
+  });
+});
 </script>
 
 
