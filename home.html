@@ -1548,8 +1548,7 @@ input[readonly] {
   </div>
 </div>
 	
-	
-<div class="tool-section">
+	<div class="tool-section">
   <div class="tool-header">③ 柱幅・柱間距離 → 梁主筋算出</div>
   <div class="tool-body">
     <div class="form-layout">
@@ -1558,11 +1557,11 @@ input[readonly] {
         <label class="form-header">入力項目</label>
         <div class="input-row">
           <div class="input-col">
-            <span>定着上</span>
+            <span>上定着</span>
             <input type="number" id="input_anchorage_top" />
           </div>
           <div class="input-col">
-            <span>定着下</span>
+            <span>下定着</span>
             <input type="number" id="input_anchorage_bottom" />
           </div>
           <div class="input-col">
@@ -1574,13 +1573,34 @@ input[readonly] {
             <input type="number" id="input_pullback" />
           </div>
         </div>
+		
+		
+		<div class="input-row">
+		  <div class="input-col">
+			<span>上余長</span>
+			<input type="number" id="input_column_top_margin" />
+		  </div>
+		  <div class="input-col">
+			<span>下余長</span>
+			<input type="number" id="input_column_bottom_margin" />
+		  </div>
+		  <div class="input-col">
+			<span>腹筋定着</span>
+			<input type="number" id="input_column_anchor_length" />
+		  </div>
+		  <div class="input-col">
+			<span>ST@</span>
+			<input type="number" id="input_st_spacing" />
+		  </div>
+		</div>
+		
         <div class="input-row">
           <div class="input-col">
             <span>柱幅</span>
             <input type="number" id="input_column_width_start" />
           </div>
           <div class="input-col">
-            <span>内法寸法</span>
+            <span>内法寸法(Lo)</span>
             <input type="number" id="input_column_spacing" />
           </div>
           <div class="input-col">
@@ -1588,8 +1608,8 @@ input[readonly] {
             <input type="number" id="input_column_width_end" />
           </div>
           <div class="input-col">
-            <span>ST@</span>
-            <input type="number" id="input_st_spacing" />
+            <span>内法寸法(Lo')</span>
+            <input type="number" id="input_column_spacing2" />
           </div>
         </div>
       </div>
@@ -1603,13 +1623,9 @@ input[readonly] {
             <span>上アンカ</span>
             <input type="number" id="output_anchor_top1" readonly />
           </div>
-          <div class="input-col">
+          <div class="input-col wide-col">
             <span>働き寸法</span>
             <input type="number" id="output_effective_length" readonly />
-          </div>
-          <div class="input-col">
-            <span>ST-枚数</span>
-            <input type="number" id="output_st_count" readonly />
           </div>
           <div class="input-col">
             <span>上アンカ</span>
@@ -1630,6 +1646,44 @@ input[readonly] {
             <input type="number" id="output_anchor_bottom2" readonly />
           </div>
         </div>
+        <label class="form-header">TOP筋</label>
+		<div class="result-row">
+		  <div class="input-col">
+			<span>端部</span>
+			<input type="number" id="output_end" readonly />
+		  </div>
+		  <div class="input-col">
+			<span>単独中央</span> 
+			<input type="number" id="output_center_single" readonly />
+		  </div>
+		  <div class="input-col">
+			<span>外端中央</span> 
+			<input type="number" id="output_center_outer" readonly />
+		  </div>
+		  <div class="input-col">
+			<span>連続端</span> 
+			<input type="number" id="output_end_continuous" readonly />
+		  </div>
+		</div>
+		<div class="result-row">
+		  <div class="input-col">
+			<span>ST-枚数</span> 
+			<input type="number" id="output_st_count" readonly />
+		  </div>
+		  <div class="input-col">
+			<span>腹筋</span> 
+			<input type="number" id="output_column_anchor_length" readonly />
+		  </div>
+			<div class="input-col">
+			  <span>段数</span>
+			  <input type="number" id="input_column_stage_count" />
+			</div>
+		  <div class="input-col">
+			<span>幅止め</span> 
+			<input type="number" id="output_habadome_count" readonly />
+		  </div>
+		</div>
+
       </div>
     </div>
   </div>
@@ -3728,7 +3782,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function roundUpTo50(value) {
   return Math.ceil(value / 50) * 50;
 }
-
 function calculateBeamMainBar() {
   // --- Lấy dữ liệu input ---
   const diameter = parseInput("input_diameter");
@@ -3739,61 +3792,93 @@ function calculateBeamMainBar() {
   const colWidthStart = parseInput("input_column_width_start");
   const colWidthEnd = parseInput("input_column_width_end");
   const columnSpacing = parseInput("input_column_spacing");
-  
+  const columnSpacing2 = parseInput("input_column_spacing2");
+
   const stSpacing = parseInput("input_st_spacing");
 
- if (
-  colWidthStart > 0 &&
-  colWidthEnd > 0 &&
-  columnSpacing > 0
-) {
-  const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
-  document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
-  // ✅ Tính output_st_count nếu stSpacing > 0
-  if (stSpacing > 0) {
-    const stCount = Math.ceil(columnSpacing / stSpacing) + 1;
-    document.getElementById("output_st_count").value = stCount;
+  const topmargin = parseInput("input_column_top_margin");
+  const bottommargin = parseInput("input_column_bottom_margin");
+  const harakinlength = parseInput("input_column_anchor_length");
+  const stagecount = parseInput("input_column_stage_count");
+
+  if (
+    colWidthStart > 0 &&
+    colWidthEnd > 0 &&
+    columnSpacing > 0
+  ) {
+    const effectiveLength = columnSpacing + colWidthStart + colWidthEnd - 2 * (pullback || 0);
+    document.getElementById("output_effective_length").value = effectiveLength.toFixed(0);
+
+    // Tính số lượng ST nếu stSpacing > 0
+    if (stSpacing > 0) {
+      const stCount = Math.ceil(columnSpacing / stSpacing) + 1;
+      document.getElementById("output_st_count").value = stCount;
+    } else {
+      document.getElementById("output_st_count").value = "";
+    }
   } else {
+    document.getElementById("output_effective_length").value = "";
     document.getElementById("output_st_count").value = "";
   }
-} else {
-  document.getElementById("output_effective_length").value = "";
-  document.getElementById("output_st_count").value = "";
-}
-const enoughForAnchor = (
-  diameter > 0 &&
-  anchorageTop > 0 &&
-  anchorageBottom > 0 &&
-  pullback > 0 && 
-  colWidthStart > 0 &&
-  colWidthEnd > 0
-);
+
+  const enoughForAnchor = (
+    diameter > 0 &&
+    anchorageTop > 0 &&
+    anchorageBottom > 0 &&
+    pullback > 0 && 
+    colWidthStart > 0 &&
+    colWidthEnd > 0
+  );
+
   if (enoughForAnchor) {
-    // Top anchor
+    // Các tính toán anchor như trước
     const topMin = roundUpTo50(diameter * 11);
     const top1_calc = roundUpTo50(anchorageTop * diameter - colWidthStart + pullback);
     const top2_calc = roundUpTo50(anchorageTop * diameter - colWidthEnd + pullback);
     const anchorTop1 = Math.max(topMin, top1_calc);
     const anchorTop2 = Math.max(topMin, top2_calc);
 
-    // Bottom anchor
     const bottom1 = roundUpTo50(anchorageBottom * diameter - colWidthStart + pullback);
     const bottom2 = roundUpTo50(anchorageBottom * diameter - colWidthEnd + pullback);
-	const anchorBottom1 = Math.max(topMin, bottom1);
+    const anchorBottom1 = Math.max(topMin, bottom1);
     const anchorBottom2 = Math.max(topMin, bottom2);
 
-    // Gán kết quả
+    // Gán kết quả anchor
     document.getElementById("output_anchor_top1").value = anchorTop1;
     document.getElementById("output_anchor_top2").value = anchorTop2;
     document.getElementById("output_anchor_bottom1").value = anchorBottom1;
     document.getElementById("output_anchor_bottom2").value = anchorBottom2;
+
+    // Tính các output mới theo công thức bạn cung cấp
+    const output_end = roundUpTo50(anchorTop1 + colWidthStart - pullback + columnSpacing / 4 + topmargin * diameter);
+    const center_single = roundUpTo50(columnSpacing / 2 + 2 * bottommargin * diameter);
+    const center_outer = roundUpTo50(7 * columnSpacing / 12 + 2 * bottommargin * diameter);
+    const end_continuous = roundUpTo50(columnSpacing / 2 + columnSpacing2 / 2 + colWidthEnd + 2 * topmargin * diameter);
+    const column_anchor_length = roundUpTo50(columnSpacing + 2 * harakinlength);
+    const habadome_count = Math.ceil(columnSpacing / 1000) * (stagecount || 0);
+
+    document.getElementById("output_end").value = output_end;
+    document.getElementById("output_center_single").value = center_single;
+    document.getElementById("output_center_outer").value = center_outer;
+    document.getElementById("output_end_continuous").value = end_continuous;
+    document.getElementById("output_column_anchor_length").value = column_anchor_length;
+    document.getElementById("output_habadome_count").value = habadome_count;
+
   } else {
-    // Clear nếu chưa đủ input
+    // Clear nếu chưa đủ input cho anchor
     document.getElementById("output_anchor_top1").value = "";
     document.getElementById("output_anchor_top2").value = "";
     document.getElementById("output_anchor_bottom1").value = "";
     document.getElementById("output_anchor_bottom2").value = "";
+
+    document.getElementById("output_end").value = "";
+    document.getElementById("output_center_single").value = "";
+    document.getElementById("output_center_outer").value = "";
+    document.getElementById("output_end_continuous").value = "";
+    document.getElementById("output_column_anchor_length").value = "";
+    document.getElementById("output_habadome_count").value = "";
   }
+
   updateBeamCanvas();
 }
 // --- Gán sự kiện tự động cập nhật ---
@@ -3801,13 +3886,17 @@ window.addEventListener("DOMContentLoaded", () => {
   [
     "input_diameter", "input_anchorage_top", "input_anchorage_bottom",
     "input_pullback", "input_column_width_start", "input_column_width_end",
-    "input_column_spacing", "input_st_spacing"
+    "input_column_spacing", "input_column_spacing2", "input_st_spacing",
+    "input_column_top_margin", "input_column_bottom_margin",
+    "input_column_anchor_length", "input_column_stage_count"
   ].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("input", calculateBeamMainBar);
   });
-});
 
+  // Tính lần đầu khi load trang
+  calculateBeamMainBar();
+});
 
 
 function calculateWallRebars() {
@@ -3996,8 +4085,8 @@ function drawBeamCanvas(ctx, top_length, bottom_length) {
   // Nhãn chiều dài hiệu dụng
   ctx.font = '16px Arial';
   ctx.fillStyle = 'black';
-  toplength = '全' + top_length;
-  bottomlength ='全' + bottom_length;
+  toplength = '切' + top_length;
+  bottomlength ='切' + bottom_length;
   ctx.fillText(toplength, 30, 22);
   ctx.fillText(bottomlength, 30, 52);
 }
