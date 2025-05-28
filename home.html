@@ -1795,6 +1795,45 @@ input[readonly] {
     </div>
   </div>
 </div>
+
+	
+<div class="tool-section">
+  <div class="tool-header">⑤直角三角形 高さ・底辺長さ → 斜長・角度算出</div>
+  <div class="tool-body">
+    <div class="form-layout">
+      <!-- Nhập liệu -->
+      <div class="form-column">
+        <label class="form-header">直角三角形</label>
+        <div class="input-row">
+          <div class="input-col">
+            <span>高さ</span>
+            <input type="number" id="input_takasa" />
+          </div>
+          <div class="input-col">
+            <span>底辺長さ</span>
+            <input type="number" id="input_teihen" />
+          </div>
+		  <div class="input-col">
+            <span>斜辺長さ</span>
+            <input type="number" id="result_shahen" readonly />
+          </div>
+          <div class="input-col">
+            <span>角度</span>
+            <input type="number" id="result_kakudo" readonly />
+          </div>
+      </div>
+	  <div class="input-row">
+          <div class="canvas-col  wide-col">
+            <canvas id="triangleCanvas" width="220" height="120"></canvas>
+          </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+	
+
+
 </div>
 </div>
 
@@ -4134,6 +4173,166 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+function drawTriangle(ctx, a, b, c, d) {
+  const x0 = 25, y0 = 100;
+  const x1 = x0 + 100, y1 = y0;
+  const x2 = 25, y2 = 25;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Xóa canvas
+
+  drawLineWithLabel(ctx, x2, y2, x0, y0, b); // cạnh a
+  drawLineWithLabel(ctx, x0, y0, x1, y1, a); // cạnh b
+  drawLineWithLabel(ctx, x2, y2, x1, y1, c); // cạnh c
+  
+  // Vẽ ký hiệu góc vuông nhỏ tại đỉnh (x0,y0)
+  drawLineWithLabel(ctx, 35, 100, 35, 90, 0);
+  drawLineWithLabel(ctx, 35, 90, 25, 90, 0);
+
+  // --- Vẽ cung góc tại đỉnh (x1, y1) ---
+  // Vector từ (x1,y1) tới (x0,y0) và (x2,y2)
+  const radius = 20; // bán kính cung góc
+
+  const v1x = x0 - x1;
+  const v1y = y0 - y1;
+  const v2x = x2 - x1;
+  const v2y = y2 - y1;
+
+  const angle1 = Math.atan2(v1y, v1x);
+  const angle2 = Math.atan2(v2y, v2x);
+
+  // Đảm bảo startAngle < endAngle (cho vẽ đúng chiều)
+  let startAngle = angle1;
+  let endAngle = angle2;
+  if (endAngle < startAngle) {
+    [startAngle, endAngle] = [endAngle, startAngle];
+  }
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 2;
+  ctx.arc(x1, y1, radius, startAngle, endAngle, true);
+  ctx.stroke();
+
+
+
+
+  // Vẽ nhãn góc d°
+  ctx.font = '16px Arial';
+  ctx.fillStyle = 'black';
+  const labelAngle = (startAngle + endAngle) / 2;
+  const labelX = x1+5;
+  const labelY = y1;
+  ctx.fillText(d + '°', labelX, labelY);
+ if (!isNaN(d)) {
+  let e = 90 - d;
+  ctx.font = '16px Arial';
+  ctx.fillStyle = 'black';
+  ctx.fillText(e.toFixed(2) + '°', 40, 30);
+  
+  
+// --- Vẽ cung góc tại đỉnh (x2, y2) ---
+  const v3x = x0 - x2;
+  const v3y = y0 - y2;
+  const v4x = x1 - x2;
+  const v4y = y1 - y2;
+
+  const angle3 = Math.atan2(v3y, v3x); // cạnh vuông
+  const angle4 = Math.atan2(v4y, v4x); // cạnh huyền
+
+  let start2 = angle3;
+  let end2 = angle4;
+  if (end2 < start2) {
+    [start2, end2] = [end2, start2];
+  }
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 2;
+  ctx.arc(x2, y2, 15, start2, end2, false);
+  ctx.stroke();
+}
+}
+
+function updateTriangle() {
+  const a = document.getElementById("input_teihen").value;
+  const b = document.getElementById("input_takasa").value;
+  const c = document.getElementById("result_shahen").value;
+  const d = document.getElementById("result_kakudo").value;
+
+  const canvas = document.getElementById("triangleCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Kiểm tra nếu tất cả đều > 0 thì vẽ với nhãn thật, nếu không thì dùng a,b,c,d
+  if (a > 0 && b > 0 && c > 0 && d > 0) {
+    drawTriangle(ctx, a, b, c, d);
+  } else {
+    drawTriangle(ctx, 'a', 'b', 'c', 'd');
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  ["input_teihen", "input_takasa", "result_shahen", "result_kakudo"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateTriangle);
+  });
+});
+window.addEventListener("DOMContentLoaded", () => {
+  // Vẽ mẫu ban đầu
+  const canvas = document.getElementById("triangleCanvas");
+  const ctx = canvas.getContext("2d");
+  drawTriangle(ctx, 'a', 'b', 'c', 'd');
+
+  // Gắn sự kiện input để cập nhật lại nếu có đủ dữ liệu
+  const ids = [
+    "input_teihen", "input_takasa", "result_shahen", "result_kakudo"
+  ];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", updateTriangle);
+    }
+  });
+});
+
+
+
+
+
+
+
+function roundTo2(num) {
+  return Math.round(num * 100) / 100;
+}
+
+function calculateTriangle() {
+  const base = parseFloat(document.getElementById("input_teihen").value);
+  const height = parseFloat(document.getElementById("input_takasa").value);
+
+  if (isNaN(base) || base <= 0 || isNaN(height) || height <= 0) {
+    document.getElementById("result_shahen").value = "";
+    document.getElementById("result_kakudo").value = "";
+    drawTriangle(0, 0);
+    return;
+  }
+
+  const hypotenuse = Math.sqrt(base * base + height * height);
+  const angleRad = Math.atan(height / base);
+  const angleDeg = angleRad * (180 / Math.PI);
+
+  document.getElementById("result_shahen").value = roundTo2(hypotenuse);
+  document.getElementById("result_kakudo").value = roundTo2(angleDeg);
+
+  updateTriangle();
+}
+
+document.getElementById("input_teihen").addEventListener("input", calculateTriangle);
+document.getElementById("input_takasa").addEventListener("input", calculateTriangle);
+
+
+
+
 </script>
 
 
